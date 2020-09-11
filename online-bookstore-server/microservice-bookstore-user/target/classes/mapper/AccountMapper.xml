@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlinebookstore.mapper.AccountMapper">
+    <resultMap id="BaseAccountMap" type="com.onlinebookstore.entity.Account">
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--关联映射-->
+    <resultMap id="AccountContainUserMap" type="com.onlinebookstore.entity.Account">
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+
+        <association property="user" column="username" javaType="com.onlinebookstore.entity.User">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
+            <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+            <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+            <result column="sex" property="sex" jdbcType="VARCHAR"/>
+            <result column="phone" property="phone" jdbcType="VARCHAR"/>
+            <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <sql id="baseAccountInfo">
+        username, password, score, create_time
+    </sql>
+
+    <sql id="accountAssociationUser">
+        username, password, score, create_time, id, a_id, nickname, birthday, sex, phone, last_login_time
+    </sql>
+
+    <insert id="addAccount" keyColumn="username" keyProperty="username">
+        insert into sys_account(<include refid="baseAccountInfo"/>)
+        values(#{username}, #{password}, 0, #{createTime})
+    </insert>
+
+    <select id="selectAccountByUsernameAndPassword" resultType="com.onlinebookstore.entity.Account">
+        select <include refid="baseAccountInfo"/> 
+        from sys_account 
+        where username = #{username} and password = #{password};
+    </select>
+    
+    <select id="selectAllAccount" resultType="com.onlinebookstore.entity.Account">
+        select <include refid="baseAccountInfo"/>
+        from sys_account;
+    </select>
+    
+    <update id="modifyPasswordByUsername">
+        update sys_account
+        set password = #{password}
+        where username = #{username};
+    </update>
+
+    <update id="addScoreByUsername">
+        update sys_account
+        set score = score + #{additional}
+        where username = #{username};
+    </update>
+
+    <select id="getAccountContainUserByUsername" resultMap="AccountContainUserMap">
+        select <include refid="accountAssociationUser"/>
+        from sys_account a
+        left join sys_user u on a.username = u.a_id
+        where username = #{username};
+    </select>
+</mapper>

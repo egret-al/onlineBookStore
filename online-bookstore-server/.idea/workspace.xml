@@ -2,13 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/GatewayServerApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/filter/CorsFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-order/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/UserServerApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/common/CommonplaceResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/Address.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/AccountMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/UserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-order/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +37,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -50,16 +66,37 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.UserServerApplication">
     <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="microservice-bookstore-gateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.onlinebookstore.GatewayServerApplication" />
@@ -67,6 +104,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="microservice-bookstore-user" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.onlinebookstore.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.onlinebookstore.UserServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.UserServerApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -78,7 +133,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599728005442</updated>
-      <workItem from="1599728008758" duration="1138000" />
+      <workItem from="1599728008758" duration="10897000" />
+      <workItem from="1599782681893" duration="10666000" />
+      <workItem from="1599807558849" duration="5951000" />
     </task>
     <servers />
   </component>
@@ -89,10 +146,58 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1599728872462">
+    <state x="361" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599732119850">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1599728872462" />
+    <state x="361" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1599732119850" />
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1599810917810">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1599810917810" />
+    <state width="1156" height="302" key="GridCell.Tab.0.bottom" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.0.center" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.0.left" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.0.right" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.1.bottom" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.1.center" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.1.left" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state width="1156" height="302" key="GridCell.Tab.1.right" timestamp="1599813308775">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="302" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1599813308775" />
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor" timestamp="1599789069026">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1599789069026" />
+    <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599809121300">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1599809121300" />
+    <state x="683" y="364" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1599733946002">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="683" y="364" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.834@0.0.1536.834" timestamp="1599733946002" />
     <state x="5" y="0" key="new project wizard" timestamp="1599729141091">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
