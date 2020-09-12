@@ -5,6 +5,7 @@ import com.onlinebookstore.entity.User;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,8 +27,9 @@ public class UserServiceImpl implements UserService {
      * @return 影响行数
      */
     @Override
-    public int addUser(User user) {
-        return userMapper.addUser(user);
+    public CommonplaceResult addUser(User user) {
+        return userMapper.addUser(user) > 0 ? CommonplaceResult.buildSuccessNoData("添加成功") :
+                CommonplaceResult.buildErrorNoData("发生异常");
     }
 
     /**
@@ -36,8 +38,12 @@ public class UserServiceImpl implements UserService {
      * @return 用户信息类
      */
     @Override
-    public User selectUserByUsername(String accountUsername) {
-        return userMapper.selectUserByUsername(accountUsername);
+    public CommonplaceResult selectUserByUsername(String accountUsername) {
+        User user = userMapper.selectUserByUsername(accountUsername);
+        if (ObjectUtils.isEmpty(user)) {
+            return CommonplaceResult.buildErrorNoData("没有该信息");
+        }
+        return CommonplaceResult.buildSuccess(user, "查询成功");
     }
 
     /**
@@ -45,8 +51,10 @@ public class UserServiceImpl implements UserService {
      * @return 用户信息集合
      */
     @Override
-    public List<User> selectAllUser() {
-        return userMapper.selectAllUser();
+    public CommonplaceResult selectAllUser() {
+        List<User> users = userMapper.selectAllUser();
+        return users.size() > 0 ? CommonplaceResult.buildSuccess(users, "查询成功") :
+                CommonplaceResult.buildError(users, "没有数据");
     }
 
     /**
@@ -55,8 +63,9 @@ public class UserServiceImpl implements UserService {
      * @return 影响行数
      */
     @Override
-    public int modifyUserById(User user) {
-        return userMapper.modifyUserById(user);
+    public CommonplaceResult modifyUserById(User user) {
+        return userMapper.modifyUserById(user) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功") :
+                CommonplaceResult.buildErrorNoData("修改失败");
     }
 
     /**
@@ -67,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public CommonplaceResult getUserContainAccountById(Integer id) {
         User userWithAccount = userMapper.getUserContainAccountById(id);
-        return userWithAccount == null ? CommonplaceResult.buildErrorNoData("查询失败！") :
+        return ObjectUtils.isEmpty(userWithAccount) ? CommonplaceResult.buildErrorNoData("查询失败！") :
                 CommonplaceResult.buildSuccess(userWithAccount, "查询成功");
     }
 }

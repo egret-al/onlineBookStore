@@ -2,6 +2,7 @@ package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Account;
+import com.onlinebookstore.entity.User;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface AccountService {
      * @param account 账户实体类
      * @return 影响行数
      */
-    int addAccount(Account account);
+    CommonplaceResult addAccount(Account account, User user);
 
     /**
      * 根据账号和密码查询账户，通常用于登录业务
@@ -25,7 +26,7 @@ public interface AccountService {
      * @param password 密码
      * @return 账户实体类
      */
-    Account selectAccountByUsernameAndPassword(String username, String password);
+    CommonplaceResult selectAccountByUsernameAndPassword(String username, String password);
 
     /**
      * 查询所有的账户，通常由管理员调用
@@ -42,13 +43,6 @@ public interface AccountService {
      */
     CommonplaceResult modifyPasswordByUsername(String username, String oldPassword, String password);
 
-    /**
-     * 根据账号增加积分
-     * @param username 被增加的账号
-     * @param additionalScore 将要增加的积分
-     * @return 影响行数
-     */
-    int addScoreByUsername(String username, Integer additionalScore);
 
     /**
      * 根据账号查询全部信息，包括用户信息的关联查询
@@ -56,4 +50,12 @@ public interface AccountService {
      * @return 账号信息+用户信息
      */
     CommonplaceResult getAccountContainUserByUsername(String username);
+
+    /**
+     * 根据账号修改积分
+     * @param username 账号
+     * @param modifyNumber 修改的积分
+     * @return 是否修改成功
+     */
+    CommonplaceResult modifyScore(String username, Integer modifyNumber);
 }

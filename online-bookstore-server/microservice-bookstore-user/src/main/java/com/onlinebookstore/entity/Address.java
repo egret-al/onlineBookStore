@@ -1,5 +1,6 @@
 package com.onlinebookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,16 @@ public class Address {
     /*
     账号表的外键字段
      */
+    @JsonProperty("account_username")
     private String accountUsername;
 
     /*
     地址
      */
     private String address;
+
+    /*
+    账户对象
+     */
+    private Account account;
 }

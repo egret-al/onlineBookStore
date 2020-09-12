@@ -31,6 +31,13 @@ public interface AccountMapper {
     Account selectAccountByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /**
+     * 根据账号查询账号信息
+     * @param username 账号
+     * @return 账户实体类
+     */
+    Account selectOneByUsername(String username);
+
+    /**
      * 查询所有的账户，通常由管理员调用
      * @return 账户集合列表
      */
@@ -44,12 +51,12 @@ public interface AccountMapper {
     int modifyPasswordByUsername(@Param("username") String username, @Param("password") String password);
 
     /**
-     * 根据账号增加积分
+     * 根据账号修改积分
      * @param username 被增加的账号
-     * @param additionalScore 将要增加的积分
+     * @param additionalScore 将要增加的积分，如果为负数，则为扣除积分
      * @return 影响行数
      */
-    int addScoreByUsername(@Param("username") String username, @Param("additional") Integer additionalScore);
+    int modifyScoreByUsername(@Param("username") String username, @Param("additional") Integer additionalScore);
 
     /**
      * 根据账号查询全部信息，包括用户信息的关联查询

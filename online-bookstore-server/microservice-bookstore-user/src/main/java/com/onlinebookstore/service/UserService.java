@@ -17,27 +17,27 @@ public interface UserService {
      * @param user 用户信息类
      * @return 影响行数
      */
-    int addUser(User user);
+    CommonplaceResult addUser(User user);
 
     /**
      * 根据登录账号查询用户信息
      * @param accountUsername 登录账号
      * @return 用户信息类
      */
-    User selectUserByUsername(String accountUsername);
+    CommonplaceResult selectUserByUsername(String accountUsername);
 
     /**
      * 查询所有用户信息
      * @return 用户信息集合
      */
-    List<User> selectAllUser();
+    CommonplaceResult selectAllUser();
 
     /**
      * 根据id修改用户信息
      * @param user id
      * @return 影响行数
      */
-    int modifyUserById(User user);
+    CommonplaceResult modifyUserById(User user);
 
     /**
      * 根据id查询用户全部信息，包括级联映射的账户信息

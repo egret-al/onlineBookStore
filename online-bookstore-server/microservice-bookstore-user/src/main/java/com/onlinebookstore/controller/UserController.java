@@ -4,14 +4,14 @@ import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.User;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.UserService;
+import com.onlinebookstore.util.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author rkc
@@ -32,8 +32,7 @@ public class UserController {
      */
     @GetMapping("pub/selectAll")
     public CommonplaceResult selectAllUser() {
-        List<User> users = userService.selectAllUser();
-        return CommonplaceResult.buildSuccess(users, "获取成功！");
+        return userService.selectAllUser();
     }
 
     /**
@@ -44,5 +43,41 @@ public class UserController {
     @GetMapping("pub/getUserWithAccount/{id}")
     public CommonplaceResult getUserContainAccountById(@PathVariable("id") Integer id) {
         return userService.getUserContainAccountById(id);
+    }
+
+    /**
+     * 根据账号查询用户信息
+     * 数据格式
+     * {
+     *     'username': '1234567890'
+     * }
+     * @param usernameMap 账号
+     * @return json数据集
+     */
+    @PostMapping("pri/getUserInfo")
+    public CommonplaceResult getUserInfoByUsername(@RequestBody Map<String, String> usernameMap) {
+        String username = usernameMap.get(UserConstantPool.USERNAME);
+        if (StringUtils.isEmpty(username)) {
+            return CommonplaceResult.buildErrorNoData("非法数据！");
+        }
+        return userService.selectUserByUsername(username);
+    }
+
+    /**
+     * 添加用户
+     * 数据格式
+     * {
+     *     'account_username': 'xxx',
+     *     'nick': 'xxx',
+     *     'birthday': 'xxxx',
+     *     'sex': 'xx',
+     *     'phone': 'xxxxxxxxxx'
+     * }
+     * @param user 用户信息
+     * @return json
+     */
+    @PostMapping("pub/addUser")
+    public CommonplaceResult addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 }

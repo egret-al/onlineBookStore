@@ -1,5 +1,7 @@
 package com.onlinebookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,7 @@ public class User {
     /*
     账号表的外键字段
      */
+    @JsonProperty("account_username")
     private String accountUsername;
 
     /*
@@ -36,6 +39,7 @@ public class User {
     /*
     用户生日
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date birthday;
 
     /*
@@ -51,10 +55,12 @@ public class User {
     /*
     上一次登录时间
      */
+    @JsonProperty("last_login_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date lastLoginTime;
 
-    /**
-     * 账号信息
+    /*
+    账号信息
      */
     private Account account;
 }

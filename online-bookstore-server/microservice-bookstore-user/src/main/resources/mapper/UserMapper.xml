@@ -44,7 +44,7 @@
     </sql>
 
     <insert id="addUser" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
-        insert into <include refid="baseUserInfoNoId"/>
+        insert into sys_user(<include refid="baseUserInfoNoId"/>)
         values (#{accountUsername}, #{nickname}, #{birthday}, #{sex}, #{phone}, #{lastLoginTime});
     </insert>
 

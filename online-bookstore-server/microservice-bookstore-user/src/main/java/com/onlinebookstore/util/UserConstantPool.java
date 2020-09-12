@@ -1,0 +1,20 @@
+package com.onlinebookstore.util;
+
+/**
+ * 常量池
+ * @author rkc
+ * @version 1.0
+ * @date 2020/9/12 10:29
+ */
+public class UserConstantPool {
+
+    public static final String USERNAME = "username";
+
+    public static final String PASSWORD = "password";
+
+    public static final String OLD_PASSWORD = "old_password";
+
+    public static final String NEW_PASSWORD = "new_password";
+
+    public static final String MODIFY_SCORE_COUNT = "modify_score_count";
+}

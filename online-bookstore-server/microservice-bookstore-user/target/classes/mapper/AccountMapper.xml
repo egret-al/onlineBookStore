@@ -29,22 +29,28 @@
     </resultMap>
 
     <sql id="baseAccountInfo">
-        username, password, score, create_time
+        username, password, score, create_time, balance
     </sql>
 
     <sql id="accountAssociationUser">
-        username, password, score, create_time, id, a_id, nickname, birthday, sex, phone, last_login_time
+        username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time
     </sql>
 
     <insert id="addAccount" keyColumn="username" keyProperty="username">
         insert into sys_account(<include refid="baseAccountInfo"/>)
-        values(#{username}, #{password}, 0, #{createTime})
+        values(#{username}, #{password}, 0, #{createTime}, 0);
     </insert>
 
     <select id="selectAccountByUsernameAndPassword" resultType="com.onlinebookstore.entity.Account">
         select <include refid="baseAccountInfo"/> 
         from sys_account 
         where username = #{username} and password = #{password};
+    </select>
+
+    <select id="selectOneByUsername" resultType="com.onlinebookstore.entity.Account">
+        select <include refid="baseAccountInfo"/>
+        from sys_account
+        where username = #{username};
     </select>
     
     <select id="selectAllAccount" resultType="com.onlinebookstore.entity.Account">
@@ -58,7 +64,7 @@
         where username = #{username};
     </update>
 
-    <update id="addScoreByUsername">
+    <update id="modifyScoreByUsername">
         update sys_account
         set score = score + #{additional}
         where username = #{username};

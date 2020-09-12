@@ -1,5 +1,7 @@
 package com.onlinebookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,11 +28,13 @@ public class Comment {
     /*
     用户信息表的外键字段，这里也就是发起评论的人
      */
+    @JsonProperty("user_id")
     private Integer userId;
 
     /*
     来自bookstore_books库的图书id，这里也就是被评论的物品
      */
+    @JsonProperty("book_id")
     private Integer bookId;
 
     /*
@@ -41,6 +45,8 @@ public class Comment {
     /*
     评论的时间
      */
+    @JsonProperty("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
 }
