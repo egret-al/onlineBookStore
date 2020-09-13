@@ -64,4 +64,21 @@ public interface AccountMapper {
      * @return 账号信息+用户信息
      */
     Account getAccountContainUserByUsername(String username);
+
+    /**
+     * 修改金额
+     * @param username 账号
+     * @param count 数量
+     * @return 影响行数
+     */
+    int modifyBalance(@Param("username") String username, @Param("count") Integer count);
+
+    /**
+     * 抵扣操作，扣除积分和余额
+     * @param username 操作账号
+     * @param score 扣除的积分
+     * @param count 扣除的金额
+     * @return 影响行数
+     */
+    int subtractScoreAndBalance(@Param("username") String username, @Param("score") Integer score, @Param("count") Integer count);
 }

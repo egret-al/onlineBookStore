@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -127,4 +128,78 @@ public class AccountServiceImpl implements AccountService {
         return row > 0 ? CommonplaceResult.buildSuccessNoData("修改成功！") :
                 CommonplaceResult.buildErrorNoData("服务器异常");
     }
+
+    /**
+     * 修改余额
+     * @param username 账号
+     * @param count 修改的数量，如果为负数则为扣除，否则为充值
+     * @param useScore 是否使用抵扣，只有在count为负数时才有效，count为正数时为null
+     * @return 操作是否成功
+     */
+    @Override
+    @Transactional
+    public CommonplaceResult modifyBalance(String username, int count, boolean useScore) {
+        if (StringUtils.isEmpty(username)) return CommonplaceResult.buildErrorNoData("非法账号！");
+        Account account = accountMapper.selectOneByUsername(username);
+        log.info("修改余额操作：" + account);
+        if (ObjectUtils.isEmpty(account)) return CommonplaceResult.buildErrorNoData("非法操作！账号不存在");
+        if (count > 0) {
+            //充值操作
+            return addBalance(username, count);
+        } else if (count < 0) {
+            //消费操作，首先进行余额判断
+            if (account.getBalance() < Math.abs(count)) return CommonplaceResult.buildErrorNoData("余额不足！");
+            return subtractBalance(account, count, useScore);
+        }
+        return CommonplaceResult.buildErrorNoData("修改数量不能为0！");
+    }
+
+    /**
+     * 扣除余额逻辑，判断是否使用优惠券，如果使用积分，如果使用，则进行相应的抵扣，10积分=1余额，且最多只能抵扣10元
+     * @param account 操作账号
+     * @param count 操作数量
+     * @param useScore 是否使用积分
+     */
+    private CommonplaceResult subtractBalance(Account account, Integer count, Boolean useScore) {
+        if (useScore) {
+            //使用了积分抵扣，需要判断积分是否为0，如果为0，则提示不能抵扣，否则进行相应的抵扣操作3
+            int score = account.getScore();
+            if (score == 0) {
+                //直接进行扣除
+                return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccessNoData("扣费成功") :
+                        CommonplaceResult.buildErrorNoData("扣费失败");
+            } else if (score > 0) {
+                //balance = balance - count + score / 10
+                int subScore = 100;
+                if (score > 100) {
+                    //积分太多，但也只能抵扣10元
+                    count = count + subScore / 10;
+                    return accountMapper.subtractScoreAndBalance(account.getUsername(), subScore, count) > 0 ? CommonplaceResult.buildSuccessNoData("购买成功")
+                            : CommonplaceResult.buildErrorNoData("网络异常");
+                } else {
+                    //积分并不会满足抵扣过多，直接进行扣除，且把积分归零
+//                    accountMapper.subtractScoreAndBalance(account.getUsername(), score / 10, count);
+                    count = count + score / 10;
+                    return accountMapper.subtractScoreAndBalance(account.getUsername(), score, count) > 0 ? CommonplaceResult.buildSuccessNoData("购买成功")
+                            : CommonplaceResult.buildErrorNoData("网络异常");
+                }
+            }
+            return CommonplaceResult.buildErrorNoData("操作异常");
+        } else {
+            //没有使用积分抵扣，直接进行扣除
+            return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccessNoData("扣费成功") :
+                    CommonplaceResult.buildErrorNoData("扣费失败");
+        }
+    }
+
+    /**
+     * 充值金额
+     * @param username 操作账号
+     * @param count 充值数量
+     */
+    private CommonplaceResult addBalance(String username, Integer count) {
+        return accountMapper.modifyBalance(username, count) > 0 ? CommonplaceResult.buildSuccessNoData("充值成功") :
+                CommonplaceResult.buildErrorNoData("充值失败！");
+    }
+
 }

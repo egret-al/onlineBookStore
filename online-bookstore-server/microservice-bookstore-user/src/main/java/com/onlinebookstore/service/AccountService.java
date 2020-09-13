@@ -58,4 +58,13 @@ public interface AccountService {
      * @return 是否修改成功
      */
     CommonplaceResult modifyScore(String username, Integer modifyNumber);
+
+    /**
+     * 修改余额
+     * @param username 账号
+     * @param count 修改的数量，如果为负数则为扣除，否则为充值
+     * @param useScore 是否使用抵扣，只有在count为负数时才有效，count为正数时为null
+     * @return 操作是否成功
+     */
+    CommonplaceResult modifyBalance(String username, int count, boolean useScore);
 }

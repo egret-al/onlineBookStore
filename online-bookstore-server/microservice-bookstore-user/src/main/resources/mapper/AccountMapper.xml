@@ -76,4 +76,16 @@
         left join sys_user u on a.username = u.a_id
         where username = #{username};
     </select>
+
+    <update id="modifyBalance">
+        update sys_account
+        set balance = balance + #{count}
+        where username = #{username};
+    </update>
+
+    <update id="subtractScoreAndBalance">
+        update sys_account
+        set balance = balance + #{count}, score = score - #{score}
+        where username = #{username};
+    </update>
 </mapper>

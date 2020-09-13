@@ -17,4 +17,8 @@ public class UserConstantPool {
     public static final String NEW_PASSWORD = "new_password";
 
     public static final String MODIFY_SCORE_COUNT = "modify_score_count";
+
+    public static final String COUNT = "count";
+
+    public static final String USE_SCORE = "use_score";
 }

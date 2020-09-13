@@ -136,6 +136,28 @@ public class AccountController {
         return accountService.modifyScore(username, score);
     }
 
+    /**
+     * 操作余额接口
+     * 数据格式：
+     * {
+     *     'username': 'xxx',
+     *     'count': 'xxx',
+     *     'use_score': true
+     * }
+     * @param operateInfo 前端传递的信息
+     */
+    @PostMapping("pri/operateBalance")
+    public CommonplaceResult operateBalance(@RequestBody Map<String, Object> operateInfo) {
+        try {
+            String username = (String) operateInfo.get(UserConstantPool.USERNAME);
+            int count = (int) operateInfo.get(UserConstantPool.COUNT);
+            boolean useScore = (boolean) operateInfo.get(UserConstantPool.USE_SCORE);
+            return accountService.modifyBalance(username, count, useScore);
+        } catch (Exception e) {
+            return CommonplaceResult.buildErrorNoData(e.getMessage());
+        }
+    }
+
     @Data
     @ToString
     @NoArgsConstructor
