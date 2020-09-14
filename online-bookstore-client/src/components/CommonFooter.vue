@@ -52,4 +52,16 @@ export default {
   },
 }
 </script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.tab {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  background-color: #ffffff;
+  width: 100%;
+  border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+}
+.cube-tab_active {
+  color: #3bb149;
+}
+</style>

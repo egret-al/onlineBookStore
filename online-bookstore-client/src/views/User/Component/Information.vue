@@ -14,10 +14,4 @@ export default {
   mounted() {},
 }
 </script>
-<style lang='scss' scoped>
-.information {
-  background: rosybrown;
-  width: 100%;
-  height: 660px;
-}
-</style>
+<style lang='scss' scoped></style>

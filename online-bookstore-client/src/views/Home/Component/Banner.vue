@@ -14,8 +14,6 @@ export default {
 </script>
 <style lang='scss' scoped>
 .banner {
-  background: wheat;
   width: 100%;
-  height: 660px;
 }
 </style>

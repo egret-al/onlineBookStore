@@ -1,6 +1,9 @@
 <template>
-  <div class="common-header">
-    {{message}}
+  <div class="header">
+    <div class="common-header">
+      <div class="leftReturn"></div>
+      <div class="centerInfo">{{message}}</div>
+    </div>
   </div>
 </template>
 
