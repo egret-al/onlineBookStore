@@ -1,0 +1,44 @@
+# 网关端口
+server:
+  port: 9527
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    # 将网关注册进Nacos
+    nacos:
+      # nacos服务注册中心配置
+      discovery:
+        server-addr: 101.200.203.216:8848
+      # nacos配置中心
+      config:
+        server-addr: 101.200.203.216:8848
+        file-extension: yaml
+        timeout: 5000
+
+    # gateway网关配置
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      # 路由映射配置
+      routes:
+        # 用户模块的负载配置
+        - id: user-server
+          uri: lb://user-server
+          predicates:
+            - Path=/api/v1/**
+
+        # 图书模块的负载配置
+        - id: book-server
+          uri: lb://book-server
+          predicates:
+            - Path=/api/v1/**
+
+        # 订单模块的负载配置
+        - id: order-server
+          uri: lb://order-server
+          predicates:
+            - Path=/api/v1/**

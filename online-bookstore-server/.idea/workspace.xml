@@ -2,19 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/BookServerApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/RedisUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/filter/GatewayAuthorityFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/util/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/exception/IllegalAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/exception/IllegalOperateException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/target/classes/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/AccountMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/AccountMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/UserConstantPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/UserConstantPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/bootstrap.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController$AccountWithUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController$AccountWithUser.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/AccountMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/AccountMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/entity/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/entity/Account.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/UserConstantPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/UserConstantPool.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AccountMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +96,11 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.onlinebookstore.util" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -93,7 +108,14 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.UserServerApplication">
+  <component name="RunManager" selected="Spring Boot.GatewayServerApplication">
+    <configuration name="BookServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="microservice-bookstore-book" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.onlinebookstore.BookServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="microservice-bookstore-gateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.onlinebookstore.GatewayServerApplication" />
@@ -138,6 +160,9 @@
       <workItem from="1599898059646" duration="15843000" />
       <workItem from="1599956636432" duration="11277000" />
       <workItem from="1599986317837" duration="13124000" />
+      <workItem from="1600042000109" duration="10018000" />
+      <workItem from="1600067872564" duration="414000" />
+      <workItem from="1600078554287" duration="6166000" />
     </task>
     <servers />
   </component>
@@ -152,50 +177,66 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="361" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1599732119850" />
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1599963096702">
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1600044494014">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1599963096702" />
-    <state width="1156" height="283" key="GridCell.Tab.0.bottom" timestamp="1599978808933">
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1600044494014" />
+    <state width="1156" height="401" key="GridCell.Tab.0.bottom" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
-    <state width="1156" height="283" key="GridCell.Tab.0.center" timestamp="1599978808932">
+    <state width="1156" height="401" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.0.center" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1599978808932" />
-    <state width="1156" height="283" key="GridCell.Tab.0.left" timestamp="1599978808932">
+    <state width="1156" height="401" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.0.left" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1599978808932" />
-    <state width="1156" height="283" key="GridCell.Tab.0.right" timestamp="1599978808933">
+    <state width="1156" height="401" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.0.right" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
-    <state width="1156" height="283" key="GridCell.Tab.1.bottom" timestamp="1599978808933">
+    <state width="1156" height="401" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.1.bottom" timestamp="1600055929917">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
-    <state width="1156" height="283" key="GridCell.Tab.1.center" timestamp="1599978808933">
+    <state width="1156" height="401" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600055929917" />
+    <state width="1156" height="401" key="GridCell.Tab.1.center" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
-    <state width="1156" height="283" key="GridCell.Tab.1.left" timestamp="1599978808933">
+    <state width="1156" height="401" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.1.left" timestamp="1600055929916">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
-    <state width="1156" height="283" key="GridCell.Tab.1.right" timestamp="1599978808933">
+    <state width="1156" height="401" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1600055929916" />
+    <state width="1156" height="401" key="GridCell.Tab.1.right" timestamp="1600055929917">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="283" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1599978808933" />
+    <state width="1156" height="401" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1600055929917" />
+    <state width="1156" height="361" key="GridCell.Tab.2.bottom" timestamp="1600044062018">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="361" key="GridCell.Tab.2.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600044062018" />
+    <state width="1156" height="361" key="GridCell.Tab.2.center" timestamp="1600044062017">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="361" key="GridCell.Tab.2.center/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
+    <state width="1156" height="361" key="GridCell.Tab.2.left" timestamp="1600044062017">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="361" key="GridCell.Tab.2.left/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
+    <state width="1156" height="361" key="GridCell.Tab.2.right" timestamp="1600044062017">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1156" height="361" key="GridCell.Tab.2.right/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
     <state x="349" y="153" key="IDE.errors.dialog" timestamp="1599898074016">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="349" y="153" key="IDE.errors.dialog/0.0.1536.834@0.0.1536.834" timestamp="1599898074016" />
-    <state x="125" y="13" width="1283" height="738" key="SettingsEditor" timestamp="1599989013918">
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor" timestamp="1600042062388">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="125" y="13" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1599989013918" />
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1600042062388" />
     <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599809121300">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -208,10 +249,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="5" y="0" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1599729141091" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1599999023522">
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1600051681453">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1599999023522" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1600051681453" />
     <state x="491" y="322" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1599901248296">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

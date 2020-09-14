@@ -3,9 +3,12 @@ package com.onlinebookstore.service.impl;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Account;
 import com.onlinebookstore.entity.User;
+import com.onlinebookstore.exception.IllegalOperateException;
 import com.onlinebookstore.mapper.AccountMapper;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
+import com.onlinebookstore.util.JwtUtil;
+import com.onlinebookstore.util.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +16,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author rkc
@@ -51,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
-     * 根据账号和密码查询账户，通常用于登录业务
+     * JWT单点登录，
      * @param username 账号
      * @param password 密码
      * @return 账户实体类
@@ -59,8 +65,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CommonplaceResult selectAccountByUsernameAndPassword(String username, String password) {
         Account account = accountMapper.selectAccountByUsernameAndPassword(username, password);
-        return account == null ? CommonplaceResult.buildErrorNoData("账号或者密码错误！") :
-                CommonplaceResult.buildSuccess(account, "登录成功！");
+        if (ObjectUtils.isEmpty(account)) {
+            return CommonplaceResult.buildErrorNoData("账号或者密码错误！");
+        }
+        //登录成功，生成jwt令牌，返回到客户端
+        Map<String, Object> info = new HashMap<>();
+        //基于工具类生成jwt token
+        String token = JwtUtil.createJWT(UUID.randomUUID().toString(), account.getUsername(), null);
+        //将token携带回去，每次发起请求都需要在请求头中携带token，便于网关进行拦截验证
+        info.put(UserConstantPool.TOKEN, token);
+        info.put(UserConstantPool.ACCOUNT, account);
+        return CommonplaceResult.buildSuccess(info, "登录成功！");
     }
 
     /**
@@ -120,7 +135,7 @@ public class AccountServiceImpl implements AccountService {
         if (account == null) return CommonplaceResult.buildErrorNoData("账号异常！");
         int score = account.getScore();
         //积分为0，不能进行扣除，非法操作
-        if (score == 0 && modifyNumber < 0)  return CommonplaceResult.buildErrorNoData("非法操作！");
+        if (score == 0 && modifyNumber < 0) throw new IllegalOperateException();
         //积分不足扣除
         if (score < Math.abs(modifyNumber) && modifyNumber < 0) return CommonplaceResult.buildErrorNoData("积分不足，扣除失败！");
         //正常扣除或者添加

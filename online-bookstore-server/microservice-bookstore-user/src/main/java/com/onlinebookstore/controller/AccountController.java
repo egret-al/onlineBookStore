@@ -31,6 +31,16 @@ public class AccountController {
     @Resource
     private AccountService accountService;
 
+    @GetMapping("pri/test")
+    public CommonplaceResult test1() {
+        return CommonplaceResult.buildSuccessNoData("成功");
+    }
+
+    @GetMapping("pub/test")
+    public CommonplaceResult test2() {
+        return CommonplaceResult.buildSuccessNoData("成功");
+    }
+
     /**
      * 注册账号接口
      * 数据格式

@@ -3,6 +3,7 @@ package com.onlinebookstore.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.onlinebookstore.util.UserConstantPool;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class Account {
     账号创建时间
      */
     @JsonProperty("create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = UserConstantPool.TIME_FORMAT, timezone = UserConstantPool.TIMEZONE)
     private Date createTime;
 
     /*
