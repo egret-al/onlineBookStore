@@ -15,17 +15,26 @@ Vue.use(VueRouter)
   {
     path: '/user-info',
     name: 'UserInfo',
-    component: () => import('../views/User/UserInfo.vue')
+    component: () => import('../views/User/UserInfo.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/shopping-cart',
     name: 'ShoppingCart',
-    component: () => import('../views/ShoppingCart/ShoppingCart.vue')
+    component: () => import('../views/ShoppingCart/ShoppingCart.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/order',
     name: 'Order',
-    component: () => import('../views/Order/Order.vue')
+    component: () => import('../views/Order/Order.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/search',
@@ -36,6 +45,11 @@ Vue.use(VueRouter)
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/registry',
+    name: 'Registry',
+    component: () => import('../views/Registry/Registry.vue')
   }
 ]
 

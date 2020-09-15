@@ -7,3 +7,7 @@ export const loginApi = (username, password) => axios.post('/api/v1/account/pub/
 })
 
 //注册接口
+export const registryApi = (account, user) => axios.post('/api/v1/account/pub/registry', {
+  account,
+  user
+})

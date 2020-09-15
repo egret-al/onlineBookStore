@@ -1,6 +1,7 @@
 <template>
   <div class="main">
-    <cube-form :model="model" @submit="submitHandler">
+    <common-header :message="pageInfo"></common-header>
+    <cube-form class="loginInfo" :model="model" @submit="submitHandler">
       <cube-form-group>
         <!--账号-->
         <cube-form-item :field="fields[0]"></cube-form-item>
@@ -17,13 +18,16 @@
 </template>
 
 <script>
-//按需导入
+import CommonHeader from '@/components/CommonHeader'
 import { loginApi } from '@/api/user/userRequest.js'
 
 export default {
-  components: {},
+  components: {
+    CommonHeader
+  },
   data() {
     return {
+      pageInfo: '登录',
       model: {
         username: '',
         password: ''
@@ -100,17 +104,21 @@ export default {
 </script>
 <style lang='scss' scoped>
 .main {
-  padding: 70% 5% 0;
   text-align: center;
-}
-//登录
-.cube-btn {
-  margin-top: 20px;
-}
-//注册
-.reg {
-  display: inline-block;
-  margin-top: 30px;
-  font-size: 18px;
+  .loginInfo {
+    padding: 80% 5% 0;
+  }
+  //登录
+  .cube-btn {
+    background-color: #489fe2;
+    margin-top: 20px;
+  }
+  //注册
+  .reg {
+    display: inline-block;
+    margin-top: 30px;
+    font-size: 14px;
+    color: red;
+  }
 }
 </style>
