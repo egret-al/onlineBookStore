@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <common-header :message='pageInfo'></common-header>
-    <information></information>
+    <user-information></user-information>
     <common-footer></common-footer>
   </div>
 </template>
@@ -9,13 +9,14 @@
 <script>
 import CommonHeader from '@/components/CommonHeader'
 import CommonFooter from '@/components/CommonFooter'
-import Information from './Component/Information'
+import UserInformation from './Component/UserInformation'
+
 
 export default {
   components: {
     CommonHeader,
     CommonFooter,
-    Information
+    UserInformation
   },
   data() {
     return {

@@ -1,6 +1,9 @@
 <template>
   <div class="main">
     <common-header :message="pageInfo"></common-header>
+    <div class="hint">
+      <cube-loading v-if="isLoading" :size="40"></cube-loading>
+    </div>
     <cube-form class="loginInfo" :model="model" @submit="submitHandler">
       <cube-form-group>
         <!--账号-->
@@ -28,6 +31,7 @@ export default {
   data() {
     return {
       pageInfo: '登录',
+      isLoading: false,       //默认是不加载的状态
       model: {
         username: '',
         password: ''
@@ -72,6 +76,8 @@ export default {
   methods: {
     submitHandler(e, model) {
       e.preventDefault()
+      //修改为加载状态
+      this.isLoading = true
       //发起登录请求
       loginApi(model.username, model.password).then(
         res => {
@@ -79,13 +85,20 @@ export default {
           if (resData.code === 1) {
             //后端约定状态码为1则都为请求成功，否则失败
             let token = resData.data.token
-            //token存入localStorage和vuex
+            //token存入localStorage，避免刷新页面数据丢失
             localStorage.setItem('token', token)
             this.$store.dispatch('setToken', token)
+            //将返回的用户信息存入vuex
+            console.log(resData.data.account)
+            this.$store.dispatch('setAccount', resData.data.account)
+            localStorage.setItem('account', JSON.stringify(resData.data.account))
 
-            //登录成功，跳转到首页  
+            //恢复未加载状态
+            this.isLoading = false
+            //登录成功，跳转到首页
             this.$router.push({ path: '/' })
           } else {
+            this.isLoading = false
             //登录失败，提示用户信息
             const toast = this.$createToast({
               txt: resData.message,
@@ -104,6 +117,13 @@ export default {
 </script>
 <style lang='scss' scoped>
 .main {
+  .hint {
+    width: 100%;
+    margin-top: 300px;
+    padding-left: 45%;
+    position: fixed;
+    z-index: 999;
+  }
   text-align: center;
   .loginInfo {
     padding: 80% 5% 0;

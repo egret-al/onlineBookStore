@@ -12,4 +12,8 @@ export default {
   mounted() {},
 }
 </script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.main {
+  margin-top: 40px;
+}
+</style>

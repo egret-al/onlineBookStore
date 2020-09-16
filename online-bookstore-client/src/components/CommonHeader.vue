@@ -27,12 +27,13 @@ export default {
 <style lang='scss' scoped>
 .common-header {
   background-color: #26A2FF;
-  height: 30px;
-  display: flex;
-  line-height: 30px;
-  justify-content: center;
-  align-content: center;
+  height: 40px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  line-height: 40px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <div class="main">购物车</div>
+  <div class="main">
+    <div class="list">图书列表</div>
+  </div>
 </template>
 
 <script>
@@ -14,6 +16,8 @@ export default {
 </script>
 <style lang='scss' scoped>
 .main {
-  margin-top: 40px;
+  width: 100%;
+  height: 1500px;
+  background-color: powderblue;
 }
 </style>

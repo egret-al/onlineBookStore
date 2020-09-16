@@ -14,6 +14,8 @@ export default {
 </script>
 <style lang='scss' scoped>
 .banner {
+  height: 200px;
   width: 100%;
+  background-color: turquoise;
 }
 </style>
