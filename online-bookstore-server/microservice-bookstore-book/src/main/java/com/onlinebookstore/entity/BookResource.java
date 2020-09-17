@@ -2,6 +2,7 @@ package com.onlinebookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.onlinebookstore.util.BookConstantPool;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,42 +13,43 @@ import java.util.Date;
 
 /**
  * @author rkc
+ * @date 2020/9/17 15:57
  * @version 1.0
- * @date 2020/9/11 9:37
  */
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment implements Serializable {
+public class BookResource implements Serializable {
 
     /*
-    主键自增长字段
+    自增长id
      */
     private Integer id;
 
     /*
-    用户信息表的外键字段，这里也就是发起评论的人
-     */
-    @JsonProperty("user_id")
-    private Integer userId;
-
-    /*
-    来自bookstore_books库的图书id，这里也就是被评论的物品
+    图书外键字段
      */
     @JsonProperty("book_id")
     private Integer bookId;
 
     /*
-    评论的内容
+    资源路径
      */
-    private String content;
+    @JsonProperty("resource_url")
+    private String resourceUrl;
 
     /*
-    评论的时间
+    标识，用于区别该资源的作用
      */
-    @JsonProperty("create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private String symbol;
 
+    /*
+    补充说明
+     */
+    private String supplement;
+
+    @JsonProperty("create_time")
+    @JsonFormat(pattern = BookConstantPool.TIME_FORMAT, timezone = BookConstantPool.TIMEZONE)
+    private Date createTime;
 }

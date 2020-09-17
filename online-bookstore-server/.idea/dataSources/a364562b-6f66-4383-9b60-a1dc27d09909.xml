@@ -899,6 +899,8 @@
       <ColNames>b_id</ColNames>
       <RefTableName>sys_book</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="273" parent="240" name="id">
       <Position>1</Position>
@@ -940,6 +942,8 @@
       <ColNames>b_id</ColNames>
       <RefTableName>sys_book</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="280" parent="241" name="id">
       <Position>1</Position>

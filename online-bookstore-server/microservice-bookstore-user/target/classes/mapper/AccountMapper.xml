@@ -15,6 +15,7 @@
         <id column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="balance" property="balance" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
 
         <association property="user" column="username" javaType="com.onlinebookstore.entity.User">
@@ -41,9 +42,10 @@
         values(#{username}, #{password}, 0, #{createTime}, 0);
     </insert>
 
-    <select id="selectAccountByUsernameAndPassword" resultType="com.onlinebookstore.entity.Account">
-        select <include refid="baseAccountInfo"/> 
-        from sys_account 
+    <select id="selectAccountByUsernameAndPassword" resultMap="AccountContainUserMap">
+        select <include refid="accountAssociationUser"/>
+        from sys_account a
+        left join sys_user u on a.username = u.a_id
         where username = #{username} and password = #{password};
     </select>
 

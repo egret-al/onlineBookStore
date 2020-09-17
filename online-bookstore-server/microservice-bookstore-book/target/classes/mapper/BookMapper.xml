@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlinebookstore.mapper.BookMapper">
+    <!--Book的基本映射信息-->
+    <resultMap id="BaseBookMapper" type="com.onlinebookstore.entity.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--Book+BookResource的集合映射信息-->
+    <resultMap id="BookContainBookResource" type="com.onlinebookstore.entity.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+
+        <collection property="bookResources" column="b_id" ofType="com.onlinebookstore.entity.BookResource">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+            <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR"/>
+            <result column="symbol" property="symbol" jdbcType="VARCHAR"/>
+            <result column="supplement" property="supplement" jdbcType="VARCHAR"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <sql id="baseBookInfo">
+        id, book_name, isbn, author, publisher, price, create_time, t_id
+    </sql>
+
+    <sql id="bookCollectionBookResource">
+        sys_book.id, book_name, isbn, author, publisher, price, sys_book.create_time, t_id, sys_book_resource.id, b_id,
+        resource_url, symbol, supplement, sys_book_resource.create_time
+    </sql>
+</mapper>

@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
-     * JWT单点登录，
+     * JWT单点登录
      * @param username 账号
      * @param password 密码
      * @return 账户实体类
@@ -74,6 +74,7 @@ public class AccountServiceImpl implements AccountService {
         String token = JwtUtil.createJWT(UUID.randomUUID().toString(), account.getUsername(), null);
         //将token携带回去，每次发起请求都需要在请求头中携带token，便于网关进行拦截验证
         info.put(UserConstantPool.TOKEN, token);
+        //登录成功，将封装好的账户+用户对象返回，避免前端再次请求获取用户信息数据
         info.put(UserConstantPool.ACCOUNT, account);
         return CommonplaceResult.buildSuccess(info, "登录成功！");
     }

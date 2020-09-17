@@ -26,7 +26,7 @@ public interface AccountMapper {
      * 根据账号和密码查询账户，通常用于登录业务
      * @param username 账号
      * @param password 密码
-     * @return 账户实体类
+     * @return 账户+用户
      */
     Account selectAccountByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 

@@ -58,7 +58,7 @@
     </delete>
 
     <update id="updateAddress" parameterType="com.onlinebookstore.entity.Address">
-        update sys_address set address = #{address} where id = 1;
+        update sys_address set address = #{address} where id = #{id};
     </update>
 
     <select id="getAddressWithAccountById" resultType="com.onlinebookstore.entity.Address">
