@@ -1,81 +1,80 @@
-package com.onlinebookstore.mapper;
+package com.onlinebookstore.service;
 
+import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Book;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * @author rkc
- * @date 2020/9/17 21:33
+ * @date 2020/9/18 16:28
  * @version 1.0
  */
-@Mapper
-public interface BookMapper {
+public interface BookService {
 
     /**
      * 查询所有图书信息
      * @return 图书信息
      */
-    List<Book> selectAllBookAlone();
+    CommonplaceResult selectAllBookAlone();
 
     /**
-     * 查询所有图书信息（顺序为图书创建时间的倒序）
+     * 查询所有图书信息
      * @return 图书信息+库存信息+资源信息
      */
-    List<Book> selectAllBookInfo();
+    CommonplaceResult selectAllBookInfo();
 
     /**
-     * 查询所有图书信息（顺序为图书创建时间的倒序）
+     * 查询所有图书信息
      * @return 图书信息+资源信息
      */
-    List<Book> selectAllBookWithResource();
+    CommonplaceResult selectAllBookWithResource();
 
     /**
-     * 查询所有图书信息（顺序为图书创建时间的倒序）
+     * 查询所有图书信息
      * @return 图书信息+库存信息
      */
-    List<Book> selectAllBookWithStorage();
+    CommonplaceResult selectAllBookWithStorage();
 
     /**
      * 查询所有图书信息
      * @param bookId id
      * @return 图书信息
      */
-    Book selectAllBookAloneById(Integer bookId);
+    CommonplaceResult selectAllBookAloneById(Integer bookId);
 
     /**
      * 根据图书id查询图书的所有信息
      * @param bookId id
      * @return 图书信息+库存信息+资源信息
      */
-    Book selectAllBookInfoByBookId(Integer bookId);
+    CommonplaceResult selectAllBookInfoByBookId(Integer bookId);
 
     /**
      * 查询图书信息+资源信息
      * @param bookId 图书id
      * @return 图书信息+资源信息
      */
-    Book selectAllBookWithResourceByBookId(Integer bookId);
+    CommonplaceResult selectAllBookWithResourceByBookId(Integer bookId);
 
     /**
      * 查询图书信息+库存信息
      * @param bookId 图书id
      * @return 图书信息+库存信息
      */
-    Book selectAllBookWithStorageByBookId(Integer bookId);
+    CommonplaceResult selectAllBookWithStorageByBookId(Integer bookId);
 
     /**
      * 更新图书信息
      * @param book book
      * @return 影响行数
      */
-    int updateBook(Book book);
+    CommonplaceResult updateBook(Book book);
 
     /**
      * 根据id删除图书（会级联删除到库存和资源，谨慎调用）
      * @param bookId 图书id
      * @return 影响行数
      */
-    int deleteBookById(Integer bookId);
+    CommonplaceResult deleteBookById(Integer bookId);
 }

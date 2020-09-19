@@ -71,4 +71,9 @@ public class Book implements Serializable {
     图书资源列表（图片）
      */
     private List<BookResource> bookResources;
+
+    /*
+    图书库存信息
+     */
+    private BookStorage bookStorage;
 }

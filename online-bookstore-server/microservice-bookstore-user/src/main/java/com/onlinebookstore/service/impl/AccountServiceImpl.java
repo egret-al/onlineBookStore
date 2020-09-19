@@ -7,6 +7,7 @@ import com.onlinebookstore.exception.IllegalOperateException;
 import com.onlinebookstore.mapper.AccountMapper;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
+import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.util.JwtUtil;
 import com.onlinebookstore.util.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private BookService bookService;
 
     /**
      * 添加账户，首先查询该账户是否已经添加，如果已经添加则返回，

@@ -1,4 +1,5 @@
 import com.onlinebookstore.BookServerApplication;
+import com.onlinebookstore.util.RandomUtils;
 import com.onlinebookstore.util.RedisUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author rkc
@@ -58,10 +62,26 @@ public class TestRedisConnection {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Autowired
+    private RandomUtils randomUtils;
+
+    @Test
+    public void testRandom() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(randomUtils.getInt(10));
+        }
+    }
+
     @Test
     public void set() {
-        redisTemplate.opsForValue().set("myKey", "myValue");
-        System.out.println(redisTemplate.opsForValue().get("myKey"));
+        List<String> list = new ArrayList<>();
+        list.add("aaa");
+        list.add("bbb");
+        list.add("ccc");
+        System.out.println(redisUtils.set("testList", list, 30));
     }
 
     @Test

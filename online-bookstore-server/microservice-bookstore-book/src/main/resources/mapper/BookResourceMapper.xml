@@ -3,5 +3,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.BookResourceMapper">
+    <sql id="baseBookResource">
+        id, b_id, resource_url, symbol, supplement, create_time
+    </sql>
 
+    <select id="selectAllResourceAlone" resultType="com.onlinebookstore.entity.BookResource">
+        select <include refid="baseBookResource"/>
+        from sys_book_resource;
+    </select>
+
+    <select id="selectAllResourceAloneByBookId" resultType="com.onlinebookstore.entity.BookResource">
+        select <include refid="baseBookResource"/>
+        from sys_book_resource
+        where b_id = #{bookId};
+    </select>
+
+    <select id="selectResourceById" resultType="com.onlinebookstore.entity.BookResource">
+        select <include refid="baseBookResource"/>
+        from sys_book_resource
+        where id = #{resourceId};
+    </select>
+
+    <update id="updateResource">
+        update sys_book_resource
+        set resource_url = #{resourceUrl}, symbol = #{symbol}, supplement = #{supplement}, create_time = #{createTime}
+        where id = #{id};
+    </update>
+
+    <delete id="deleteResourceById">
+        delete from sys_book_resource where id = #{resourceId};
+    </delete>
 </mapper>

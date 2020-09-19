@@ -800,8 +800,7 @@
     </column>
     <column id="255" parent="238" name="isbn">
       <Position>3</Position>
-      <Comment>ISBN</Comment>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>char(13)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="256" parent="238" name="author">

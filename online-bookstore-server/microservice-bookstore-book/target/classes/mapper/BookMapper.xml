@@ -27,7 +27,7 @@
         <result column="t_id" property="typeId" jdbcType="INTEGER"/>
 
         <collection property="bookResources" column="b_id" ofType="com.onlinebookstore.entity.BookResource">
-            <id column="id" property="id" jdbcType="INTEGER"/>
+            <id column="rid" property="id" jdbcType="INTEGER"/>
             <result column="b_id" property="bookId" jdbcType="INTEGER"/>
             <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR"/>
             <result column="symbol" property="symbol" jdbcType="VARCHAR"/>
@@ -36,12 +36,141 @@
         </collection>
     </resultMap>
 
+    <!--Book + BookStorage映射信息-->
+    <resultMap id="BookAssociationBookStorage" type="com.onlinebookstore.entity.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+
+        <!--映射库存-->
+        <association property="bookStorage" column="b_id" javaType="com.onlinebookstore.entity.BookStorage">
+            <id column="sid" property="id" jdbcType="INTEGER"/>
+            <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+            <result column="last_add_time" property="lastAddTime" jdbcType="TIMESTAMP"/>
+            <result column="residue_count" property="residueCount" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <!--Book + BookResource + BookStorage映射信息-->
+    <resultMap id="BookContainBookResourceWithStorage" type="com.onlinebookstore.entity.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+
+        <!--映射库存-->
+        <association property="bookStorage" column="b_id" javaType="com.onlinebookstore.entity.BookStorage">
+            <id column="sid" property="id" jdbcType="INTEGER"/>
+            <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+            <result column="last_add_time" property="lastAddTime" jdbcType="TIMESTAMP"/>
+            <result column="residue_count" property="residueCount" jdbcType="INTEGER"/>
+        </association>
+
+        <!--映射资源-->
+        <collection property="bookResources" column="b_id" ofType="com.onlinebookstore.entity.BookResource">
+            <id column="rid" property="id" jdbcType="INTEGER"/>
+            <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+            <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR"/>
+            <result column="symbol" property="symbol" jdbcType="VARCHAR"/>
+            <result column="supplement" property="supplement" jdbcType="VARCHAR"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <!--只包含Book字段-->
     <sql id="baseBookInfo">
         id, book_name, isbn, author, publisher, price, create_time, t_id
     </sql>
 
+    <!--Book字段+资源字段-->
     <sql id="bookCollectionBookResource">
-        sys_book.id, book_name, isbn, author, publisher, price, sys_book.create_time, t_id, sys_book_resource.id, b_id,
-        resource_url, symbol, supplement, sys_book_resource.create_time
+        sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, sbr.id as rid, b_id,
+        resource_url, symbol, supplement, sbr.create_time
     </sql>
+
+    <!--Book字段+资源字段+库存字段-->
+    <sql id="bookCollectionBookResourceWithBookStorage">
+        sb.id, book_name, isbn, author, publisher, price, sb.create_time, sbr.id as sid, sbr.b_id, resource_url, symbol,
+        supplement, sbr.create_time, t_id, sbr.id as rid, sbr.b_id, last_add_time, residue_count
+    </sql>
+
+    <!--Book字段+库存字段-->
+    <sql id="bookAssociationBookStorage">
+        sb.id, book_name, isbn, author, publisher, price, create_time, t_id, sbs.id as sid, b_id, last_add_time, residue_count
+    </sql>
+
+    <select id="selectAllBookAlone" resultMap="BaseBookMapper">
+        select <include refid="baseBookInfo"/>
+        from sys_book;
+    </select>
+
+    <select id="selectAllBookInfo" resultMap="BookContainBookResourceWithStorage">
+        select <include refid="bookCollectionBookResourceWithBookStorage"/>
+        from sys_book_storage sbs
+        left join sys_book sb on sbs.b_id = sb.id
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        order by sb.create_time desc;
+    </select>
+
+    <select id="selectAllBookWithResource" resultMap="BookContainBookResource">
+        select <include refid="bookCollectionBookResource"/>
+        from sys_book sb
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        order by sb.create_time desc;
+    </select>
+
+    <select id="selectAllBookWithStorage" resultMap="BookAssociationBookStorage">
+        select <include refid="bookAssociationBookStorage"/>
+        from sys_book sb
+        left join sys_book_storage sbs on sb.id = sbs.b_id
+        order by sb.create_time desc;
+    </select>
+
+    <select id="selectAllBookAloneById" resultMap="BaseBookMapper">
+        select <include refid="baseBookInfo"/>
+        from sys_book
+        where id = #{bookId};
+    </select>
+
+    <select id="selectAllBookInfoByBookId" resultMap="BookContainBookResourceWithStorage">
+        select <include refid="bookCollectionBookResourceWithBookStorage"/>
+        from sys_book_storage sbs
+        left join sys_book sb on sbs.b_id = sb.id
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        where sb.id = #{bookId};
+    </select>
+
+    <select id="selectAllBookWithResourceByBookId" resultMap="BookContainBookResource">
+        select <include refid="bookCollectionBookResource"/>
+        from sys_book sb
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        where sb.id = #{bookId};
+    </select>
+
+    <select id="selectAllBookWithStorageByBookId" resultMap="BookAssociationBookStorage">
+        select <include refid="bookAssociationBookStorage"/>
+        from sys_book sb
+        left join sys_book_storage sbs on sb.id = sbs.b_id
+        where sb.id = #{bookId};
+    </select>
+
+    <update id="updateBook">
+        update sys_book
+        set book_name = #{bookName}, isbn = #{isbn}, author = #{author}, publisher = #{publisher}, price = #{price},
+            create_time = #{createTime}, t_id = #{typeId}
+        where id = #{bookId};
+    </update>
+
+    <delete id="deleteBookById">
+        delete from sys_book where id = #{bookId};
+    </delete>
 </mapper>
