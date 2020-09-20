@@ -2,10 +2,13 @@ package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Book;
+import com.onlinebookstore.entity.BookStorage;
 import com.onlinebookstore.mapper.BookMapper;
 import com.onlinebookstore.mapper.BookResourceMapper;
 import com.onlinebookstore.mapper.BookStorageMapper;
+import com.onlinebookstore.service.BookResourceService;
 import com.onlinebookstore.service.BookService;
+import com.onlinebookstore.service.BookStorageService;
 import com.onlinebookstore.util.BookConstantPool;
 import com.onlinebookstore.util.RandomUtils;
 import com.onlinebookstore.util.RedisUtils;
@@ -27,12 +30,6 @@ public class BookServiceImpl implements BookService {
 
     @Resource
     private BookMapper bookMapper;
-
-    @Resource
-    private BookResourceMapper bookResourceMapper;
-
-    @Resource
-    private BookStorageMapper bookStorageMapper;
 
     @Resource
     private RandomUtils randomUtils;

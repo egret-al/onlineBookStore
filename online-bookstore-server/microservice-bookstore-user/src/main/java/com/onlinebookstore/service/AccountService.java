@@ -67,4 +67,13 @@ public interface AccountService {
      * @return 操作是否成功
      */
     CommonplaceResult modifyBalance(String username, int count, boolean useScore);
+
+    /**
+     * 购买图书
+     * @param bookId 图书id
+     * @param count 数量
+     * @param username 购买账号
+     * @param useScore 是否使用积分
+     */
+    CommonplaceResult purchaseBook(Integer bookId, Integer count, String username, Boolean useScore);
 }

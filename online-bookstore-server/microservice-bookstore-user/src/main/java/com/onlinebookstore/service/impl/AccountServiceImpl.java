@@ -1,26 +1,28 @@
 package com.onlinebookstore.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Account;
 import com.onlinebookstore.entity.User;
+import com.onlinebookstore.entity.otherserver.Book;
+import com.onlinebookstore.entity.otherserver.BookStorage;
 import com.onlinebookstore.exception.IllegalOperateException;
 import com.onlinebookstore.mapper.AccountMapper;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
 import com.onlinebookstore.service.BookService;
+import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
 import com.onlinebookstore.util.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author rkc
@@ -39,6 +41,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     private BookService bookService;
+
+    @Resource
+    private JsonUtil jsonUtil;
 
     /**
      * 添加账户，首先查询该账户是否已经添加，如果已经添加则返回，
@@ -89,6 +94,8 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public List<Account> selectAllAccount() {
+        CommonplaceResult commonplaceResult = bookService.selectAllInfo();
+        System.out.println(commonplaceResult.getData());
         return accountMapper.selectAllAccount();
     }
 
@@ -150,6 +157,56 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
+     * 购买图书，需要使用全局事务处理
+     * TODO 后续整合seata和调用订单微服务
+     * 流程：检查用户余额 -> 调用订单微服务创建订单 -> 扣除用户余额 -> 调用图书微服务扣除库存 -> 修改订单状态为完成订单
+     * @param bookId 图书id
+     * @param count 数量
+     * @param username 购买账号
+     * @param useScore 是否使用积分
+     */
+    @Override
+    @SuppressWarnings("all")
+//    @GlobalTransaction
+    public CommonplaceResult purchaseBook(Integer bookId, Integer count, String username, Boolean useScore) {
+        //调用图书微服务，得到图书信息+库存信息，通过断点调试可以得知，此时得到的对象是LinkedHashMap
+        Object data =  bookService.selectBookAndStorageByBookId(bookId).getData();
+        try {
+            //转化为Book实体类
+            Book book = jsonUtil.mapToBean((Map) data, Book.class);
+            log.info(String.valueOf(book));
+            //TODO 测试
+            BookStorage bookStorage = book.getBookStorage();
+            if (count > bookStorage.getResidueCount()) return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
+            //得到需要支付的金额
+            int money = book.getPrice() * count;
+            //TODO 调用订单微服务创建订单
+
+            //扣除余额
+            CommonplaceResult commonplaceResult = this.modifyBalance(username, -money, useScore);
+            if ((boolean) commonplaceResult.getData()) {
+                //扣除成功，则进行下一步，扣除库存
+                CommonplaceResult storageCalledResult = bookService.subtractStorageById(bookStorage.getId(), count);
+                if ((boolean) storageCalledResult.getData()) {
+                    //库存扣除成功
+                    //TODO 修改订单状态
+
+                    //TODO 增加积分
+                    this.modifyScore(username, money / 10);
+                    return CommonplaceResult.buildSuccessNoData("操作成功！");
+                } else {
+                    throw new RuntimeException("库存扣除失败");
+                }
+            } else {
+                return CommonplaceResult.buildSuccessNoData("余额扣除失败，余额不足！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CommonplaceResult.buildSuccessNoData("服务器异常，对象转换失败！");
+    }
+
+    /**
      * 修改余额
      * @param username 账号
      * @param count 修改的数量，如果为负数则为扣除，否则为充值
@@ -159,19 +216,19 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public CommonplaceResult modifyBalance(String username, int count, boolean useScore) {
-        if (StringUtils.isEmpty(username)) return CommonplaceResult.buildErrorNoData("非法账号！");
+        if (StringUtils.isEmpty(username)) return CommonplaceResult.buildError(false, "非法账号！");
         Account account = accountMapper.selectOneByUsername(username);
         log.info("修改余额操作：" + account);
-        if (ObjectUtils.isEmpty(account)) return CommonplaceResult.buildErrorNoData("非法操作！账号不存在");
+        if (ObjectUtils.isEmpty(account)) return CommonplaceResult.buildError(false, "非法操作！账号不存在");
         if (count > 0) {
             //充值操作
             return addBalance(username, count);
         } else if (count < 0) {
             //消费操作，首先进行余额判断
-            if (account.getBalance() < Math.abs(count)) return CommonplaceResult.buildErrorNoData("余额不足！");
+            if (account.getBalance() < Math.abs(count)) return CommonplaceResult.buildError(false, "余额不足！");
             return subtractBalance(account, count, useScore);
         }
-        return CommonplaceResult.buildErrorNoData("修改数量不能为0！");
+        return CommonplaceResult.buildError(false, "修改数量不能为0！");
     }
 
     /**
@@ -186,29 +243,29 @@ public class AccountServiceImpl implements AccountService {
             int score = account.getScore();
             if (score == 0) {
                 //直接进行扣除
-                return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccessNoData("扣费成功") :
-                        CommonplaceResult.buildErrorNoData("扣费失败");
+                return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccess(true, "扣费成功") :
+                        CommonplaceResult.buildError(false, "扣费失败");
             } else if (score > 0) {
                 //balance = balance - count + score / 10
                 int subScore = 100;
                 if (score > 100) {
                     //积分太多，但也只能抵扣10元
                     count = count + subScore / 10;
-                    return accountMapper.subtractScoreAndBalance(account.getUsername(), subScore, count) > 0 ? CommonplaceResult.buildSuccessNoData("购买成功")
-                            : CommonplaceResult.buildErrorNoData("网络异常");
+                    return accountMapper.subtractScoreAndBalance(account.getUsername(), subScore, count) > 0 ? CommonplaceResult.buildSuccess(true, "购买成功")
+                            : CommonplaceResult.buildError(false, "网络异常");
                 } else {
                     //积分并不会满足抵扣过多，直接进行扣除，且把积分归零
 //                    accountMapper.subtractScoreAndBalance(account.getUsername(), score / 10, count);
                     count = count + score / 10;
-                    return accountMapper.subtractScoreAndBalance(account.getUsername(), score, count) > 0 ? CommonplaceResult.buildSuccessNoData("购买成功")
-                            : CommonplaceResult.buildErrorNoData("网络异常");
+                    return accountMapper.subtractScoreAndBalance(account.getUsername(), score, count) > 0 ? CommonplaceResult.buildSuccess(true, "购买成功")
+                            : CommonplaceResult.buildError(false, "网络异常");
                 }
             }
-            return CommonplaceResult.buildErrorNoData("操作异常");
+            return CommonplaceResult.buildError(false, "操作异常");
         } else {
             //没有使用积分抵扣，直接进行扣除
-            return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccessNoData("扣费成功") :
-                    CommonplaceResult.buildErrorNoData("扣费失败");
+            return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccess(true, "扣费成功") :
+                    CommonplaceResult.buildError(false, "扣费失败");
         }
     }
 
@@ -221,5 +278,4 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.modifyBalance(username, count) > 0 ? CommonplaceResult.buildSuccessNoData("充值成功") :
                 CommonplaceResult.buildErrorNoData("充值失败！");
     }
-
 }

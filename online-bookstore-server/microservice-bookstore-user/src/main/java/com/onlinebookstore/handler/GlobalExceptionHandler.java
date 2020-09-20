@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public CommonplaceResult handle(Exception e) {
         log.error("发生异常：" + e.getMessage());
+        e.printStackTrace();
         return CommonplaceResult.buildErrorNoData(e.getMessage());
     }
 }

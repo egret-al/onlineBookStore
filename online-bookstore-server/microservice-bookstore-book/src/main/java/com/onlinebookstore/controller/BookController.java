@@ -1,7 +1,10 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
+import com.onlinebookstore.entity.BookStorage;
 import com.onlinebookstore.service.BookService;
+import com.onlinebookstore.service.BookStorageService;
+import com.onlinebookstore.service.impl.BookServiceImpl;
 import com.onlinebookstore.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 图书微服务的接口
+ * 图书微服务的接口，主要给用户微服务和前端直接申请资源
+ * 当其他微服务调用该接口的时候，调用方和被调用方的参数都需要保持一致，
+ * 两方的请求必须保持一致
+ * 例：1、被调用方是 @RequestMapping(value = "xxx", method = RequestMethod.POST)
+ *     则调用方的方法也得 @RequestMapping(value = "xxx", method = RequestMethod.POST)保持一致
+ *     2、被调用方是：@RequestMapping(value = "pub/selectBookAndStorageByBookId/{bookId}", method = RequestMethod.POST)
+ *                   public CommonplaceResult selectBookAndStorageByBookId(@PathVariable("bookId") Integer bookId) { }
+ *        调用方也需要保持一致：@RequestMapping(value = "/api/v1/book/pub/selectBookAndStorageByBookId/{bookId}")
+ *                            CommonplaceResult selectBookAndStorageByBookId(@PathVariable("bookId") Integer bookId);
+ *        微服务调用直接传参：bookService.selectBookAndStorageByBookId(bookId)
  * @author rkc
  * @date 2020/9/18 16:30
  * @version 1.0
@@ -21,6 +33,9 @@ public class BookController {
 
     @Resource
     private BookService bookService;
+
+    @Resource
+    private BookStorageService bookStorageService;
 
     /**
      * 得到所有图书的所有信息，包括库存和资源信息
@@ -50,10 +65,12 @@ public class BookController {
      * 根据图书id得到图书信息和库存信息
      * @param bookId 图书id
      */
-    @GetMapping("pub/selectBookAndStorageByBookId/{bookId}")
+    @GetMapping(value = "pub/selectBookAndStorageByBookId/{bookId}")
     public CommonplaceResult selectBookAndStorageByBookId(@PathVariable("bookId") Integer bookId) {
+        log.info("图书id：" + bookId);
         return bookService.selectAllBookWithStorageByBookId(bookId);
     }
+
 
     /**
      * 根据图书id得到图书信息和资源信息
@@ -65,6 +82,16 @@ public class BookController {
     }
 
     /**
+     * 根据图书id查询信息
+     * @param bookId 图书id
+     * @return 只包含图书的基本信息
+     */
+    @GetMapping(value = "pub/selectAllBookAloneById/{bookId}")
+    public CommonplaceResult selectAllBookAloneById(@PathVariable("bookId") Integer bookId) {
+        return bookService.selectAllBookAloneById(bookId);
+    }
+
+    /**
      * 根据图书id查询图书信息+资源信息+库存信息
      * @param bookId 图书id
      */
@@ -72,4 +99,52 @@ public class BookController {
     public CommonplaceResult selectBookContainAllInfoById(@PathVariable("bookId") Integer bookId) {
         return bookService.selectAllBookInfoByBookId(bookId);
     }
+
+    /**
+     * 根据图书id得到库存信息
+     * @param bookId 图书id
+     */
+    @GetMapping("pub/selectStorageByBookId/{bookId}")
+    public CommonplaceResult selectStorageByBookId(@PathVariable("bookId") Integer bookId) {
+        return bookStorageService.selectStorageByBookId(bookId);
+    }
+
+    /**
+     * 根据id查询库存
+     * @param id id
+     */
+    @GetMapping("pub/selectStorageById/{id}")
+    public CommonplaceResult selectStorageById(@PathVariable("id") Integer id) {
+        return bookStorageService.selectStorageById(id);
+    }
+
+    /**
+     * 根据id增加库存
+     * @param id id
+     * @param count 增加的数量
+     */
+    @PostMapping("pub/addStorageById")
+    public CommonplaceResult addStorageById(@RequestParam("id") Integer id, @RequestParam("count") Integer count) {
+        return bookStorageService.addStorageById(id, count);
+    }
+
+    /**
+     * 根据id扣减库存
+     * @param id id
+     * @param count 扣除的数量
+     */
+    @PostMapping("pub/subtractStorageById")
+    public CommonplaceResult subtractStorageById(@RequestParam("id") Integer id, @RequestParam("count") Integer count) {
+        return bookStorageService.subtractStorageById(id, count);
+    }
+
+    /**
+     * 更新库存信息
+     * @param bookStorage 新的库存信息
+     */
+    @PostMapping(value = "pub/updateStorage")
+    public CommonplaceResult updateStorage(@RequestBody BookStorage bookStorage) {
+        return bookStorageService.updateStorage(bookStorage);
+    }
+
 }

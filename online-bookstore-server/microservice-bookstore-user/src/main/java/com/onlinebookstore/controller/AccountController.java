@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/account")
 public class AccountController {
 
-    @Resource
+    @Autowired
     private AccountService accountService;
 
     @GetMapping("pri/test")
@@ -176,5 +177,24 @@ public class AccountController {
 
         private Account account;
         private User user;
+    }
+
+    /**
+     * 购买图书接口
+     * 数据格式：
+     * {
+     *     book_id: 'xxx',
+     *     count: 'xxx',
+     *     username: 'xxx',
+     *     use_score: 'xxx'
+     * }
+     */
+    @PostMapping("pri/purchaseBook")
+    public CommonplaceResult purchaseBook(@RequestBody Map<String, Object> pojo) {
+        Integer bookId = (Integer) pojo.get("book_id");
+        Integer count = (Integer) pojo.get("count");
+        String username = (String) pojo.get("username");
+        Boolean useScore = (Boolean) pojo.get("use_score");
+        return accountService.purchaseBook(bookId, count, username, useScore);
     }
 }

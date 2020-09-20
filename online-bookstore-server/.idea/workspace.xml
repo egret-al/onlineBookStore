@@ -3,41 +3,38 @@
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../online-bookstore-client/src/views/User/Component/UserInfoHeader.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/RandomUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/BookService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookResourceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookStorageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookResourceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookStorageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/otherserver/Book.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/otherserver/BookResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/otherserver/BookStorage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/BookConstantPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/JsonUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/components/CommonFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/components/CommonFooter.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/components/CommonHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/components/CommonHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/views/Login/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/views/Login/Login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/views/Registry/components/RegistryMain.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/views/Registry/components/RegistryMain.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/views/User/Component/UserInformation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/views/User/Component/UserInformation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-client/src/views/User/UserInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-client/src/views/User/UserInfo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/entity/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/entity/BookStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/entity/BookStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookResourceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookResourceMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookStorageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookStorageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/BookConstantPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/BookConstantPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookResourceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookResourceMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookStorageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookStorageMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/test/java/TestRedisConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/test/java/TestRedisConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/entity/Book.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/entity/Book.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookResourceMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookResourceMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/META-INF/microservice-bookstore-book.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/util/BookConstantPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/util/BookConstantPool.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookResourceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookResourceMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/test-classes/TestRedisConnection$User.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/test-classes/TestRedisConnection$User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/test-classes/TestRedisConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/test-classes/TestRedisConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/UserServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/UserServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/BookService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/UserServerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/UserServerApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/META-INF/microservice-bookstore-user.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController$AccountWithUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController$AccountWithUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/handler/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/handler/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/BookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/BookService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +94,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../androidCode/01basicUse/inClass/lifecycle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/entity/otherserver" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -111,10 +108,16 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.onlinebookstore.common" />
       <recent name="com.onlinebookstore.util" />
+      <recent name="com.onlinebookstore.common" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\graduation-project\online-bookstore-server\microservice-bookstore-user\src\main\java\com\onlinebookstore\entity\otherserver" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -124,7 +127,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestRedisConnection.testRandom">
+  <component name="RunManager" selected="Spring Boot.BookServerApplication">
     <configuration name="TestRedisConnection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="microservice-bookstore-book" />
       <option name="PACKAGE_NAME" value="" />
@@ -191,11 +194,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.TestRedisConnection" />
+      <item itemvalue="JUnit.TestRedisConnection.contextLoads" />
+      <item itemvalue="JUnit.TestRedisConnection.set" />
+      <item itemvalue="JUnit.TestRedisConnection.testRandom" />
+      <item itemvalue="Spring Boot.BookServerApplication" />
+      <item itemvalue="Spring Boot.GatewayServerApplication" />
+      <item itemvalue="Spring Boot.UserServerApplication" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.UserServerApplication" />
         <item itemvalue="JUnit.TestRedisConnection.testRandom" />
         <item itemvalue="JUnit.TestRedisConnection.set" />
-        <item itemvalue="Spring Boot.UserServerApplication" />
         <item itemvalue="JUnit.TestRedisConnection.contextLoads" />
         <item itemvalue="JUnit.TestRedisConnection" />
       </list>
@@ -231,7 +243,8 @@
       <workItem from="1600318131215" duration="21800000" />
       <workItem from="1600387300623" duration="7663000" />
       <workItem from="1600412729023" duration="15775000" />
-      <workItem from="1600474169899" duration="21813000" />
+      <workItem from="1600474169899" duration="27198000" />
+      <workItem from="1600558787246" duration="27966000" />
     </task>
     <servers />
   </component>
@@ -246,70 +259,70 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="361" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1599732119850" />
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1600418036025">
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1600569625764">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1600418036025" />
+    <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1600569625764" />
     <state x="542" y="172" key="FileChooserDialogImpl" timestamp="1600397157768">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="542" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1600397157768" />
-    <state width="1169" height="275" key="GridCell.Tab.0.bottom" timestamp="1600502851242">
+    <state width="1177" height="406" key="GridCell.Tab.0.bottom" timestamp="1600606019923">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600502851242" />
-    <state width="1169" height="275" key="GridCell.Tab.0.center" timestamp="1600502851241">
+    <state width="1177" height="406" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600606019923" />
+    <state width="1177" height="406" key="GridCell.Tab.0.center" timestamp="1600606019923">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1600502851241" />
-    <state width="1169" height="275" key="GridCell.Tab.0.left" timestamp="1600502851241">
+    <state width="1177" height="406" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1600606019923" />
+    <state width="1177" height="406" key="GridCell.Tab.0.left" timestamp="1600606019923">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1600502851241" />
-    <state width="1169" height="275" key="GridCell.Tab.0.right" timestamp="1600502851241">
+    <state width="1177" height="406" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1600606019923" />
+    <state width="1177" height="406" key="GridCell.Tab.0.right" timestamp="1600606019923">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1600502851241" />
-    <state width="1169" height="275" key="GridCell.Tab.1.bottom" timestamp="1600502851242">
+    <state width="1177" height="406" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1600606019923" />
+    <state width="1177" height="406" key="GridCell.Tab.1.bottom" timestamp="1600606006102">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600502851242" />
-    <state width="1169" height="275" key="GridCell.Tab.1.center" timestamp="1600502851242">
+    <state width="1177" height="406" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600606006102" />
+    <state width="1177" height="406" key="GridCell.Tab.1.center" timestamp="1600606006101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1600502851242" />
-    <state width="1169" height="275" key="GridCell.Tab.1.left" timestamp="1600502851242">
+    <state width="1177" height="406" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1600606006101" />
+    <state width="1177" height="406" key="GridCell.Tab.1.left" timestamp="1600606006101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1600502851242" />
-    <state width="1169" height="275" key="GridCell.Tab.1.right" timestamp="1600502851242">
+    <state width="1177" height="406" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1600606006101" />
+    <state width="1177" height="406" key="GridCell.Tab.1.right" timestamp="1600606006101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1169" height="275" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1600502851242" />
-    <state width="1156" height="361" key="GridCell.Tab.2.bottom" timestamp="1600044062018">
+    <state width="1177" height="406" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1600606006101" />
+    <state width="1177" height="367" key="GridCell.Tab.2.bottom" timestamp="1600594793053">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="361" key="GridCell.Tab.2.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600044062018" />
-    <state width="1156" height="361" key="GridCell.Tab.2.center" timestamp="1600044062017">
+    <state width="1177" height="367" key="GridCell.Tab.2.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600594793053" />
+    <state width="1177" height="367" key="GridCell.Tab.2.center" timestamp="1600594793053">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="361" key="GridCell.Tab.2.center/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
-    <state width="1156" height="361" key="GridCell.Tab.2.left" timestamp="1600044062017">
+    <state width="1177" height="367" key="GridCell.Tab.2.center/0.0.1536.834@0.0.1536.834" timestamp="1600594793053" />
+    <state width="1177" height="367" key="GridCell.Tab.2.left" timestamp="1600594793053">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="361" key="GridCell.Tab.2.left/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
-    <state width="1156" height="361" key="GridCell.Tab.2.right" timestamp="1600044062017">
+    <state width="1177" height="367" key="GridCell.Tab.2.left/0.0.1536.834@0.0.1536.834" timestamp="1600594793053" />
+    <state width="1177" height="367" key="GridCell.Tab.2.right" timestamp="1600594793053">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1156" height="361" key="GridCell.Tab.2.right/0.0.1536.834@0.0.1536.834" timestamp="1600044062017" />
+    <state width="1177" height="367" key="GridCell.Tab.2.right/0.0.1536.834@0.0.1536.834" timestamp="1600594793053" />
     <state x="349" y="153" key="IDE.errors.dialog" timestamp="1600246967145">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="349" y="153" key="IDE.errors.dialog/0.0.1536.834@0.0.1536.834" timestamp="1600246967145" />
-    <state x="125" y="13" width="1283" height="738" key="SettingsEditor" timestamp="1600512232233">
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor" timestamp="1600605356549">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="125" y="13" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1600512232233" />
+    <state x="125" y="13" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1600605356549" />
     <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599809121300">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
