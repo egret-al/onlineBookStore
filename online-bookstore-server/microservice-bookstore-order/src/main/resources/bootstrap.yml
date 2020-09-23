@@ -1,0 +1,25 @@
+server:
+  port: 7200
+spring:
+  profiles:
+    active: default
+  application:
+    name: order-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 101.200.203.216:8848
+      config:
+        server-addr: 101.200.203.216:8848
+        file-extension: yaml
+        timeout: 5000
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.200.203.216:3306/bookstore_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 2243756824
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

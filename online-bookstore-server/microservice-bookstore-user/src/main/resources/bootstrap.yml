@@ -17,6 +17,13 @@ spring:
         server-addr: 101.200.203.216:8848
         file-extension: yaml
         timeout: 5000
+  mail:
+    host: smtp.qq.com
+    username: 2243756824@qq.com
+    password: qsekwtufurkadjcc
+    port: 25
+    protocol: smtp
+    default-encoding: utf-8
 
   # 数据源配置
   datasource:

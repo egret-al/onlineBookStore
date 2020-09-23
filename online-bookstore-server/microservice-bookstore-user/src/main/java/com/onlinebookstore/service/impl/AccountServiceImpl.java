@@ -1,20 +1,25 @@
 package com.onlinebookstore.service.impl;
 
+import com.alibaba.nacos.common.util.UuidUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.Account;
 import com.onlinebookstore.entity.User;
 import com.onlinebookstore.entity.otherserver.Book;
 import com.onlinebookstore.entity.otherserver.BookStorage;
+import com.onlinebookstore.entity.otherserver.Order;
 import com.onlinebookstore.exception.IllegalOperateException;
+import com.onlinebookstore.exception.RemainInsufficientException;
 import com.onlinebookstore.mapper.AccountMapper;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
 import com.onlinebookstore.service.BookService;
+import com.onlinebookstore.service.OrderService;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
 import com.onlinebookstore.util.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +46,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     private BookService bookService;
+
+    @Resource
+    private OrderService orderService;
 
     @Resource
     private JsonUtil jsonUtil;
@@ -175,35 +183,46 @@ public class AccountServiceImpl implements AccountService {
             //转化为Book实体类
             Book book = jsonUtil.mapToBean((Map) data, Book.class);
             log.info(String.valueOf(book));
-            //TODO 测试
             BookStorage bookStorage = book.getBookStorage();
             if (count > bookStorage.getResidueCount()) return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
             //得到需要支付的金额
             int money = book.getPrice() * count;
-            //TODO 调用订单微服务创建订单
+            int score = money / 10;
+            String orderContent = "下单了" + count + "本" + book.getBookName();
+            String serialName = UuidUtils.generateUuid().substring(0, 30);
+            //构建一个订单并且指定基本数据信息
+            Order order = new Order(serialName, bookId, username, orderContent, count, money, score,
+                    new Date(), new Date(), new Date(), new Date(), 0);
+            //1、开始创建订单
+            orderService.insertOrder(order);
 
-            //扣除余额
+            //2、扣除余额
             CommonplaceResult commonplaceResult = this.modifyBalance(username, -money, useScore);
             if ((boolean) commonplaceResult.getData()) {
                 //扣除成功，则进行下一步，扣除库存
-                CommonplaceResult storageCalledResult = bookService.subtractStorageById(bookStorage.getId(), count);
+                Map<String, Integer> pojo = new HashMap<>();
+                pojo.put("id", bookStorage.getId());
+                pojo.put("count", count);
+                //3、扣除库存
+                CommonplaceResult storageCalledResult = bookService.subtractStorageById(pojo);
                 if ((boolean) storageCalledResult.getData()) {
-                    //库存扣除成功
                     //TODO 修改订单状态
-
-                    //TODO 增加积分
-                    this.modifyScore(username, money / 10);
+                    //4、修改订单状态
+                    order.setOrderPaymentStatus(1);
+                    orderService.updateOrder(order);
+                    this.modifyScore(username, score);
                     return CommonplaceResult.buildSuccessNoData("操作成功！");
                 } else {
                     throw new RuntimeException("库存扣除失败");
                 }
             } else {
-                return CommonplaceResult.buildSuccessNoData("余额扣除失败，余额不足！");
+//                throw new RemainInsufficientException();
+                return CommonplaceResult.buildErrorNoData("余额不足！");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return CommonplaceResult.buildSuccessNoData("服务器异常，对象转换失败！");
+        return CommonplaceResult.buildSuccessNoData("服务器异常！");
     }
 
     /**

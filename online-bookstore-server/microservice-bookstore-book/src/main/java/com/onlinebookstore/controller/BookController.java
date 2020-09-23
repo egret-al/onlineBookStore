@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 图书微服务的接口，主要给用户微服务和前端直接申请资源
@@ -67,10 +68,8 @@ public class BookController {
      */
     @GetMapping(value = "pub/selectBookAndStorageByBookId/{bookId}")
     public CommonplaceResult selectBookAndStorageByBookId(@PathVariable("bookId") Integer bookId) {
-        log.info("图书id：" + bookId);
         return bookService.selectAllBookWithStorageByBookId(bookId);
     }
-
 
     /**
      * 根据图书id得到图书信息和资源信息
@@ -120,21 +119,33 @@ public class BookController {
 
     /**
      * 根据id增加库存
-     * @param id id
-     * @param count 增加的数量
+     * 数据格式：
+     * {
+     *     'id': 'xx',
+     *     'count': 'xxx'
+     * }
+     * @param pojo 包含id和count键值
      */
-    @PostMapping("pub/addStorageById")
-    public CommonplaceResult addStorageById(@RequestParam("id") Integer id, @RequestParam("count") Integer count) {
+    @PostMapping("pri/addStorageById")
+    public CommonplaceResult addStorageById(@RequestBody Map<String, Integer> pojo) {
+        Integer id = pojo.get("id");
+        Integer count = pojo.get("count");
         return bookStorageService.addStorageById(id, count);
     }
 
     /**
-     * 根据id扣减库存
-     * @param id id
-     * @param count 扣除的数量
+     * 根据id减少库存
+     * 数据格式：
+     * {
+     *     'id': 'xx',
+     *     'count': 'xxx'
+     * }
+     * @param pojo 包含id和count键值
      */
-    @PostMapping("pub/subtractStorageById")
-    public CommonplaceResult subtractStorageById(@RequestParam("id") Integer id, @RequestParam("count") Integer count) {
+    @PostMapping("pri/subtractStorageById")
+    public CommonplaceResult subtractStorageById(@RequestBody Map<String, Integer> pojo) {
+        Integer id = pojo.get("id");
+        Integer count = pojo.get("count");
         return bookStorageService.subtractStorageById(id, count);
     }
 
@@ -142,7 +153,7 @@ public class BookController {
      * 更新库存信息
      * @param bookStorage 新的库存信息
      */
-    @PostMapping(value = "pub/updateStorage")
+    @PostMapping(value = "pri/updateStorage")
     public CommonplaceResult updateStorage(@RequestBody BookStorage bookStorage) {
         return bookStorageService.updateStorage(bookStorage);
     }
