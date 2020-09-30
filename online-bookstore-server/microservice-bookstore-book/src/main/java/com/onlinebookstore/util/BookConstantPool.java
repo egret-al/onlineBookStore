@@ -28,4 +28,8 @@ public class BookConstantPool {
     public static final String SELECT_ALL_BOOK_INFO_BY_BOOK_ID = "selectAllBookInfoByBookId";
 
     public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_BOOK_ID = "selectAllBookWithResourceByBookId";
+
+    public static final String SELECT_ALL = "BookBannerServiceImpl.selectAll";
+
+    public static final String SELECT_COUNT = "BookBannerServiceImpl.selectCount";
 }

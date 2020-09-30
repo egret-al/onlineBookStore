@@ -120,7 +120,7 @@ public class RedisUtils {
      * @param key 键
      * @param value 值
      * @param time 时间(秒) time要大于0 如果time小于等于0 将设置无限期
-     * @return true成功 false 失败
+     * @return true 成功 false 失败
      */
     public boolean set(String key, Object value, long time) {
         try {

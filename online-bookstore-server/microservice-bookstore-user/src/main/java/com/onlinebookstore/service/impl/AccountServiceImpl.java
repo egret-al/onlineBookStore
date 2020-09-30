@@ -152,12 +152,18 @@ public class AccountServiceImpl implements AccountService {
     public CommonplaceResult modifyScore(String username, Integer modifyNumber) {
         //查询积分信息
         Account account = accountMapper.selectOneByUsername(username);
-        if (account == null) return CommonplaceResult.buildErrorNoData("账号异常！");
+        if (account == null) {
+            return CommonplaceResult.buildErrorNoData("账号异常！");
+        }
         int score = account.getScore();
         //积分为0，不能进行扣除，非法操作
-        if (score == 0 && modifyNumber < 0) throw new IllegalOperateException();
+        if (score == 0 && modifyNumber < 0) {
+            throw new IllegalOperateException();
+        }
         //积分不足扣除
-        if (score < Math.abs(modifyNumber) && modifyNumber < 0) return CommonplaceResult.buildErrorNoData("积分不足，扣除失败！");
+        if (score < Math.abs(modifyNumber) && modifyNumber < 0) {
+            return CommonplaceResult.buildErrorNoData("积分不足，扣除失败！");
+        }
         //正常扣除或者添加
         int row = accountMapper.modifyScoreByUsername(username, modifyNumber);
         return row > 0 ? CommonplaceResult.buildSuccessNoData("修改成功！") :
@@ -184,7 +190,9 @@ public class AccountServiceImpl implements AccountService {
             Book book = jsonUtil.mapToBean((Map) data, Book.class);
             log.info(String.valueOf(book));
             BookStorage bookStorage = book.getBookStorage();
-            if (count > bookStorage.getResidueCount()) return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
+            if (count > bookStorage.getResidueCount()) {
+                return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
+            }
             //得到需要支付的金额
             int money = book.getPrice() * count;
             int score = money / 10;
@@ -233,18 +241,24 @@ public class AccountServiceImpl implements AccountService {
      * @return 操作是否成功
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public CommonplaceResult modifyBalance(String username, int count, boolean useScore) {
-        if (StringUtils.isEmpty(username)) return CommonplaceResult.buildError(false, "非法账号！");
+        if (StringUtils.isEmpty(username)) {
+            return CommonplaceResult.buildError(false, "非法账号！");
+        }
         Account account = accountMapper.selectOneByUsername(username);
         log.info("修改余额操作：" + account);
-        if (ObjectUtils.isEmpty(account)) return CommonplaceResult.buildError(false, "非法操作！账号不存在");
+        if (ObjectUtils.isEmpty(account)) {
+            return CommonplaceResult.buildError(false, "非法操作！账号不存在");
+        }
         if (count > 0) {
             //充值操作
             return addBalance(username, count);
         } else if (count < 0) {
             //消费操作，首先进行余额判断
-            if (account.getBalance() < Math.abs(count)) return CommonplaceResult.buildError(false, "余额不足！");
+            if (account.getBalance() < Math.abs(count)) {
+                return CommonplaceResult.buildError(false, "余额不足！");
+            }
             return subtractBalance(account, count, useScore);
         }
         return CommonplaceResult.buildError(false, "修改数量不能为0！");

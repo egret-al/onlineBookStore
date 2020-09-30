@@ -1,12 +1,15 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
+import com.onlinebookstore.entity.BookBanner;
 import com.onlinebookstore.entity.BookStorage;
+import com.onlinebookstore.service.BookBannerService;
 import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.BookStorageService;
 import com.onlinebookstore.service.impl.BookServiceImpl;
 import com.onlinebookstore.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +40,61 @@ public class BookController {
 
     @Resource
     private BookStorageService bookStorageService;
+
+    @Resource
+    private BookBannerService bookBannerService;
+
+    /**
+     * 获取所有Banner
+     */
+    @GetMapping("pub/selectAllBanner")
+    public CommonplaceResult selectAllBanner() {
+        return bookBannerService.selectAll();
+    }
+
+    /**
+     * 查询最新的count条记录
+     * @param count 数量
+     */
+    @GetMapping("pub/selectCountBanner/{count}")
+    public CommonplaceResult selectCountBanner(@PathVariable("count") Integer count) {
+        return bookBannerService.selectCount(count);
+    }
+
+    /**
+     * 修改BookBanner
+     * @param bookBanner 实体类
+     */
+    @PostMapping("pri/updateBookBanner")
+    public CommonplaceResult updateBookBanner(@RequestBody BookBanner bookBanner) {
+        return bookBannerService.updateBookBanner(bookBanner);
+    }
+
+    /**
+     * 添加Banner
+     * @param bookBanner banner数据对象
+     */
+    @PostMapping("pri/insertBookBanner")
+    public CommonplaceResult insertBookBanner(@RequestBody BookBanner bookBanner) {
+        return bookBannerService.insertBookBanner(bookBanner);
+    }
+
+    /**
+     * 根据id删除banner
+     * 数据格式：
+     * {
+     *     'id': 'xxx'
+     * }
+     * @param pojo 存放id的map
+     */
+    @PostMapping("pri/deleteBookBannerById")
+    public CommonplaceResult deleteBookBannerById(@RequestBody Map<String, Integer> pojo) {
+        Integer id = pojo.get("id");
+        if (ObjectUtils.isEmpty(id)) {
+            return CommonplaceResult.buildErrorNoData("数据错误！");
+        }
+        return bookBannerService.deleteBookBannerById(id);
+    }
 
     /**
      * 得到所有图书的所有信息，包括库存和资源信息

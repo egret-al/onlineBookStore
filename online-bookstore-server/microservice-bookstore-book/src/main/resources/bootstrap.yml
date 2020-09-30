@@ -31,7 +31,7 @@ spring:
   #redis配置
   redis:
     database: 0
-    host: 132.232.28.130
+    host: 101.200.203.216
     port: 6379
     jedis:
       pool:

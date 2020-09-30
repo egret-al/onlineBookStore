@@ -13,6 +13,7 @@
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--Book+BookResource的集合映射信息-->
@@ -25,6 +26,7 @@
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
 
         <collection property="bookResources" column="b_id" ofType="com.onlinebookstore.entity.BookResource">
             <id column="rid" property="id" jdbcType="INTEGER"/>
@@ -46,6 +48,7 @@
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
 
         <!--映射库存-->
         <association property="bookStorage" column="b_id" javaType="com.onlinebookstore.entity.BookStorage">
@@ -66,6 +69,7 @@
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
 
         <!--映射库存-->
         <association property="bookStorage" column="b_id" javaType="com.onlinebookstore.entity.BookStorage">
@@ -88,24 +92,24 @@
 
     <!--只包含Book字段-->
     <sql id="baseBookInfo">
-        id, book_name, isbn, author, publisher, price, create_time, t_id
+        id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover
     </sql>
 
     <!--Book字段+资源字段-->
     <sql id="bookCollectionBookResource">
-        sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, sbr.id as rid, b_id,
+        sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, sbr.id as rid, b_id,
         resource_url, symbol, supplement, sbr.create_time
     </sql>
 
     <!--Book字段+资源字段+库存字段-->
     <sql id="bookCollectionBookResourceWithBookStorage">
-        sb.id, book_name, isbn, author, publisher, price, sb.create_time, sbr.id as sid, sbr.b_id, resource_url, symbol,
-        supplement, sbr.create_time, t_id, sbr.id as rid, sbr.b_id, last_add_time, residue_count
+        sb.id, book_name, isbn, author, publisher, price, sb.create_time, sbr.id as sid, main_cover, sbr.b_id, resource_url,
+        symbol, supplement, sbr.create_time, t_id, sbr.id as rid, sbr.b_id, last_add_time, residue_count
     </sql>
 
     <!--Book字段+库存字段-->
     <sql id="bookAssociationBookStorage">
-        sb.id, book_name, isbn, author, publisher, price, create_time, t_id, sbs.id as sid, b_id, last_add_time, residue_count
+        sb.id, book_name, isbn, author, publisher, price, create_time, t_id, sbs.id as sid, main_cover, b_id, last_add_time, residue_count
     </sql>
 
     <select id="selectAllBookAlone" resultMap="BaseBookMapper">

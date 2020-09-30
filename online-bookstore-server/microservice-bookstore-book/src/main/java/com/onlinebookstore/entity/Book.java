@@ -68,6 +68,12 @@ public class Book implements Serializable {
     private Integer typeId;
 
     /*
+    主封面
+     */
+    @JsonProperty("main_cover")
+    private String mainCover;
+
+    /*
     图书资源列表（图片）
      */
     private List<BookResource> bookResources;
