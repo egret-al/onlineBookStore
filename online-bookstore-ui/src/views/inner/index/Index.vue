@@ -1,0 +1,97 @@
+<template>
+  <div class="main">
+    <!--轮播图-->
+    <cube-slide ref="slide" :data="BannerItems" @change="changePage">
+      <cube-slide-item v-for="(item, index) in BannerItems" :key="index" @click.native="clickHandler(item, index)">
+        <a :href="item.resource_url">
+          <img class="banner" :src="item.resource_url" />
+        </a>
+      </cube-slide-item>
+    </cube-slide>
+    <!--滚动分类-->
+    <cube-slide ref="slideClassify" :auto-play="false" :data="classifyList">
+      <cube-slide-item v-for="(list, index) in classifyList" :key="index">
+        <ul class="listUl">
+          <li class="listLi" v-for="(item, index1) in list" :key="index1">
+            <a :href="item.url">
+              <img :src="item.image" alt="" />
+              <p>{{ item.label }}</p>
+            </a>
+          </li>
+        </ul>
+      </cube-slide-item>
+    </cube-slide>
+    <book-list :bookInfoList="bookInfoList"></book-list>
+  </div>
+</template>
+
+<script>
+import BookList from './component/BookList'
+
+export default {
+  components: {
+    BookList,
+  },
+  data() {
+    return {
+      bookInfoList: [], //首页图书列表信息
+      BannerItems: [], //轮播图数组
+      classifyList: [], //滚动分类数组
+    }
+  },
+  methods: {
+    changePage(current) {
+      //console.log('当前轮播图序号：' + current)
+    },
+
+    clickHandler(item, index) {
+      //console.log(item, index)
+    },
+  },
+  mounted() {},
+  async created() {
+    try {
+      //获取轮播图数据
+      const bookBannerList = await this.$http.get(
+        'http://127.0.0.1:9527/book-server/api/v1/book/pub/selectAllBanner',
+      )
+      this.BannerItems = bookBannerList.data
+      //console.log(bookBannerList.data)
+
+      //获取列表分类
+      const lists = await this.$http.get('/api/rollinglist')
+      this.classifyList = lists.data
+
+      //获取首页图书列表
+      const bookInfoList = await this.$http.get(
+        'http://127.0.0.1:9527/book-server/api/v1/book/pub/selectBookAndResource',
+      )
+      this.bookInfoList = bookInfoList.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
+}
+</script>
+<style lang="stylus" scoped>
+.main
+  a
+    .banner
+      display block
+      width 100%
+      height 175px
+  .listUl
+    display flex
+    flex-wrap wrap
+  .listLi
+    width 20%
+    justify-content center
+    img
+      width 35px
+      height 35px
+      border-radius 50%
+      padding 5px 0
+    p
+      font-size 14px
+      padding-bottom 5px
+</style>
