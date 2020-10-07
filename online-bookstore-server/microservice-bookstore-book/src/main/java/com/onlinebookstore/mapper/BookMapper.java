@@ -1,6 +1,6 @@
 package com.onlinebookstore.mapper;
 
-import com.onlinebookstore.entity.Book;
+import com.onlinebookstore.entity.bookserver.Book;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

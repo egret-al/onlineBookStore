@@ -1,7 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.otherserver.Order;
+import com.onlinebookstore.entity.orderserver.Order;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,17 +1,12 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Book;
-import com.onlinebookstore.entity.BookStorage;
+import com.onlinebookstore.entity.bookserver.Book;
 import com.onlinebookstore.mapper.BookMapper;
-import com.onlinebookstore.mapper.BookResourceMapper;
-import com.onlinebookstore.mapper.BookStorageMapper;
-import com.onlinebookstore.service.BookResourceService;
 import com.onlinebookstore.service.BookService;
-import com.onlinebookstore.service.BookStorageService;
-import com.onlinebookstore.util.BookConstantPool;
 import com.onlinebookstore.util.RandomUtils;
 import com.onlinebookstore.util.RedisUtils;
+import com.onlinebookstore.util.bookutil.BookConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -173,15 +168,22 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * 查询图书信息+库存信息
+     * 查询图书信息+库存信息，缓存时间：1h
      * @param bookId 图书id
      * @return 图书信息+库存信息
      */
     @Override
     public CommonplaceResult selectAllBookWithStorageByBookId(Integer bookId) {
-        Book book = bookMapper.selectAllBookWithStorageByBookId(bookId);
-        return ObjectUtils.isEmpty(book) ? CommonplaceResult.buildErrorNoData("没有该数据！")
-                : CommonplaceResult.buildSuccessNoMessage(book);
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_WITH_STORAGE_BY_BOOK_ID + bookId);
+        if (ObjectUtils.isEmpty(o)) {
+            Book book = bookMapper.selectAllBookWithStorageByBookId(bookId);
+            if (ObjectUtils.isEmpty(book)) {
+                return CommonplaceResult.buildErrorNoData("查询失败，没有该数据！");
+            }
+            redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_WITH_STORAGE_BY_BOOK_ID + bookId, book, BookConstantPool.CACHE_TIME[5]);
+            return CommonplaceResult.buildSuccessNoMessage(book);
+        }
+        return CommonplaceResult.buildSuccessNoMessage(o);
     }
 
     /**

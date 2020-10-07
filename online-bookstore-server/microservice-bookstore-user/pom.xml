@@ -12,6 +12,11 @@
     <artifactId>microservice-bookstore-user</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>microservice-bookstore-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.cloud</groupId>-->
         <!--            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
@@ -31,6 +36,19 @@
         <!--            <artifactId>seata-spring-boot-starter</artifactId>-->
         <!--            <version>1.2.0</version>-->
         <!--        </dependency>-->
+
+        <!--整合RocketMQ-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!--整合zipkin/sleuth-->
         <dependency>

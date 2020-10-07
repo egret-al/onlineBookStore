@@ -1,16 +1,14 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.User;
-import com.onlinebookstore.mapper.UserMapper;
+import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.UserService;
-import com.onlinebookstore.util.UserConstantPool;
+import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -1,7 +1,7 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.BookStorage;
+import com.onlinebookstore.entity.bookserver.BookStorage;
 import com.onlinebookstore.mapper.BookStorageMapper;
 import com.onlinebookstore.service.BookStorageService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,10 @@ public class BookStorageServiceImpl implements BookStorageService {
             //减少操作
             row = bookStorageMapper.subtractStorageById(id, count);
         }
-        if (row > 0) return CommonplaceResult.buildSuccess(true, "修改成功！");
+        if (row > 0) {
+            return CommonplaceResult.buildSuccess(true, "修改成功！");
+        }
+
         return CommonplaceResult.buildError(false, "非法操作！");
     }
 

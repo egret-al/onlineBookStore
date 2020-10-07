@@ -1,10 +1,12 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Account;
-import com.onlinebookstore.entity.User;
+import com.onlinebookstore.entity.userserver.Account;
+import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.AccountService;
-import com.onlinebookstore.util.UserConstantPool;
+import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
+import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
+import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,15 +34,31 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("pri/test")
-    public CommonplaceResult test1() {
-        return CommonplaceResult.buildSuccessNoData("成功");
+    @Resource
+    private RocketMQMessageSendUtils rocketMQMessageSendUtils;
+
+    //-------------------------RocketMQ测试---------------------------
+
+    /**
+     * 测试发送普通消息
+     */
+    @GetMapping("pub/send-normal-message/{tag}")
+    public CommonplaceResult testSendNormalMessage(@PathVariable("tag") String tag) {
+        Account account = new Account();
+        account.setUsername("测试名称");
+        account.setCreateTime(new Date());
+        account.setPassword("12312312");
+        account.setScore(12);
+        Boolean flag = rocketMQMessageSendUtils.sendNormalMessage(RocketMQConstantPool.Topic.R_ORDER_IMPORT, tag, account);
+        return CommonplaceResult.buildSuccessNoMessage(flag);
     }
 
     @GetMapping("pub/test")
     public CommonplaceResult test2() {
         return CommonplaceResult.buildSuccessNoData("成功");
     }
+
+    //----------------------------------------------------
 
     /**
      * 注册账号接口

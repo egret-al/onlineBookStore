@@ -1,11 +1,11 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.BookBanner;
+import com.onlinebookstore.entity.bookserver.BookBanner;
 import com.onlinebookstore.mapper.BookBannerMapper;
 import com.onlinebookstore.service.BookBannerService;
-import com.onlinebookstore.util.BookConstantPool;
 import com.onlinebookstore.util.RedisUtils;
+import com.onlinebookstore.util.bookutil.BookConstantPool;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 

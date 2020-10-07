@@ -1,7 +1,7 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Order;
+import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.exception.StatusCodeException;
 import com.onlinebookstore.service.OrderService;
 import lombok.extern.slf4j.Slf4j;

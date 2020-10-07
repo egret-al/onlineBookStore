@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.BookBannerMapper">
-    <resultMap id="BaseBookBanner" type="com.onlinebookstore.entity.BookBanner">
+    <resultMap id="BaseBookBanner" type="com.onlinebookstore.entity.bookserver.BookBanner">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR"/>
         <result column="modify_time" property="modifyTime" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
         limit 0, #{count};
     </select>
 
-    <insert id="insertBookBanner" parameterType="com.onlinebookstore.entity.BookBanner">
+    <insert id="insertBookBanner" parameterType="com.onlinebookstore.entity.bookserver.BookBanner">
         insert into sys_book_banner (resource_url, modify_time, b_id)
         values (#{resourceUrl}, #{modifyTime}, #{bookId});
     </insert>
@@ -31,7 +31,7 @@
         delete from sys_book_banner where id = #{id};
     </delete>
 
-    <update id="updateBookBanner" parameterType="com.onlinebookstore.entity.BookBanner">
+    <update id="updateBookBanner" parameterType="com.onlinebookstore.entity.bookserver.BookBanner">
         update sys_book_banner
         set resource_url = #{resourceUrl}, modify_time = #{modifyTime}, b_id = #{bookId}
         where id = #{id};

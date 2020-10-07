@@ -1,7 +1,7 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Address;
+import com.onlinebookstore.entity.userserver.Address;
 import com.onlinebookstore.mapper.AddressMapper;
 import com.onlinebookstore.service.AddressService;
 import lombok.extern.slf4j.Slf4j;

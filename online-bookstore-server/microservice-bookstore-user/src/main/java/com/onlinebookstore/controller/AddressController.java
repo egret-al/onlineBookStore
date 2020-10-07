@@ -1,9 +1,9 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Address;
+import com.onlinebookstore.entity.userserver.Address;
 import com.onlinebookstore.service.AddressService;
-import com.onlinebookstore.util.UserConstantPool;
+import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

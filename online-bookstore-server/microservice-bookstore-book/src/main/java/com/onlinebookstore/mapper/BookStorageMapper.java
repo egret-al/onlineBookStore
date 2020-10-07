@@ -1,7 +1,6 @@
 package com.onlinebookstore.mapper;
 
-import com.onlinebookstore.entity.Book;
-import com.onlinebookstore.entity.BookStorage;
+import com.onlinebookstore.entity.bookserver.BookStorage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

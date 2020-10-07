@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlinebookstore.mapper.BookTypeMapper">
+    <select id="selectAllType" resultType="com.onlinebookstore.entity.bookserver.BookType">
+        select id, type, supplement, img
+        from sys_book_type;
+    </select>
+
+    <select id="selectTypeById" resultType="com.onlinebookstore.entity.bookserver.BookType">
+        select id, type, supplement, img
+        from sys_book_type
+        where id = #{id};
+    </select>
+
+    <update id="updateType">
+        update sys_book_type
+        set type = #{type}, supplement = #{supplement}, img = #{img}
+        where id = #{id};
+    </update>
+
+    <insert id="insertType">
+        insert into sys_book_type(type, supplement, img)
+        values (#{type}, #{supplement}, #{img});
+    </insert>
+</mapper>

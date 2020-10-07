@@ -7,13 +7,13 @@
         id, b_id, last_add_time, residue_count
     </sql>
 
-    <select id="selectStorageByBookId" resultType="com.onlinebookstore.entity.BookStorage">
+    <select id="selectStorageByBookId" resultType="com.onlinebookstore.entity.bookserver.BookStorage">
         select <include refid="baseBookStorage"/>
         from sys_book_storage
         where b_id = #{bookId};
     </select>
 
-    <select id="selectStorageById" resultType="com.onlinebookstore.entity.BookStorage">
+    <select id="selectStorageById" resultType="com.onlinebookstore.entity.bookserver.BookStorage">
         select <include refid="baseBookStorage"/>
         from sys_book_storage
         where id = #{id};

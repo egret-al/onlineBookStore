@@ -3,7 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.OrderMapper">
-    <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.Order">
+<!--    <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.Order">-->
+    <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.orderserver.Order">
         <id column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
         <result column="book_id" property="bookId" jdbcType="INTEGER"/>
         <result column="username_id" property="usernameId" jdbcType="VARCHAR"/>
@@ -39,7 +40,7 @@
         where book_id = #{bookId};
     </select>
 
-    <insert id="insertOrder" parameterType="com.onlinebookstore.entity.Order">
+    <insert id="insertOrder" parameterType="com.onlinebookstore.entity.orderserver.Order">
         insert into sys_order(<include refid="orderFields"/>)
         values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice}, #{obtainScore},
          #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus});
@@ -51,7 +52,7 @@
         where serial_number = #{serialNumber};
     </update>
 
-    <update id="updateOrder" parameterType="com.onlinebookstore.entity.Order">
+    <update id="updateOrder" parameterType="com.onlinebookstore.entity.orderserver.Order">
         update sys_order
         set book_id = #{bookId}, username_id = #{usernameId}, order_content = #{orderContent}, product_count = #{productCount},
             whole_price = #{wholePrice}, obtain_score = #{obtainScore}, create_time = #{createTime}, payment_time = #{paymentTime},

@@ -1,11 +1,11 @@
 package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.BookBanner;
-import com.onlinebookstore.entity.BookStorage;
-import com.onlinebookstore.service.BookBannerService;
-import com.onlinebookstore.service.BookService;
-import com.onlinebookstore.service.BookStorageService;
+import com.onlinebookstore.entity.bookserver.BookBanner;
+import com.onlinebookstore.entity.bookserver.BookResource;
+import com.onlinebookstore.entity.bookserver.BookStorage;
+import com.onlinebookstore.entity.bookserver.BookType;
+import com.onlinebookstore.service.*;
 import com.onlinebookstore.service.impl.BookServiceImpl;
 import com.onlinebookstore.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +43,114 @@ public class BookController {
 
     @Resource
     private BookBannerService bookBannerService;
+
+    @Resource
+    private BookResourceService bookResourceService;
+
+    @Resource
+    private BookTypeService bookTypeService;
+
+    /**
+     * 新加图书类型
+     * @param bookType 图书类型
+     * @return 影响行数
+     */
+    @PostMapping("pri/insertType")
+    public CommonplaceResult insertType(@RequestBody BookType bookType) {
+        return bookTypeService.insertType(bookType);
+    }
+
+    /**
+     * 更新类型
+     * 数据格式：
+     * {
+     *     'type': 'xxx',
+     *     'supplement': 'xxx',
+     *     'img': 'xxx',
+     *     'id': 'xx'
+     * }
+     * @param bookType 类型
+     * @return 影响行数
+     */
+    @PostMapping("pri/updateType")
+    public CommonplaceResult updateType(@RequestBody BookType bookType) {
+        return bookTypeService.updateType(bookType);
+    }
+
+    /**
+     * 根据类型id查询类型
+     * @param id id
+     * @return 类型信息
+     */
+    @GetMapping("pub/selectTypeById/{id}")
+    public CommonplaceResult selectTypeById(@PathVariable("id") Integer id) {
+        return bookTypeService.selectTypeById(id);
+    }
+
+    /**
+     * 查询所有图书类型
+     * @return 图书类型
+     */
+    @GetMapping("pub/selectAllType")
+    public CommonplaceResult selectAllType() {
+        return bookTypeService.selectAllType();
+    }
+
+    /**
+     * 查询所有资源信息
+     * @return 资源信息集合
+     */
+    @GetMapping("pub/selectAllResourceAlone")
+    public CommonplaceResult selectAllResourceAlone() {
+        return bookResourceService.selectAllResourceAlone();
+    }
+
+    /**
+     * 根据图书的id查询其所有的资源对象
+     * @param bookId 图书id
+     * @return 指定图书下的所有资源
+     */
+    @GetMapping("pub/selectAllResourceAloneByBookId/{bookId}")
+    public CommonplaceResult selectAllResourceAloneByBookId(@PathVariable("bookId") Integer bookId) {
+        return bookResourceService.selectAllResourceAloneByBookId(bookId);
+    }
+
+    /**
+     * 根据资源id查询资源对象
+     * @param resourceId 资源id
+     * @return 资源对象
+     */
+    @GetMapping("pub/selectResourceById/{id}")
+    public CommonplaceResult selectResourceById(@PathVariable("id") Integer resourceId) {
+        return bookResourceService.selectResourceById(resourceId);
+    }
+
+    /**
+     * 更新资源信息，通常由管理员操作
+     * 数据格式：
+     * {
+     *     'id': 'xx',
+     *     'resourceUrl': 'xxx',
+     *     'symbol': 'xxx',
+     *     'supplement': 'xxx'
+     * }
+     * @param bookResource 资源对象
+     * @return 影响行数
+     */
+    @PostMapping("pri/updateResource")
+    public CommonplaceResult updateResource(@RequestBody BookResource bookResource) {
+        return bookResourceService.updateResource(bookResource);
+    }
+
+    /**
+     * 根据id删除资源
+     * @param resourceId 资源id
+     * @return 影响行数
+     */
+    @GetMapping("pri/deleteResourceById/{id}")
+    public CommonplaceResult deleteResourceById(@PathVariable("id") Integer resourceId) {
+        return bookResourceService.deleteResourceById(resourceId);
+    }
 
     /**
      * 获取所有Banner

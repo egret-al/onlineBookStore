@@ -5,6 +5,13 @@ server:
 spring:
   application:
     name: gateway-server
+  # 整合zipkin链路追踪
+  zipkin:
+    base-url: http://101.200.203.216:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1
   cloud:
     # 将网关注册进Nacos
     nacos:

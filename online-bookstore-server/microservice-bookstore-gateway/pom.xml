@@ -12,6 +12,12 @@
 
     <artifactId>microservice-bookstore-gateway</artifactId>
     <dependencies>
+        <!--整合zipkin/sleuth-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

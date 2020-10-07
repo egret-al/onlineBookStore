@@ -1,7 +1,7 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.User;
+import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.UserService;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Book;
+import com.onlinebookstore.entity.bookserver.Book;
 
 import java.util.List;
 

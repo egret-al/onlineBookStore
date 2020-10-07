@@ -3,18 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.AddressMapper">
-    <resultMap id="BaseAddressMap" type="com.onlinebookstore.entity.Address">
+    <resultMap id="BaseAddressMap" type="com.onlinebookstore.entity.userserver.Address">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--关联映射-->
-    <resultMap id="AddressContainAccountMap" type="com.onlinebookstore.entity.Address">
+    <resultMap id="AddressContainAccountMap" type="com.onlinebookstore.entity.userserver.Address">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
-        <association property="address" column="a_id" javaType="com.onlinebookstore.entity.Account">
+        <association property="address" column="a_id" javaType="com.onlinebookstore.entity.userserver.Account">
             <id column="username" property="username" jdbcType="VARCHAR"/>
             <result column="password" property="password" jdbcType="VARCHAR"/>
             <result column="score" property="score" jdbcType="INTEGER"/>
@@ -30,24 +30,24 @@
         a_id, address
     </sql>
 
-    <select id="selectOneById" resultType="com.onlinebookstore.entity.Address">
+    <select id="selectOneById" resultType="com.onlinebookstore.entity.userserver.Address">
         select <include refid="baseAddressInfo"/>
         from sys_address
         where id = #{id};
     </select>
 
-    <select id="selectAddressByAccountUsername" resultType="com.onlinebookstore.entity.Address">
+    <select id="selectAddressByAccountUsername" resultType="com.onlinebookstore.entity.userserver.Address">
         select <include refid="baseAddressInfo"/>
         from sys_address
         where a_id = #{username};
     </select>
 
-    <select id="selectAllAddress" resultType="com.onlinebookstore.entity.Address">
+    <select id="selectAllAddress" resultType="com.onlinebookstore.entity.userserver.Address">
         select <include refid="baseAddressInfo"/>
         from sys_address;
     </select>
 
-    <insert id="addAddress" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.onlinebookstore.entity.Address">
+    <insert id="addAddress" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.onlinebookstore.entity.userserver.Address">
         insert into sys_address(<include refid="baseAddressInfoNoId"/>)
         values (#{accountUsername}, #{address});
     </insert>
@@ -57,11 +57,11 @@
         where id = #{id};
     </delete>
 
-    <update id="updateAddress" parameterType="com.onlinebookstore.entity.Address">
+    <update id="updateAddress" parameterType="com.onlinebookstore.entity.userserver.Address">
         update sys_address set address = #{address} where id = #{id};
     </update>
 
-    <select id="getAddressWithAccountById" resultType="com.onlinebookstore.entity.Address">
+    <select id="getAddressWithAccountById" resultType="com.onlinebookstore.entity.userserver.Address">
 
     </select>
 </mapper>

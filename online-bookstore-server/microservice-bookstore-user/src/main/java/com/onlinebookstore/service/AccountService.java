@@ -1,8 +1,8 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Account;
-import com.onlinebookstore.entity.User;
+import com.onlinebookstore.entity.userserver.Account;
+import com.onlinebookstore.entity.userserver.User;
 
 import java.util.List;
 

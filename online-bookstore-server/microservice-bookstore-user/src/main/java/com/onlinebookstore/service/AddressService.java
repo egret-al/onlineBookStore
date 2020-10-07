@@ -1,9 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Address;
-
-import java.util.List;
+import com.onlinebookstore.entity.userserver.Address;
 
 /**
  * @author rkc

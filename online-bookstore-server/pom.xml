@@ -14,6 +14,7 @@
         <module>microservice-bookstore-user</module>
         <module>microservice-bookstore-book</module>
         <module>microservice-bookstore-order</module>
+        <module>microservice-bookstore-common</module>
     </modules>
 
     <properties>

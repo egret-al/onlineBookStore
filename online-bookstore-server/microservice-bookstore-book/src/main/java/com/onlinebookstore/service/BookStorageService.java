@@ -1,7 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.BookStorage;
+import com.onlinebookstore.entity.bookserver.BookStorage;
 
 /**
  * @author rkc

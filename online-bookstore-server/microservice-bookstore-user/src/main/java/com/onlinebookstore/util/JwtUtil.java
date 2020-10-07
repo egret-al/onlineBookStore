@@ -17,13 +17,13 @@ import java.util.Date;
  */
 public class JwtUtil {
 
-    /*
-    设置有效期 60 * 60s
+    /**
+     * 设置有效期 60 * 60s
      */
     private static final Long JWT_TTL = 3600000L;
 
-    /*
-    设置秘钥明文
+    /**
+     * 设置秘钥明文
      */
     private static final String JWT_KEY = "NVIDIA";
 
@@ -34,7 +34,9 @@ public class JwtUtil {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        if (ttlMillis == null) ttlMillis = JWT_TTL;
+        if (ttlMillis == null) {
+            ttlMillis = JWT_TTL;
+        }
 
         //过期时间
         long expMillis = nowMillis + ttlMillis;

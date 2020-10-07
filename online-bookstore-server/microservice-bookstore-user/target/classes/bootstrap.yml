@@ -1,5 +1,11 @@
 server:
   port: 7000
+# RocketMQ配置信息
+rocketmq:
+  namesrvAddr: 112.126.78.225:9876
+  sendMsgTimeoutMillis: 3000
+  reconsumeTimes: 3
+
 spring:
   profiles:
     active: default
@@ -20,6 +26,7 @@ spring:
   # 整合zipkin链路追踪
   zipkin:
     base-url: http://101.200.203.216:9411/
+    discovery-client-enabled: false
   sleuth:
     sampler:
       probability: 1

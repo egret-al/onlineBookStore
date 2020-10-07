@@ -1,8 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.Order;
-import com.onlinebookstore.util.OrderStatusEnum;
+import com.onlinebookstore.entity.orderserver.Order;
 
 /**
  * @author rkc

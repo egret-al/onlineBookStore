@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "name": "rocketmq",
+      "type": "com.onlinebookstore.config.RocketMQProperties",
+      "sourceType": "com.onlinebookstore.config.RocketMQProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "rocketmq.namesrv-addr",
+      "type": "java.lang.String",
+      "description": "namesrv地址",
+      "sourceType": "com.onlinebookstore.config.RocketMQProperties"
+    },
+    {
+      "name": "rocketmq.reconsume-times",
+      "type": "java.lang.Integer",
+      "description": "失败重试次数",
+      "sourceType": "com.onlinebookstore.config.RocketMQProperties"
+    },
+    {
+      "name": "rocketmq.send-msg-timeout-millis",
+      "type": "java.lang.Integer",
+      "description": "超时时间",
+      "sourceType": "com.onlinebookstore.config.RocketMQProperties"
+    }
+  ],
+  "hints": []
+}
