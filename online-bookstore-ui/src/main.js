@@ -4,13 +4,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import axios from 'axios'
+//import axios from 'axios'
+import service from './request'
 
-import request from './request'
-request()
+//import request from './request'
+//request()
 Vue.config.productionTip = false
 //挂载
-Vue.prototype.$http = axios
+Vue.prototype.$http = service
 //路由守卫
 router.beforeEach((to, from, next) => {
   //无论是刷新还是跳转路由，都会进入到路由的前置钩子函数

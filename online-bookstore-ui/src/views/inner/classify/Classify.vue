@@ -118,6 +118,8 @@ export default {
       this.ball.el = e.target
     },
 
+    //--------------------------动画效果------------------------
+
     beforeEnter(el) {
       //让小球移动到点击的位置
       const dom = this.ball.el

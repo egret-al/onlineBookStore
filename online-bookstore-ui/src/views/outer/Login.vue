@@ -69,15 +69,12 @@ export default {
   methods: {
     async submitHandler(e, model) {
       e.preventDefault()
+      this.isLoading = true
       try {
-        const result = await this.$http.post(
-          'http://127.0.0.1:9527/api/v1/account/pub/login',
-          {
-            username: this.model.username,
-            password: this.model.password,
-          },
-        )
-        console.log(result)
+        const result = await this.$http.post('/api/v1/account/pub/login', {
+          username: this.model.username,
+          password: this.model.password,
+        })
         if (result.code === 1) {
           this.$store.commit('setToken', result.data.token)
           window.localStorage.setItem('token', result.data.token)

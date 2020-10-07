@@ -9,7 +9,11 @@
         </span>
       </p>
       <div class="purchase">
-        购买数量：
+        购买数量：<br>
+        <button class="sub" @click="subNumber">-</button>
+        <cube-input readonly class="purchase-number" v-model="number"></cube-input>
+        <button class="add" @click="addNumber">+</button>
+        <cube-validator :model="number" :rules="validatorNumber" />
       </div>
       <!--各种参数信息-->
       <div class="info">
@@ -43,20 +47,61 @@ export default {
   },
   components: {},
   data() {
-    return {}
+    return {
+      number: 0,
+      validatorNumber: {
+        type: 'number',
+        min: 0,
+        max: this.bookData.bookStorage.residue_count,
+      },
+    }
   },
   methods: {
+    //减少购买数量
+    subNumber() {
+      if (this.number <= 0) return
+      this.number--
+    },
+
+    //增加购买数量
+    addNumber() {
+      if (this.number >= this.bookData.bookStorage.residue_count) return
+      this.number++
+    },
+
     //直接购买
-    immediatelyPurchase() {},
+    immediatelyPurchase() {
+      if (typeof this.number === 'number') {
+        console.log('数据合法，发起下单请求！')
+      } else {
+        //数据非法，归零
+        this.number = 0
+      }
+    },
 
     //加入购物车
     addCart() {},
 
     //图文信息（详细介绍）
-    pictureAndWordIntroduce() {},
+    pictureAndWordIntroduce() {
+      this.$router.push({path: '/introduce', query: {id: this.bookData.id}})
+    },
 
     //查看评论
     showComment() {},
+
+    validateNumber(value) {
+      return typeof value === 'number' && !isNaN(value)
+    },
+  },
+  watch: {
+    number(newValue, oldValue) {
+      if (this.validateNumber(newValue)) {
+        console.log('合法数字')
+      } else {
+        console.log('非法数字')
+      }
+    },
   },
   mounted() {},
   created() {},
@@ -82,6 +127,16 @@ export default {
     text-align left
     padding-left 10px
     margin-bottom 20px
+    display flex
+    .cube-input
+      width 40px
+      padding 0
+      height 20px
+      margin-left 5px
+    button
+      border 0
+    .add
+      margin-left 5px
   .purchase-btn
     padding-left 10px
     display flex

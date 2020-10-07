@@ -60,6 +60,11 @@ const routes = [{
     path: '/detail',
     name: 'detail',
     component: () => import('../views/inner/detail/BookDetail.vue')
+  },
+  {
+    path: '/introduce',
+    name: 'introduce',
+    component: () => import('../views/inner/detail/BookIntroduce.vue')
   }
 ]
 

@@ -3,6 +3,7 @@
     <img class="headerimg" src="https://xd-video-pc-img.oss-cn-beijing.aliyuncs.com/xdclass_pro/bannner/1901/learn.png" alt="">
     <ul>
       <li v-for="item in mineArray" class="mineitem" @click="itemClick(item)" :key="item.label">
+        <i class="icon-class" :class="item.icon"></i>
         <span class="minetitle">{{item.label}}</span>
         <i class="cubeic-arrow"></i>
       </li>
@@ -17,20 +18,25 @@ export default {
     return {
       mineArray: [
         {
+          label: '我的信息',
+          icon: 'cubeic-person',
+        },
+        {
           label: '商品收藏',
+          icon: 'cubeic-search',
         },
         {
           label: '我的足迹',
-        },
-        {
-          label: '店铺收藏',
+          icon: 'cubeic-navigation',
         },
         {
           label: '我的订单',
+          icon: 'cubeic-square-right',
         },
         {
           label: '退出',
           type: 'exit',
+          icon: 'cubeic-close',
         },
       ],
     }
@@ -56,9 +62,11 @@ export default {
   line-height 50px
   padding-left 5%
   border-bottom 1px solid #eee
+  .icon-class
+    margin-right 10px
   .minetitle
     display inline-block
-    width 90%
+    width 85%
 .headerimg
   height 150px
   width 100%

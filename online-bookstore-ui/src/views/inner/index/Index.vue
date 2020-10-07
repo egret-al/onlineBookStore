@@ -13,9 +13,13 @@
       <cube-slide-item v-for="(list, index) in classifyList" :key="index">
         <ul class="listUl">
           <li class="listLi" v-for="(item, index1) in list" :key="index1">
-            <a :href="item.url">
+            <!-- <a :href="item.url">
               <img :src="item.image" alt="" />
               <p>{{ item.label }}</p>
+            </a> -->
+            <a>
+              <img :src="item.img" :alt="item.img" />
+              <p>{{item.type}}</p>
             </a>
           </li>
         </ul>
@@ -36,7 +40,7 @@ export default {
     return {
       bookInfoList: [], //首页图书列表信息
       BannerItems: [], //轮播图数组
-      classifyList: [], //滚动分类数组
+      classifyList: [[], []], //滚动分类数组
     }
   },
   methods: {
@@ -53,18 +57,24 @@ export default {
     try {
       //获取轮播图数据
       const bookBannerList = await this.$http.get(
-        'http://127.0.0.1:9527/book-server/api/v1/book/pub/selectAllBanner',
+        '/book-server/api/v1/book/pub/selectAllBanner',
       )
       this.BannerItems = bookBannerList.data
       //console.log(bookBannerList.data)
 
       //获取列表分类
-      const lists = await this.$http.get('/api/rollinglist')
-      this.classifyList = lists.data
+      //const lists = await this.$http.get('http:localhost:8080/api/rollinglist')
+      const lists = await this.$http.get(
+        '/book-server/api/v1/book/pub/selectAllType',
+      )
+      for (let i = 0; i < lists.data.length; i++) {
+        if (i < lists.data.length / 2) this.classifyList[0].push(lists.data[i])
+        else this.classifyList[1].push(lists.data[i])
+      }
 
       //获取首页图书列表
       const bookInfoList = await this.$http.get(
-        'http://127.0.0.1:9527/book-server/api/v1/book/pub/selectBookAndResource',
+        '/book-server/api/v1/book/pub/selectBookAndResource',
       )
       this.bookInfoList = bookInfoList.data
     } catch (err) {

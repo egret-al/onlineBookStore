@@ -18,8 +18,7 @@ export default {
     }
   },
   methods: {},
-  mounted() {},
-  created() {
+  mounted() {
     this.$router.beforeEach((to, from, next) => {
       if (to.path.indexOf('footer') == -1) {
         //跳转的不是首页的几个页面
@@ -31,6 +30,7 @@ export default {
       next()
     })
   },
+  created() {},
 }
 </script>
 <style lang="stylus">
