@@ -1,9 +1,12 @@
 package com.onlinebookstore.controller;
 
+import com.alibaba.nacos.common.util.UuidUtils;
 import com.onlinebookstore.common.CommonplaceResult;
+import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.AccountService;
+import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
 import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
 import com.onlinebookstore.util.userutil.UserConstantPool;
@@ -12,6 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,28 +42,22 @@ public class AccountController {
     @Resource
     private RocketMQMessageSendUtils rocketMQMessageSendUtils;
 
-    //-------------------------RocketMQ测试---------------------------
-
     /**
-     * 测试发送普通消息
+     * 创建订单，并且设置订单30分钟内未支付则自动过期
+     * 数据格式：
+     * {
+     *     'book_id': 'xx',
+     *     'username_id': 'xx',
+     *     'order_content': 'xxx',
+     *     'product_count': 'xxx'
+     * }
+     * @param order 订单
+     * @return 创建成功
      */
-    @GetMapping("pub/send-normal-message/{tag}")
-    public CommonplaceResult testSendNormalMessage(@PathVariable("tag") String tag) {
-        Account account = new Account();
-        account.setUsername("测试名称");
-        account.setCreateTime(new Date());
-        account.setPassword("12312312");
-        account.setScore(12);
-        Boolean flag = rocketMQMessageSendUtils.sendNormalMessage(RocketMQConstantPool.Topic.R_ORDER_IMPORT, tag, account);
-        return CommonplaceResult.buildSuccessNoMessage(flag);
+    @PostMapping("pri/createOrder")
+    public CommonplaceResult createOrder(@RequestBody Order order) {
+        return accountService.createOrder(order);
     }
-
-    @GetMapping("pub/test")
-    public CommonplaceResult test2() {
-        return CommonplaceResult.buildSuccessNoData("成功");
-    }
-
-    //----------------------------------------------------
 
     /**
      * 注册账号接口

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.OrderMapper">
-<!--    <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.Order">-->
+    <!--    <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.Order">-->
     <resultMap id="BaseOrderMap" type="com.onlinebookstore.entity.orderserver.Order">
         <id column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
         <result column="book_id" property="bookId" jdbcType="INTEGER"/>
@@ -23,27 +23,37 @@
         serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time, payment_time, delivery_time, end_time, order_payment_status
     </sql>
 
+    <update id="tryCancelOrder">
+        update sys_order
+        set order_payment_status = -1
+        where serial_number = #{serialNumber} and order_payment_status = 0;
+    </update>
+
     <select id="selectAll" resultMap="BaseOrderMap">
-        select <include refid="orderFields"/>
+        select
+        <include refid="orderFields"/>
         from sys_order;
     </select>
 
     <select id="selectAllByUsername" resultMap="BaseOrderMap">
-        select <include refid="orderFields"/>
+        select
+        <include refid="orderFields"/>
         from sys_order
         where username_id = #{username};
     </select>
 
     <select id="selectAllByBookId" resultMap="BaseOrderMap">
-        select <include refid="orderFields"/>
+        select
+        <include refid="orderFields"/>
         from sys_order
         where book_id = #{bookId};
     </select>
 
     <insert id="insertOrder" parameterType="com.onlinebookstore.entity.orderserver.Order">
         insert into sys_order(<include refid="orderFields"/>)
-        values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice}, #{obtainScore},
-         #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus});
+        values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice},
+        #{obtainScore},
+        #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus});
     </insert>
 
     <update id="updateOrderStatus">

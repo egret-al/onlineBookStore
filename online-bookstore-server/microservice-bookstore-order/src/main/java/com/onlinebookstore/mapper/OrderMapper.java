@@ -15,6 +15,13 @@ import java.util.List;
 public interface OrderMapper {
 
     /**
+     * 将未支付的订单取消
+     * @param serialNumber 订单号
+     * @return 返回0则为取消失败，订单已经被处理，返回1则取消成功，用户没有在规定时间内进行支付
+     */
+    int tryCancelOrder(String serialNumber);
+
+    /**
      * 查询所有订单
      */
     List<Order> selectAll();

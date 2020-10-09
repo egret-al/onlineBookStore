@@ -15,8 +15,13 @@ import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.OrderService;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
+import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
+import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
+import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -49,6 +54,37 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     private JsonUtil jsonUtil;
 
+    @Resource
+    private RocketMQMessageSendUtils rocketMQMessageSendUtils;
+
+    /**
+     * 创建订单
+     * @param order 订单
+     */
+    @Override
+    public CommonplaceResult createOrder(Order order) {
+        //TODO order初始化
+        String serialName = UuidUtils.generateUuid().substring(0, 30);
+        order.setSerialNumber(serialName);
+        order.setCreateTime(new Date());
+        order.setOrderPaymentStatus(0);
+        //创建订单
+        orderService.insertOrder(order);
+        //发送异步延时消息，测试为1分钟取消，上线改为30分钟
+        rocketMQMessageSendUtils.sendDelayMessageAsync(RocketMQConstantPool.Topic.R_ORDER_IMPORT, OrderOperationStatusEnum.CANCEL.status,
+                order, new SendCallback() {
+                    @Override
+                    public void onSuccess(SendResult sendResult) {
+                        log.info("取消订单的延时消息发送成功！" + sendResult.getSendStatus());
+                    }
+                    @Override
+                    public void onException(Throwable e) {
+                        log.error("取消订单的延时消息发送失败！" + e.getMessage());
+                    }
+                }, 5);
+        return CommonplaceResult.buildSuccess(order, "订单创建成功");
+    }
+
     /**
      * 添加账户，首先查询该账户是否已经添加，如果已经添加则返回，
      * 否则继续进行，中途有任何的异常都会结束该事务操作
@@ -56,14 +92,14 @@ public class AccountServiceImpl implements AccountService {
      * @return 影响行数
      */
     @Override
-    @Transactional
-    public CommonplaceResult addAccount(Account account, User User) {
+    @Transactional(rollbackFor = Exception.class)
+    public CommonplaceResult addAccount(Account account, User user) {
         //如果查询是空，说明该账号没有被注册，可以进行注册操作，否则返回
         if (ObjectUtils.isEmpty(accountMapper.selectOneByUsername(account.getUsername()))) {
             //账号注册
             accountMapper.addAccount(account);
             //用户信息注册
-            userMapper.addUser(User);
+            userMapper.addUser(user);
             return CommonplaceResult.buildSuccessNoData("注册成功！");
         }
         return CommonplaceResult.buildErrorNoData("注册失败！禁止重复注册");
@@ -82,7 +118,7 @@ public class AccountServiceImpl implements AccountService {
             return CommonplaceResult.buildErrorNoData("账号或者密码错误！");
         }
         //登录成功，生成jwt令牌，返回到客户端
-        Map<String, Object> info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>(5);
         //基于工具类生成jwt token
         String token = JwtUtil.createJWT(UUID.randomUUID().toString(), account.getUsername(), null);
         //将token携带回去，每次发起请求都需要在请求头中携带token，便于网关进行拦截验证
@@ -180,7 +216,7 @@ public class AccountServiceImpl implements AccountService {
 //    @GlobalTransaction
     public CommonplaceResult purchaseBook(Integer bookId, Integer count, String username, Boolean useScore) {
         //调用图书微服务，得到图书信息+库存信息，通过断点调试可以得知，此时得到的对象是LinkedHashMap
-        Object data =  bookService.selectBookAndStorageByBookId(bookId).getData();
+        Object data = bookService.selectBookAndStorageByBookId(bookId).getData();
         try {
             //转化为Book实体类
             Book book = jsonUtil.mapToBean((Map) data, Book.class);

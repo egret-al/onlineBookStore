@@ -1,6 +1,7 @@
 package com.onlinebookstore.service;
 
 import com.onlinebookstore.common.CommonplaceResult;
+import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.User;
 
@@ -12,6 +13,12 @@ import java.util.List;
  * @date 2020/9/11 15:43
  */
 public interface AccountService {
+
+    /**
+     * 创建订单
+     * @param order 订单
+     */
+    CommonplaceResult createOrder(Order order);
 
     /**
      * 添加账户
