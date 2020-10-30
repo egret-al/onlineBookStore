@@ -11,6 +11,42 @@ import com.onlinebookstore.entity.orderserver.Order;
 public interface OrderService {
 
     /**
+     * 根据订单号和账号删除订单
+     * @param serialNumber 订单号
+     * @param username 账号
+     * @return 影响行数
+     */
+    CommonplaceResult deleteOrder(String serialNumber, String username);
+
+    /**
+     * 根据账号查询所有订单，并且按照订单创建时间倒序排列
+     * @param username 账号
+     * @return 订单列表
+     */
+    CommonplaceResult selectOrderByUsername(String username);
+
+    /**
+     * 根据订单号取消订单
+     * @param serial 订单号
+     * @param username 账号
+     */
+    CommonplaceResult tryCancelOrder(String serial, String username);
+
+    /**
+     * 根据订单号查询订单
+     * @param serialNumber 订单号
+     * @return 包含订单的对象
+     */
+    CommonplaceResult selectOrderBySerialNumber(String serialNumber);
+
+    /**
+     * 订单是否过期或者被取消
+     * @param serialNumber 订单号
+     * @return 是否过期
+     */
+    boolean isExpire(String serialNumber);
+
+    /**
      * 查询所有订单
      */
     CommonplaceResult selectAll();

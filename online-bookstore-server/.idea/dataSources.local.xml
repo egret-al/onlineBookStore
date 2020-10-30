@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="@101.200.203.216" uuid="a364562b-6f66-4383-9b60-a1dc27d09909">
+    <data-source name="101.200.203.216" uuid="2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8">
       <database-info product="MySQL" version="5.7.24" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.15 (Revision: 79a4336f140499bd22dd07f02b708e163844e3d5)" dbms="MYSQL" exact-version="5.7.24" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -13,10 +13,8 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="bookstore_user" />
-            <name qname="bookstore_books" />
             <name qname="bookstore_order" />
-            <name qname="seata" />
+            <name qname="bookstore_user" />
           </node>
         </introspection-scope>
       </schema-mapping>

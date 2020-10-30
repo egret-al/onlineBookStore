@@ -15,11 +15,47 @@ import java.util.List;
 public interface OrderMapper {
 
     /**
+     * 根据订单号和账号删除订单
+     * @param serialNumber 订单号
+     * @param username 账号
+     * @return 影响行数
+     */
+    int deleteOrder(@Param("seriallNumber") String serialNumber, @Param("username") String username);
+
+    /**
+     * 根据账号查询所有订单，并且按照订单创建时间倒序排列
+     * @param username 账号
+     * @return 订单列表
+     */
+    List<Order> selectOrderByUsername(String username);
+
+    /**
+     * 根据订单号查询订单
+     * @param serialNumber 订单号
+     * @return 订单对象
+     */
+    Order selectOrderBySerialNumber(String serialNumber);
+
+    /**
+     * 根据订单号查询订单是否过期
+     * @param serialNumber 订单号
+     * @return 返回订单状态
+     */
+    int isExpire(String serialNumber);
+
+    /**
+     * 消费者将未支付的订单取消
+     * @param serialNumber 订单号
+     * @return 返回0则为取消失败，订单已经被处理，返回1则取消成功，用户没有在规定时间内进行支付
+     */
+    int mqTryCancelOrder(@Param("serialNumber") String serialNumber);
+
+    /**
      * 将未支付的订单取消
      * @param serialNumber 订单号
      * @return 返回0则为取消失败，订单已经被处理，返回1则取消成功，用户没有在规定时间内进行支付
      */
-    int tryCancelOrder(String serialNumber);
+    int tryCancelOrder(@Param("serialNumber") String serialNumber, @Param("username") String username);
 
     /**
      * 查询所有订单

@@ -16,6 +16,22 @@ import java.util.Map;
 public interface OrderService {
 
     /**
+     * 根据订单号查询订单
+     * @param serialNumber 订单号
+     * @return 包含订单的对象
+     */
+    @GetMapping("/api/v1/order/pri/selectOrderBySerialNumber/{serialNumber}")
+    CommonplaceResult selectOrderBySerialNumber(@PathVariable("serialNumber") String serialNumber);
+
+    /**
+     * 根据订单号查询订单是否过期
+     * @param serialNumber 订单号
+     * @return 是否过期
+     */
+    @GetMapping("/api/v1/order/pri/isExpire/{serialNumber}")
+    boolean isExpire(@PathVariable("serialNumber") String serialNumber);
+
+    /**
      * 查询所有订单
      */
     @GetMapping("/api/v1/order/pri/selectAll")

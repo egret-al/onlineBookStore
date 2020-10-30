@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
                     public void onException(Throwable e) {
                         log.error("取消订单的延时消息发送失败！" + e.getMessage());
                     }
-                }, 5);
+                }, 9);
         return CommonplaceResult.buildSuccess(order, "订单创建成功");
     }
 
@@ -180,7 +180,7 @@ public class AccountServiceImpl implements AccountService {
      * @return 是否修改成功
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public CommonplaceResult modifyScore(String username, Integer modifyNumber) {
         //查询积分信息
         Account account = accountMapper.selectOneByUsername(username);
@@ -206,15 +206,38 @@ public class AccountServiceImpl implements AccountService {
      * 购买图书，需要使用全局事务处理
      * TODO 后续整合seata和调用订单微服务
      * 流程：检查用户余额 -> 调用订单微服务创建订单 -> 扣除用户余额 -> 调用图书微服务扣除库存 -> 修改订单状态为完成订单
-     * @param bookId 图书id
-     * @param count 数量
-     * @param username 购买账号
-     * @param useScore 是否使用积分
+     * @param serialNumber 订单号
      */
     @Override
     @SuppressWarnings("all")
+    @Transactional(rollbackFor = Exception.class)
 //    @GlobalTransaction
-    public CommonplaceResult purchaseBook(Integer bookId, Integer count, String username, Boolean useScore) {
+    public CommonplaceResult purchaseBook(String serialNumber) {
+        //查询订单
+        System.out.println(orderService.selectOrderBySerialNumber(serialNumber).getData().getClass());
+        Order order = null;
+        try {
+            order = jsonUtil.mapToBean((Map) orderService.selectOrderBySerialNumber(serialNumber).getData(), Order.class);
+        } catch (Exception e) {
+            log.error("对象转换错误：" + e.getMessage());
+            return CommonplaceResult.buildErrorNoData("没有该数据！");
+        }
+        if (ObjectUtils.isEmpty(order)) {
+            return CommonplaceResult.buildErrorNoData("没有该数据！");
+        }
+
+        //如果订单已经过期，直接返回
+        if (order.getOrderPaymentStatus() == -1) {
+            return CommonplaceResult.buildErrorNoData("订单过期！购买失败");
+        }
+//        log.info("订单信息：" + String.valueOf(order));
+        //获取订单中的基本信息
+        int bookId = order.getBookId();
+        int count = order.getProductCount();
+        String username = order.getUsernameId();
+        //为0或者为null都认为是不使用积分的消费
+        boolean useScore = order.getUseScore() == 1;
+
         //调用图书微服务，得到图书信息+库存信息，通过断点调试可以得知，此时得到的对象是LinkedHashMap
         Object data = bookService.selectBookAndStorageByBookId(bookId).getData();
         try {
@@ -228,13 +251,8 @@ public class AccountServiceImpl implements AccountService {
             //得到需要支付的金额
             int money = book.getPrice() * count;
             int score = money / 10;
-            String orderContent = "下单了" + count + "本" + book.getBookName();
-            String serialName = UuidUtils.generateUuid().substring(0, 30);
-            //构建一个订单并且指定基本数据信息
-            Order order = new Order(serialName, bookId, username, orderContent, count, money, score,
-                    new Date(), new Date(), new Date(), new Date(), 0);
-            //1、开始创建订单
-            orderService.insertOrder(order);
+            String orderContent = "购买了" + count + "本《" + book.getBookName() + "》";
+            order.setPaymentTime(new Date());
 
             //2、扣除余额
             CommonplaceResult commonplaceResult = this.modifyBalance(username, -money, useScore);
@@ -247,8 +265,13 @@ public class AccountServiceImpl implements AccountService {
                 CommonplaceResult storageCalledResult = bookService.subtractStorageById(pojo);
                 if ((boolean) storageCalledResult.getData()) {
                     //TODO 修改订单状态
-                    //4、修改订单状态
                     order.setOrderPaymentStatus(1);
+                    order.setDeliveryTime(new Date());
+                    order.setEndTime(new Date());
+                    order.setObtainScore(score);
+                    order.setWholePrice(money);
+
+                    //4、修改订单状态和其它数据信息
                     orderService.updateOrder(order);
                     this.modifyScore(username, score);
                     return CommonplaceResult.buildSuccessNoData("操作成功！");
@@ -256,7 +279,6 @@ public class AccountServiceImpl implements AccountService {
                     throw new RuntimeException("库存扣除失败");
                 }
             } else {
-//                throw new RemainInsufficientException();
                 return CommonplaceResult.buildErrorNoData("余额不足！");
             }
         } catch (Exception e) {

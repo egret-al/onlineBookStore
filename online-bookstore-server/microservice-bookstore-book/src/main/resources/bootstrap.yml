@@ -26,7 +26,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://101.200.203.216:3306/bookstore_books?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: 2243756824
+    password: dbe5b1e2-137d-4b50-a560-8ce71d9bd79e
 
   #redis配置
   redis:

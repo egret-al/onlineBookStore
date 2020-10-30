@@ -7,6 +7,7 @@ import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.exception.SerialNumberNullException;
 import com.onlinebookstore.mapper.OrderMapper;
 import com.onlinebookstore.service.AbstractRocketMQService;
+import com.onlinebookstore.service.OrderHandler;
 import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
 import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ import java.util.Date;
  */
 @Slf4j
 @Service
-public class OrderRocketMQService extends AbstractRocketMQService {
+public class OrderRocketMQService extends AbstractRocketMQService implements OrderHandler {
 
     @Resource
     private OrderMapper orderMapper;
@@ -56,6 +57,7 @@ public class OrderRocketMQService extends AbstractRocketMQService {
      * @param message 消息
      * @return 消息处理状态
      */
+    @Override
     public ConsumeConcurrentlyStatus doMessage(MessageExt message) {
         int times = message.getReconsumeTimes();
         try {
@@ -97,9 +99,10 @@ public class OrderRocketMQService extends AbstractRocketMQService {
             throw new SerialNumberNullException(-1, "订单号不能为空！");
         }
         order.setEndTime(new Date());
-        return orderMapper.tryCancelOrder(order.getSerialNumber()) > 0;
+        return orderMapper.mqTryCancelOrder(order.getSerialNumber()) > 0;
     }
 
+    @Override
     @PreDestroy
     public void shutdown() {
         mqPushConsumer.shutdown();

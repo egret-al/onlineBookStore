@@ -5,6 +5,8 @@ import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.exception.StatusCodeException;
 import com.onlinebookstore.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,6 +25,66 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
+
+    /**
+     * 根据订单号和账号删除订单
+     * @param serialNumber 订单号
+     * @param username 账号
+     * @return 影响行数
+     */
+    @GetMapping("pri/deleteOrder/{serialNumber}/{username}")
+    public CommonplaceResult deleteOrder(@PathVariable("serialNumber") String serialNumber, @PathVariable("username") String username) {
+        if (StringUtils.isEmpty(serialNumber) || StringUtils.isEmpty(username)) {
+            return CommonplaceResult.buildErrorNoData("非法数据！");
+        }
+        return orderService.deleteOrder(serialNumber, username);
+    }
+
+    /**
+     * 根据账号查询所有订单，并且按照订单创建时间倒序排列
+     * @param username 账号
+     * @return 订单列表
+     */
+    @GetMapping("pri/selectOrderByUsername/{username}")
+    public CommonplaceResult selectOrderByUsername(@PathVariable("username") String username) {
+        if (StringUtils.isEmpty(username)) {
+            return CommonplaceResult.buildErrorNoData("数据异常！");
+        }
+        return orderService.selectOrderByUsername(username);
+    }
+
+    /**
+     * 根据订单号取消订单
+     * @param serial 订单号
+     * @param username 账号
+     */
+    @GetMapping("pri/cancelOrder/{serial}/{username}")
+    public CommonplaceResult tryCancelOrder(@PathVariable("serial") String serial, @PathVariable("username") String username) {
+        if (ObjectUtils.isEmpty(serial)) {
+            return CommonplaceResult.buildErrorNoData("数据异常！");
+        }
+        return orderService.tryCancelOrder(serial, username);
+    }
+
+    /**
+     * 根据订单号查询订单
+     * @param serialNumber 订单号
+     * @return 包含订单的对象
+     */
+    @GetMapping("pri/selectOrderBySerialNumber/{serialNumber}")
+    public CommonplaceResult selectOrderBySerialNumber(@PathVariable("serialNumber") String serialNumber) {
+        return orderService.selectOrderBySerialNumber(serialNumber);
+    }
+
+    /**
+     * 根据订单号查询订单是否过期
+     * @param serialNumber 订单号
+     * @return 是否过期
+     */
+    @GetMapping("pri/isExpire/{serialNumber}")
+    public boolean isExpire(@PathVariable("serialNumber") String serialNumber) {
+        return orderService.isExpire(serialNumber);
+    }
 
     /**
      * 查询所有订单

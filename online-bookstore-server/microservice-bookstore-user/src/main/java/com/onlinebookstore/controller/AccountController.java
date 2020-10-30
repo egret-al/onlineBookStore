@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +40,16 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @Resource
-    private RocketMQMessageSendUtils rocketMQMessageSendUtils;
+    /**
+     * 购买图书接口
+     */
+    @GetMapping("pri/purchaseBook/{serialNumber}")
+    public CommonplaceResult purchaseBook(@PathVariable("serialNumber") String serialNumber) {
+        if (ObjectUtils.isEmpty(serialNumber)) {
+            return CommonplaceResult.buildErrorNoData("非法数据");
+        }
+        return accountService.purchaseBook(serialNumber);
+    }
 
     /**
      * 创建订单，并且设置订单30分钟内未支付则自动过期
@@ -194,24 +203,5 @@ public class AccountController {
 
         private Account account;
         private User user;
-    }
-
-    /**
-     * 购买图书接口
-     * 数据格式：
-     * {
-     *     book_id: 'xxx',
-     *     count: 'xxx',
-     *     username: 'xxx',
-     *     use_score: 'xxx'
-     * }
-     */
-    @PostMapping("pri/purchaseBook")
-    public CommonplaceResult purchaseBook(@RequestBody Map<String, Object> pojo) {
-        Integer bookId = (Integer) pojo.get("book_id");
-        Integer count = (Integer) pojo.get("count");
-        String username = (String) pojo.get("username");
-        Boolean useScore = (Boolean) pojo.get("use_score");
-        return accountService.purchaseBook(bookId, count, username, useScore);
     }
 }

@@ -1,6 +1,7 @@
 package com.onlinebookstore.entity.orderserver;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onlinebookstore.util.orderutil.OrderConstantPool;
 import lombok.AllArgsConstructor;
@@ -96,4 +97,10 @@ public class Order {
      */
     @JsonProperty("order_payment_status")
     private Integer orderPaymentStatus;
+
+    /**
+     * 是否使用积分
+     */
+    @JsonProperty("use_score")
+    private Integer useScore;
 }

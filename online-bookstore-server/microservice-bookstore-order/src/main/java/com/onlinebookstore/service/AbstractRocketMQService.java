@@ -1,13 +1,10 @@
 package com.onlinebookstore.service;
 
-import com.onlinebookstore.config.RocketMQProperties;
-import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
-import javax.annotation.PreDestroy;
 
 /**
  * 消息消费者抽象类，对应的具体业务类只需要继承该类，并且重写registerMessageListener方法即可

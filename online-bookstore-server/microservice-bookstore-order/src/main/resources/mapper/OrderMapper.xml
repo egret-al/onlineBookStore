@@ -17,16 +17,47 @@
         <result column="delivery_time" property="deliveryTime" jdbcType="TIMESTAMP"/>
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
         <result column="order_payment_status" property="orderPaymentStatus" jdbcType="INTEGER"/>
+        <result column="use_score" property="useScore" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="orderFields">
-        serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time, payment_time, delivery_time, end_time, order_payment_status
+        serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
+        payment_time, delivery_time, end_time, order_payment_status, use_score
     </sql>
+
+    <delete id="deleteOrder">
+        delete from sys_order where serial_number = #{seriallNumber} and username_id = #{username};
+    </delete>
+
+    <select id="selectOrderByUsername" resultMap="BaseOrderMap">
+        select *
+        from bookstore_order.sys_order
+        where username_id = #{username}
+        order by create_time desc;
+    </select>
+
+    <select id="selectOrderBySerialNumber" resultMap="BaseOrderMap">
+        select <include refid="orderFields"/>
+        from sys_order
+        where serial_number = #{serialNumber};
+    </select>
+
+    <select id="isExpire" resultType="int">
+        select order_payment_status
+        from sys_order
+        where serial_number = #{serialNumber};
+    </select>
+
+    <update id="mqTryCancelOrder">
+        update sys_order
+        set order_payment_status = -1
+        where serial_number = #{serialNumber} and order_payment_status != -1;
+    </update>
 
     <update id="tryCancelOrder">
         update sys_order
         set order_payment_status = -1
-        where serial_number = #{serialNumber} and order_payment_status = 0;
+        where serial_number = #{serialNumber} and order_payment_status != -1 and username_id = #{username};
     </update>
 
     <select id="selectAll" resultMap="BaseOrderMap">
@@ -53,7 +84,9 @@
         insert into sys_order(<include refid="orderFields"/>)
         values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice},
         #{obtainScore},
-        #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus});
+        #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus},
+        <if test="useScore == null">0);</if>
+        <if test="useScore != null">1);</if>
     </insert>
 
     <update id="updateOrderStatus">
@@ -66,7 +99,8 @@
         update sys_order
         set book_id = #{bookId}, username_id = #{usernameId}, order_content = #{orderContent}, product_count = #{productCount},
             whole_price = #{wholePrice}, obtain_score = #{obtainScore}, create_time = #{createTime}, payment_time = #{paymentTime},
-            delivery_time = #{deliveryTime}, end_time = #{endTime}, order_payment_status = #{orderPaymentStatus}
+            delivery_time = #{deliveryTime}, end_time = #{endTime}, order_payment_status = #{orderPaymentStatus},
+            use_score = #{useScore}
         where serial_number = #{serialNumber};
     </update>
 

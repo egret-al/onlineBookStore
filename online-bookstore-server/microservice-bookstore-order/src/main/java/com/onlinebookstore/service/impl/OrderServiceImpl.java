@@ -23,6 +23,63 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     /**
+     * 根据订单号和账号删除订单
+     * @param serialNumber 订单号
+     * @param username 账号
+     * @return 影响行数
+     */
+    @Override
+    public CommonplaceResult deleteOrder(String serialNumber, String username) {
+        return orderMapper.deleteOrder(serialNumber, username) > 0 ? CommonplaceResult.buildSuccessNoData("删除成功") : CommonplaceResult.buildErrorNoData("删除失败");
+    }
+
+    /**
+     * 根据账号查询所有订单，并且按照订单创建时间倒序排列
+     * @param username 账号
+     * @return 订单列表
+     */
+    @Override
+    public CommonplaceResult selectOrderByUsername(String username) {
+        List<Order> orders = orderMapper.selectOrderByUsername(username);
+        if (orders.size() == 0) {
+            return CommonplaceResult.buildErrorNoData("没有订单哦！");
+        }
+        return CommonplaceResult.buildSuccessNoMessage(orders);
+    }
+
+    /**
+     * 根据订单号取消订单
+     * @param serial 订单号
+     * @param username 账号
+     */
+    @Override
+    public CommonplaceResult tryCancelOrder(String serial, String username) {
+        int row = orderMapper.tryCancelOrder(serial, username);
+        return row > 0 ? CommonplaceResult.buildSuccessNoData("取消成功！") : CommonplaceResult.buildErrorNoData("取消失败，该订单已经完成或取消！");
+    }
+
+    /**
+     * 根据订单号查询订单
+     * @param serialNumber 订单号
+     * @return 订单
+     */
+    @Override
+    public CommonplaceResult selectOrderBySerialNumber(String serialNumber) {
+        Order order = orderMapper.selectOrderBySerialNumber(serialNumber);
+        return CommonplaceResult.buildSuccessNoMessage(order);
+    }
+
+    /**
+     * 查询订单是否过期
+     * @param serialNumber 订单号
+     * @return 是否过期
+     */
+    @Override
+    public boolean isExpire(String serialNumber) {
+        return orderMapper.isExpire(serialNumber) != -1;
+    }
+
+    /**
      * 查询所有订单
      */
     @Override
