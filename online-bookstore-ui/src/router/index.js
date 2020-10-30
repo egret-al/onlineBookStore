@@ -65,6 +65,30 @@ const routes = [{
     path: '/introduce',
     name: 'introduce',
     component: () => import('../views/inner/detail/BookIntroduce.vue')
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: () => import('../views/inner/other/payment/Payment.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: () => import('../views/inner/other/order/Order.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/order-detail',
+    name: 'orderDetail',
+    component: () => import('../views/inner/other/order/OrderDetail.vue'),
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 

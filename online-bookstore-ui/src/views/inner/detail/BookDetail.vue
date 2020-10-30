@@ -43,7 +43,7 @@ export default {
     //获取到图书id，发起查询请求
     let bookId = this.$route.query.id
     const result = await this.$http.get(
-      `http://localhost:9527/book-server/api/v1/book/pub/selectBookAndStorageByBookId/${bookId}`,
+      `/book-server/api/v1/book/pub/selectBookAndStorageByBookId/${bookId}`,
     )
     this.bookData = result.data
     this.cover = result.data.main_cover

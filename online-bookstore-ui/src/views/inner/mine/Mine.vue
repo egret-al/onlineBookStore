@@ -1,11 +1,22 @@
 <template>
   <div>
-    <img class="headerimg" src="https://xd-video-pc-img.oss-cn-beijing.aliyuncs.com/xdclass_pro/bannner/1901/learn.png" alt="">
+    <img
+      class="headerimg"
+      src="https://cdn.pixabay.com/photo/2020/01/14/02/09/vapor-4763904_1280.jpg"
+      alt=""
+    />
     <ul>
-      <li v-for="item in mineArray" class="mineitem" @click="itemClick(item)" :key="item.label">
-        <i class="icon-class" :class="item.icon"></i>
-        <span class="minetitle">{{item.label}}</span>
-        <i class="cubeic-arrow"></i>
+      <li
+        v-for="item in mineArray"
+        class="mineitem"
+        @click="itemClick(item)"
+        :key="item.label"
+      >
+        <router-link :to="{ path: item.path }">
+          <i class="icon-class" :class="item.icon"></i>
+          <span class="minetitle">{{ item.label }}</span>
+          <i class="cubeic-arrow"></i>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -18,41 +29,45 @@ export default {
     return {
       mineArray: [
         {
-          label: '我的信息',
-          icon: 'cubeic-person',
+          label: "我的信息",
+          icon: "cubeic-person",
+          path: "/infomation",
         },
         {
-          label: '商品收藏',
-          icon: 'cubeic-search',
+          label: "商品收藏",
+          icon: "cubeic-search",
+          path: "/collection",
         },
         {
-          label: '我的足迹',
-          icon: 'cubeic-navigation',
+          label: "我的足迹",
+          icon: "cubeic-navigation",
+          path: "/footprint",
         },
         {
-          label: '我的订单',
-          icon: 'cubeic-square-right',
+          label: "我的订单",
+          icon: "cubeic-square-right",
+          path: "/order",
         },
         {
-          label: '退出',
-          type: 'exit',
-          icon: 'cubeic-close',
+          label: "退出",
+          type: "exit",
+          icon: "cubeic-close",
         },
       ],
-    }
+    };
   },
   methods: {
     itemClick(item) {
-      if (item.type === 'exit') {
+      if (item.type === "exit") {
         //退出操作，清除token，跳转登录
-        this.$store.commit('setToken', '')
-        localStorage.removeItem('token')
-        this.$router.push({path: '/login'})
+        this.$store.commit("setToken", "");
+        localStorage.removeItem("token");
+        this.$router.push({ path: "/login" });
       }
     },
   },
   mounted() {},
-}
+};
 </script>
 <style lang="stylus" scoped>
 .mineitem

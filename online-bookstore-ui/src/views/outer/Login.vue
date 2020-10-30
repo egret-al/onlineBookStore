@@ -71,13 +71,18 @@ export default {
       e.preventDefault()
       this.isLoading = true
       try {
-        const result = await this.$http.post('/api/v1/account/pub/login', {
-          username: this.model.username,
-          password: this.model.password,
-        })
+        const result = await this.$http.post(
+          '/user-server/api/v1/account/pub/login',
+          {
+            username: this.model.username,
+            password: this.model.password,
+          },
+        )
         if (result.code === 1) {
           this.$store.commit('setToken', result.data.token)
           window.localStorage.setItem('token', result.data.token)
+          this.$store.commit('setUsername', result.data.account.username)
+          window.localStorage.setItem('username', result.data.account.username)
           //恢复未加载状态
           this.isLoading = false
           //判断路由是否带参，如果有参，则去参数地址，否则跳转首页

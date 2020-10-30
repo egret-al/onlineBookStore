@@ -1,43 +1,71 @@
 <template>
   <div class="main">
-    <p class="title" style="text-align: left; padding-left: 10px; font-size: 18px">{{bookData.book_name}}</p>
+    <p
+      class="title"
+      style="text-align: left; padding-left: 10px; font-size: 18px"
+    >
+      {{ bookData.book_name }}
+    </p>
     <hr />
     <div>
       <p class="price">
-        市场价：<del>￥{{ bookData.price + 20 }}</del>&nbsp;&nbsp;销售价： <span class="now_price">
-          ￥{{ bookData.price }}
-        </span>
+        市场价：<del>￥{{ bookData.price + 20 }}</del
+        >&nbsp;&nbsp;销售价：
+        <span class="now_price"> ￥{{ bookData.price }} </span>
       </p>
       <div class="purchase">
-        购买数量：<br>
+        购买数量：<br />
         <button class="sub" @click="subNumber">-</button>
-        <cube-input readonly class="purchase-number" v-model="number"></cube-input>
+        <cube-input
+          readonly
+          class="purchase-number"
+          v-model="number"
+        ></cube-input>
         <button class="add" @click="addNumber">+</button>
         <cube-validator :model="number" :rules="validatorNumber" />
+        <cube-switch class="switch-use-score" v-model="useScore">
+          使用积分
+        </cube-switch>
       </div>
       <!--各种参数信息-->
       <div class="info">
         <ul>
-          <li>库存数量：{{bookData.bookStorage.residue_count}}</li>
-          <li>作者：{{bookData.author}}</li>
-          <li>ISBN：{{bookData.isbn}}</li>
-          <li>出版社：{{bookData.publisher}}</li>
-          <li>上架时间：{{bookData.create_time}}</li>
+          <li>库存数量：{{ bookData.bookStorage.residue_count }}</li>
+          <li>作者：{{ bookData.author }}</li>
+          <li>ISBN：{{ bookData.isbn }}</li>
+          <li>出版社：{{ bookData.publisher }}</li>
+          <li>上架时间：{{ bookData.create_time }}</li>
         </ul>
       </div>
+
       <div class="purchase-btn">
-        <cube-button class="buy" @click="immediatelyPurchase">立刻购买</cube-button>
-        <cube-button class="add-cart" style="margin-left: 5px" @click="addCart">加入购物车</cube-button>
+        <cube-button class="buy" @click="immediatelyPurchase"
+          >立刻购买</cube-button
+        >
+        <cube-button class="add-cart" style="margin-left: 5px" @click="addCart"
+          >加入购物车</cube-button
+        >
       </div>
       <div class="introduce">
-        <cube-button class="picture-word-introduce" @click="pictureAndWordIntroduce">图文介绍</cube-button>
-        <cube-button class="show-comment" style="margin-left: 5px" @click="showComment">查看评论</cube-button>
+        <cube-button
+          class="picture-word-introduce"
+          @click="pictureAndWordIntroduce"
+          >图文介绍</cube-button
+        >
+        <cube-button
+          class="show-comment"
+          style="margin-left: 5px"
+          @click="showComment"
+          >查看评论</cube-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: {
     bookData: {
@@ -48,34 +76,64 @@ export default {
   components: {},
   data() {
     return {
-      number: 0,
+      number: 1,
       validatorNumber: {
-        type: 'number',
+        type: "number",
         min: 0,
-        max: this.bookData.bookStorage.residue_count,
       },
-    }
+      useScore: false,
+    };
   },
+  computed: {
+    ...mapState({
+      username: (state) => state.username,
+    }),
+  },
+
   methods: {
     //减少购买数量
     subNumber() {
-      if (this.number <= 0) return
-      this.number--
+      if (this.number <= 0) return;
+      this.number--;
     },
 
     //增加购买数量
     addNumber() {
-      if (this.number >= this.bookData.bookStorage.residue_count) return
-      this.number++
+      if (this.number >= this.bookData.bookStorage.residue_count) return;
+      this.number++;
     },
 
     //直接购买
-    immediatelyPurchase() {
-      if (typeof this.number === 'number') {
-        console.log('数据合法，发起下单请求！')
+    async immediatelyPurchase() {
+      if (typeof this.number === "number") {
+        //console.log('数据合法，发起下单请求！')
+        //发起请求创建订单
+        const result = await this.$http.post(
+          "/user-server/api/v1/account/pri/createOrder",
+          {
+            book_id: this.bookData.id,
+            username_id: this.username,
+            order_content: `下单了${this.number}本《${this.bookData.book_name}》`,
+            product_count: this.number,
+            use_score: this.useScore == true ? 1 : 0,
+          }
+        );
+        console.log(result);
+        const toast = this.$createToast({
+          txt: result.message,
+          type: "correct",
+          time: 1000,
+        });
+        toast.show();
+        //跳转到支付页面
+        let serialNumber = result.data.serial_number;
+        this.$router.push({
+          path: "/payment",
+          query: { serialNumber: serialNumber },
+        });
       } else {
         //数据非法，归零
-        this.number = 0
+        this.number = 0;
       }
     },
 
@@ -84,30 +142,33 @@ export default {
 
     //图文信息（详细介绍）
     pictureAndWordIntroduce() {
-      this.$router.push({path: '/introduce', query: {id: this.bookData.id}})
+      this.$router.push({
+        path: "/introduce",
+        query: { id: this.bookData.id },
+      });
     },
 
     //查看评论
     showComment() {},
 
     validateNumber(value) {
-      return typeof value === 'number' && !isNaN(value)
+      return typeof value === "number" && !isNaN(value);
     },
   },
   watch: {
     number(newValue, oldValue) {
       if (this.validateNumber(newValue)) {
-        console.log('合法数字')
+        console.log("合法数字");
       } else {
-        console.log('非法数字')
+        console.log("非法数字");
       }
     },
   },
   mounted() {},
   created() {},
-}
+};
 </script>
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 .main
   margin 10px
   box-shadow 0 4px 11px 0 rgba(43, 51, 59, 0.6)
@@ -137,6 +198,12 @@ export default {
       border 0
     .add
       margin-left 5px
+  .switch-use-score
+    margin-left 10px
+    height 20px
+    color grey
+    font-size 15px
+
   .purchase-btn
     padding-left 10px
     display flex

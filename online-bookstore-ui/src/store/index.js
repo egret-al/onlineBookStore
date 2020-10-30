@@ -7,6 +7,7 @@ let store = new Vuex.Store({
   state: {
     //token持久化
     token: localStorage.getItem('token') || '',
+    username: localStorage.getItem('username') || '',
     cartArray: JSON.parse(localStorage.getItem('cartArray')) || []
   },
   mutations: {
@@ -14,6 +15,12 @@ let store = new Vuex.Store({
     setToken(state, token) {
       state.token = token
     },
+
+    //设置登录账号
+    setUsername(state, username) {
+      state.username = username
+    },
+
     //添加商品到购物车，如果有数据则数量加1，否则加入到数组中
     addCart(state, tag) {
       let goods = state.cartArray.find(v => v.title == tag.label)
