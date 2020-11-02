@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlinebookstore.mapper.AdminAccountMapper">
+    <resultMap id="BaseAdminAccount" type="com.onlinebookstore.entity.userserver.AdminAccount">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectAdminByUsernameAndPassword" resultMap="BaseAdminAccount">
+        select id, username, password, create_time
+        from sys_admin
+        where username = #{username} and password = #{password};
+    </select>
+
+    <insert id="addAdminAccount" parameterType="com.onlinebookstore.entity.userserver.AdminAccount" useGeneratedKeys="true">
+        insert into sys_admin(username, password, create_time)
+        values (#{username}, #{password}, #{create_time});
+    </insert>
+
+    <select id="selectAllAdminAccount" resultMap="BaseAdminAccount">
+        select id, username, password, create_time
+        from sys_admin;
+    </select>
+</mapper>

@@ -103,4 +103,10 @@ public class Order {
      */
     @JsonProperty("use_score")
     private Integer useScore;
+
+    /**
+     * 购买的图书名字
+     */
+    @JsonProperty("book_name")
+    private String bookName;
 }

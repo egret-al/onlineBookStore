@@ -18,11 +18,12 @@
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
         <result column="order_payment_status" property="orderPaymentStatus" jdbcType="INTEGER"/>
         <result column="use_score" property="useScore" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="orderFields">
         serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
-        payment_time, delivery_time, end_time, order_payment_status, use_score
+        payment_time, delivery_time, end_time, order_payment_status, use_score, book_name
     </sql>
 
     <delete id="deleteOrder">
@@ -51,13 +52,13 @@
     <update id="mqTryCancelOrder">
         update sys_order
         set order_payment_status = -1
-        where serial_number = #{serialNumber} and order_payment_status != -1;
+        where serial_number = #{serialNumber} and order_payment_status = 0;
     </update>
 
     <update id="tryCancelOrder">
         update sys_order
         set order_payment_status = -1
-        where serial_number = #{serialNumber} and order_payment_status != -1 and username_id = #{username};
+        where serial_number = #{serialNumber} and order_payment_status = 0 and username_id = #{username};
     </update>
 
     <select id="selectAll" resultMap="BaseOrderMap">
@@ -85,8 +86,9 @@
         values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice},
         #{obtainScore},
         #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus},
-        <if test="useScore == null">0);</if>
-        <if test="useScore != null">1);</if>
+        <if test="useScore == null">0, </if>
+        <if test="useScore != null">1, </if>
+        #{bookName});
     </insert>
 
     <update id="updateOrderStatus">
@@ -100,7 +102,7 @@
         set book_id = #{bookId}, username_id = #{usernameId}, order_content = #{orderContent}, product_count = #{productCount},
             whole_price = #{wholePrice}, obtain_score = #{obtainScore}, create_time = #{createTime}, payment_time = #{paymentTime},
             delivery_time = #{deliveryTime}, end_time = #{endTime}, order_payment_status = #{orderPaymentStatus},
-            use_score = #{useScore}
+            use_score = #{useScore}, book_name = #{bookName}
         where serial_number = #{serialNumber};
     </update>
 
