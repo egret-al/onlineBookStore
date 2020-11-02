@@ -31,45 +31,48 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [{
-    path: '/login',
+    path: '/',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-  // 素材管理
   {
-    path: '/material',
+    path: '/home',
     component: Layout,
-    redirect: '/material/upload',
+    redirect: '/home/upload',
     meta: {
-      title: '素材管理',
+      title: '图书',
       icon: 'plane'
     },
     children: [{
-        path: 'check-template',
-        name: 'check-template',
-        component: () => import('@/views/material/check-template'),
+        path: 'books',
+        name: 'book-list',
+        component: () => import('@/views/book/BookList.vue'),
         meta: {
-          title: '查看模板',
+          title: '图书列表',
         }
       },
       {
-        path: 'logo',
-        name: 'logo',
-        component: () => import('@/views/material/check-logo'),
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/book/AddBook'),
         meta: {
-          title: '查看logo',
+          title: '上架图书',
         }
+      },
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/views/book/BookDetail'),
       },
       {
         path: 'generate',
         name: 'generate',
-        component: () => import('@/views/material/generate'),
+        component: () => import('@/views/book/generate'),
         meta: {
           title: '生成素材',
         }
@@ -77,26 +80,38 @@ export const constantRoutes = [{
       {
         path: 'check',
         name: 'check',
-        component: () => import('@/views/material/check'),
+        component: () => import('@/views/book/check'),
         meta: {
           title: '查看素材',
         }
       },
     ]
   },
-
-  //测试页面
   {
-    path: '/',
+    path: '/order',
     component: Layout,
+    redirect: '/home/upload',
+    meta: {
+      title: '订单',
+      icon: 'plane'
+    },
     children: [{
-      path: 'test',
-      name: 'test',
-      component: () => import('@/views/test/test'),
+      path: 'overview',
+      name: 'overview',
+      component: () => import('@/views/order/OrderOverview.vue'),
       meta: {
-        title: '测试',
+        title: '订单总览',
       }
-    }]
+    },
+    {
+      path: 'user-activity',
+      name: 'userActivity',
+      component: () => import('@/views/order/UserActivity.vue'),
+      meta: {
+        title: '用户活动',
+      }
+    }
+    ]
   },
   // 404 page must be placed at the end !!!
   {
@@ -107,7 +122,6 @@ export const constantRoutes = [{
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({
     y: 0
   }),
@@ -116,7 +130,6 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

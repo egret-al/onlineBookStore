@@ -35,6 +35,10 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    //mock 数据
+    before(app) {
+      
     }
   },
   configureWebpack: {
