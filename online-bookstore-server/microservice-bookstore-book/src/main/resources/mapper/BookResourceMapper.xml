@@ -16,6 +16,19 @@
         id, b_id, resource_url, symbol, supplement, create_time
     </sql>
 
+    <insert id="addBookResources">
+        insert into sys_book_resource(b_id, resource_url, symbol, supplement, create_time)
+        values
+        <foreach collection="bookResources" item="bookResource" separator=",">
+            (#{bookResource.bookId}, #{bookResource.resourceUrl}, #{bookResource.symbol}, #{bookResource.supplement}, #{bookResource.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="addBookResource" parameterType="com.onlinebookstore.entity.bookserver.BookResource">
+        insert into sys_book_resource(b_id, resource_url, symbol, supplement, create_time)
+        values (#{bookId}, #{resourceUrl}, #{symbol}, #{supplement}, #{createTime})
+    </insert>
+
     <select id="selectAllResourceAlone" resultMap="BaseBookResourceMapper">
         select <include refid="baseBookResource"/>
         from sys_book_resource;

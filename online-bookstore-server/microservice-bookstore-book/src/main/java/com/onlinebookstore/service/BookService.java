@@ -13,6 +13,13 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * 添加图书和资源
+     * @param book book
+     * @return CommonplaceResult
+     */
+    CommonplaceResult addCompleteBook(Book book);
+
+    /**
      * 查询所有图书信息
      * @return 图书信息
      */

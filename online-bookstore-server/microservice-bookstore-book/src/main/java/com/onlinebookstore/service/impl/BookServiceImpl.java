@@ -2,16 +2,21 @@ package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.Book;
+import com.onlinebookstore.entity.bookserver.BookResource;
 import com.onlinebookstore.mapper.BookMapper;
+import com.onlinebookstore.mapper.BookResourceMapper;
+import com.onlinebookstore.mapper.BookStorageMapper;
 import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.util.RandomUtils;
 import com.onlinebookstore.util.RedisUtils;
 import com.onlinebookstore.util.bookutil.BookConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,10 +32,46 @@ public class BookServiceImpl implements BookService {
     private BookMapper bookMapper;
 
     @Resource
+    private BookResourceMapper bookResourceMapper;
+
+    @Resource
+    private BookStorageMapper bookStorageMapper;
+
+    @Resource
     private RandomUtils randomUtils;
 
     @Resource
     private RedisUtils redisUtils;
+
+    /**
+     * 添加图书、资源和库存
+     * @param book book
+     * @return CommonplaceResult
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public CommonplaceResult addCompleteBook(Book book) {
+        book.setCreateTime(new Date());
+        try {
+            log.info(String.valueOf(book));
+            //添加图书
+            bookMapper.addBook(book);
+            for (BookResource bookResource : book.getBookResources()) {
+                bookResource.setBookId(book.getId());
+                bookResource.setCreateTime(new Date());
+            }
+            //添加资源
+            bookResourceMapper.addBookResources(book.getBookResources());
+            //添加库存
+            book.getBookStorage().setLastAddTime(new Date());
+            bookStorageMapper.addBookStorage(book.getBookStorage());
+            return CommonplaceResult.buildSuccessNoData("添加成功！");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            //抛出异常，让切面能够感知，进行事务回滚
+            throw e;
+        }
+    }
 
     /**
      * 查询所有图书信息（缓存时间：60s）

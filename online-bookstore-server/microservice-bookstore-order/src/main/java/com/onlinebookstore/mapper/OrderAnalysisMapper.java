@@ -1,5 +1,6 @@
 package com.onlinebookstore.mapper;
 
+import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.entity.orderserver.OrderCoordinateAxis;
 import com.onlinebookstore.entity.orderserver.OrderCoordinateAxisItem;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +15,19 @@ import java.util.List;
  */
 @Mapper
 public interface OrderAnalysisMapper {
+
+    /**
+     * 得到成功销售的日期
+     * @return 日期字符串集合
+     */
+    List<String> getOrderSuccessDate();
+
+    /**
+     * 获取指定月的订单
+     * @param yearAndMonth YYYY-mm
+     * @return 指定月份的成交订单集合
+     */
+    List<Order> getOrdersByMonthly(String yearAndMonth);
 
     /**
      * 得到已经交易成功的订单的图书名称和销售数量，封装到OrderCoordinateAxis

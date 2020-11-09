@@ -2,6 +2,7 @@ package com.onlinebookstore.mapper;
 
 import com.onlinebookstore.entity.bookserver.BookResource;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +13,20 @@ import java.util.List;
  */
 @Mapper
 public interface BookResourceMapper {
+
+    /**
+     * 批量插入图书资源数据
+     * @param bookResources 图书资源
+     * @return 影响行数
+     */
+    int addBookResources(@Param("bookResources") List<BookResource> bookResources);
+
+    /**
+     * 添加图书资源
+     * @param bookResource 图书资源
+     * @return 影响行数
+     */
+    int addBookResource(BookResource bookResource);
 
     /**
      * 查询所有资源信息

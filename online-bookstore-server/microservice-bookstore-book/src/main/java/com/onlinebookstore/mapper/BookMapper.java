@@ -2,6 +2,7 @@ package com.onlinebookstore.mapper;
 
 import com.onlinebookstore.entity.bookserver.Book;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +13,13 @@ import java.util.List;
  */
 @Mapper
 public interface BookMapper {
+
+    /**
+     * 添加图书
+     * @param book 图书
+     * @return 影响行数
+     */
+    int addBook(Book book);
 
     /**
      * 查询所有图书信息

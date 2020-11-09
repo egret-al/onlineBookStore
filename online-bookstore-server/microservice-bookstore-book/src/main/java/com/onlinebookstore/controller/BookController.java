@@ -1,10 +1,8 @@
 package com.onlinebookstore.controller;
 
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
-import com.onlinebookstore.entity.bookserver.BookBanner;
-import com.onlinebookstore.entity.bookserver.BookResource;
-import com.onlinebookstore.entity.bookserver.BookStorage;
-import com.onlinebookstore.entity.bookserver.BookType;
+import com.onlinebookstore.entity.bookserver.*;
 import com.onlinebookstore.service.*;
 import com.onlinebookstore.service.impl.BookServiceImpl;
 import com.onlinebookstore.util.RedisUtils;
@@ -49,6 +47,20 @@ public class BookController {
 
     @Resource
     private BookTypeService bookTypeService;
+
+    /**
+     * 添加图书和资源（图片）
+     * @param book book
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/addBookAndResource")
+    public CommonplaceResult addCompleteBook(@RequestBody Book book) {
+        if (ObjectUtils.isEmpty(book) || ObjectUtils.isEmpty(book.getBookResources()) || ObjectUtils.isEmpty(book.getBookStorage())) {
+            return CommonplaceResult.buildErrorNoData("数据不全！添加失败");
+        }
+        log.info(book.toString());
+        return bookService.addCompleteBook(book);
+    }
 
     /**
      * 新加图书类型

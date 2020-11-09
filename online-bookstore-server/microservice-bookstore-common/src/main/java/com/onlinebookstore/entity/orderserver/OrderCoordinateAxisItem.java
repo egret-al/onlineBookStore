@@ -18,9 +18,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class OrderCoordinateAxisItem<X, Y> {
 
-    @JsonProperty("x_axis_data")
     private X xAxisData;
-
-    @JsonProperty("y_axis_data")
     private Y yAxisData;
 }

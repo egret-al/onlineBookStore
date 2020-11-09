@@ -2,7 +2,6 @@ package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.service.OrderAnalysisService;
-import com.onlinebookstore.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,16 +26,16 @@ public class OrderAnalysisController {
     /**
      * 得到已经交易成功的订单的图书名称和销售数量
      */
-    @GetMapping("pri/getBookNameAndCountWithDealtOrder/{day}/{count}")
-    public CommonplaceResult getBookNameAndCountWithDealtOrder(@PathVariable("day") int day, @PathVariable("count") int count) {
-        return orderAnalysisService.getBookNameAndCountWithDealtOrder(day, count);
+    @GetMapping("pri/getMonthlyDealCount")
+    public CommonplaceResult getMonthlyDealCount() {
+        return orderAnalysisService.getMonthlyDealCount();
     }
 
     /**
      * 得到已经交易成功的订单的图书名称和改图书的总销售额
      */
-    @GetMapping("pri/getBookNameAndWholePriceWithDealtOrder/{day}/{count}")
-    public CommonplaceResult getBookNameAndWholePriceWithDealtOrder(@PathVariable("day") int day, @PathVariable("count") int count) {
-        return orderAnalysisService.getBookNameAndWholePriceWithDealtOrder(day, count);
+    @GetMapping("pri/getMonthlyDealPrice")
+    public CommonplaceResult getMonthlyDealPrice() {
+        return orderAnalysisService.getMonthlyDealPrice();
     }
 }
