@@ -1,15 +1,12 @@
 package com.rkc.onlinebookstore.viewmodel.login
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import com.rkc.onlinebookstore.model.Account
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.rkc.onlinebookstore.model.user.Account
+import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
 import okhttp3.Callback
@@ -22,60 +19,42 @@ import java.io.IOException
  * @date 2020/11/9 22:41
  * @version 1.0
  */
+const val REQUESTING = 0
+const val LOGIN_SUCCESS = 1
+const val LOGIN_FAILURE = -1
+const val NET_ERROR = -2
+
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
-    private lateinit var context: Context
+    private var _loginStatus = MutableLiveData<Int>().apply { value = 2 }
+    val loginStatus: LiveData<Int> = _loginStatus
 
-    companion object {
-        private const val LOGIN_SUCCESS = 1
-        private const val LOGIN_FAILURE = 0
-        private const val NET_ERROR = -1
-    }
-
-    @SuppressLint("HandlerLeak") private val handler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                LOGIN_SUCCESS -> {
-                    val account = msg.obj as Account
-                    Toast.makeText(context, "登录成功！", Toast.LENGTH_SHORT).show()
-                    val edit = context.getSharedPreferences("user", Context.MODE_PRIVATE).edit()
-                    edit.putString("username", account.username)
-                    edit.putString("password", account.password)
-                    edit.apply()
-//                    context.startActivity()
-                }
-                LOGIN_FAILURE -> Toast.makeText(context, "登录失败！", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    fun login(context: Context, username: String, password: String) {
-        this.context = context
+    fun login(username: String, password: String) {
         val jsonObject = JSONObject().apply {
             put("username", username)
             put("password", password)
         }
-        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/account/pub/login", jsonObject, object :Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("error", e.toString())
-                val message = Message.obtain().apply {
-                    what = NET_ERROR
-                    obj = e.toString()
+        OKHttpUtils.asyncHttpPostJson(
+            "/user-server/api/v1/account/pub/login",
+            jsonObject,
+            object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    _loginStatus.postValue(NET_ERROR)
                 }
-                handler.sendMessage(message)
-            }
-            override fun onResponse(call: Call, response: Response) {
-                val message = Message.obtain().apply {
-                    what = LOGIN_SUCCESS
-                    obj = Account(username=username, password=password)
-                }
-                Log.d("login", response.body?.string())
-                //判断返回code是否成功
-//                handler.sendMessage(message)
-            }
-        })
-    }
 
-    fun destroyHandler() {
-        handler.removeCallbacksAndMessages(null)
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObject = JSONObject(response.body?.string())
+                    if (jsonObject.getInt("code") == 1) {
+                        val account = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").toString(), Account::class.java)
+                        val edit = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).edit()
+                        edit.putString("username", account.username)
+                        edit.putString("password", account.password)
+                        edit.apply()
+                        //setValue(T) 必须在主线程中调用 , 而 postValue(T) 既可以在主线程中调用, 也可以在子线程中调用
+                        _loginStatus.postValue(LOGIN_SUCCESS)
+                    } else {
+                        _loginStatus.postValue(LOGIN_FAILURE)
+                    }
+                }
+            })
     }
 }
