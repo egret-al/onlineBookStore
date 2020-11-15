@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.model.book.BookBanner
 import com.rkc.onlinebookstore.util.GsonUtils
+import com.rkc.onlinebookstore.util.KotlinType.Companion.getType
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
 import okhttp3.Callback
@@ -52,7 +52,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
      * 获取图书列表
      */
     fun fetchBookList() {
-        val url = "/book-server/api/v1/book/pub/selectBookAndResource"
+        val url = "/book-server/api/v1/book/pub/selectAllInfo"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.d(TAG, "onFailure: $e")
@@ -70,11 +70,5 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         })
-    }
-
-    fun getType(raw: Class<*>, vararg args: Type) = object : ParameterizedType {
-        override fun getRawType(): Type = raw
-        override fun getActualTypeArguments(): Array<out Type> = args
-        override fun getOwnerType(): Type? = null
     }
 }

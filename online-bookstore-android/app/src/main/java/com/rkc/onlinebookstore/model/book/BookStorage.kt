@@ -12,8 +12,8 @@ import java.util.*
  */
 @Parcelize
 data class BookStorage(
-    @SerializedName("id") val id: Int,
-    @SerializedName("book_id") val bookId: Int,
-    @SerializedName("last_add_time") val lastAddTime: Date,
-    @SerializedName("residue_count") val residueCount: Int
+    @SerializedName("id") val id: Int = -1,
+    @SerializedName("book_id") val bookId: Int = -1,
+    @SerializedName("last_add_time") val lastAddTime: Date = Date(),
+    @SerializedName("residue_count") val residueCount: Int = -1
 ) : Parcelable

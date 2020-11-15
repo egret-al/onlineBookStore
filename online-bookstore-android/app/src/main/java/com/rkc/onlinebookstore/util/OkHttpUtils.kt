@@ -15,7 +15,8 @@ import kotlin.math.sign
 class OKHttpUtils {
 
     companion object {
-        private const val serverAddress = "http://100.66.30.183:9527"
+//        private const val serverAddress = "http://100.66.30.183:9527"
+        private const val serverAddress = "http://10.127.105.16:9527"
         private val okHttpClientBuilder = OkHttpClient().newBuilder().addInterceptor(SignInterceptor())
         private val jsonType = "application/json;charset=utf-8".toMediaTypeOrNull()
 
@@ -38,6 +39,7 @@ class OKHttpUtils {
          * post请求，json数据格式
          */
         fun asyncHttpPostJson(url: String, jsonObject: JSONObject, callback: Callback) {
+            Log.d("asyncHttpPostJson", jsonObject.toString())
             val requestBody = jsonObject.toString().toRequestBody(jsonType)
             okHttpClientBuilder.build().newCall(Request.Builder().url(serverAddress + url).post(requestBody).build()).also { it.enqueue(callback) }
         }

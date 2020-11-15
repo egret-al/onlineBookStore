@@ -2,9 +2,11 @@ package com.rkc.onlinebookstore.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +24,8 @@ import kotlinx.android.synthetic.main.home_list_book_item.view.*
  * @date 2020/11/11 17:36
  * @version 1.0
  */
+const val BOOK_BUNDLE_KEY = "book"
+
 class HomeBookItemAdapter : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<Book>() {
@@ -35,6 +39,15 @@ class HomeBookItemAdapter : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBa
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBookItemViewHolder {
         val holder = HomeBookItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_list_book_item, parent, false))
+        //创建ViewHolder时添加点击事件
+        holder.itemView.setOnClickListener {
+            //该book包含了bookResources，因此直接将数据存到bundle中，到详情页获取即可，不用再次请求后台服务器
+            val book = getItem(holder.absoluteAdapterPosition)
+            Bundle().apply {
+                putParcelable(BOOK_BUNDLE_KEY, book)
+                holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment, this)
+            }
+        }
         return holder
     }
 

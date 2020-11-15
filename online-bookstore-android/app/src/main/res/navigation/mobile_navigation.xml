@@ -9,12 +9,81 @@
         android:id="@+id/nav_home"
         android:name="com.rkc.onlinebookstore.view.home.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_mine"
         android:name="com.rkc.onlinebookstore.view.home.mine.MineFragment"
         android:label="@string/mine"
-        tools:layout="@layout/fragment_mine" />
+        tools:layout="@layout/fragment_mine" >
+        <action
+            android:id="@+id/action_nav_mine_to_orderListFragment"
+            app:destination="@id/orderListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.rkc.onlinebookstore.view.home.detail.BookDetailFragment"
+        android:label="图书详情"
+        tools:layout="@layout/fragment_book_detail" >
+        <action
+            android:id="@+id/action_bookDetailFragment_to_introductionFragment"
+            app:destination="@id/introductionFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_commentFragment"
+            app:destination="@id/commentFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_unpaidOrderFragment"
+            app:destination="@id/unpaidOrderFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/introductionFragment"
+        android:name="com.rkc.onlinebookstore.view.home.detail.IntroductionFragment"
+        android:label="图文介绍"
+        tools:layout="@layout/fragment_introduction" />
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.rkc.onlinebookstore.view.home.detail.CommentFragment"
+        android:label="评论"
+        tools:layout="@layout/fragment_comment" />
+    <fragment
+        android:id="@+id/nav_classify"
+        android:name="com.rkc.onlinebookstore.view.home.classify.ClassifyFragment"
+        android:label="@string/classify"
+        tools:layout="@layout/fragment_classify" >
+        <action
+            android:id="@+id/action_nav_classify_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/unpaidOrderFragment"
+        android:name="com.rkc.onlinebookstore.view.home.order.UnpaidOrderFragment"
+        android:label="待支付"
+        tools:layout="@layout/fragment_unpaid_order" >
+        <action
+            android:id="@+id/action_unpaidOrderFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_fade_enter" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderListFragment"
+        android:name="com.rkc.onlinebookstore.view.home.order.OrderListFragment"
+        android:label="订单列表"
+        tools:layout="@layout/fragment_order_list" />
 
 </navigation>
