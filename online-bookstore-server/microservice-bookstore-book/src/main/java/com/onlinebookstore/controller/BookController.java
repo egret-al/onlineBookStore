@@ -63,6 +63,15 @@ public class BookController {
     }
 
     /**
+     * 查询所有类型和对应的图书
+     * @return CommonplaceResult
+     */
+    @GetMapping("pub/selectAllTypeWithBook")
+    public CommonplaceResult selectAllTypeWithBook() {
+        return bookTypeService.selectAllWithBook();
+    }
+
+    /**
      * 新加图书类型
      * @param bookType 图书类型
      * @return 影响行数

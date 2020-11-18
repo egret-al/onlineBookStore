@@ -34,6 +34,11 @@ public class GatewayAuthorityFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         URI uri = request.getURI();
+        //安卓端不走jwt
+        if ("android".equals(request.getHeaders().getFirst("clientType"))) {
+            log.info("android客户端：" + uri);
+            return chain.filter(exchange);
+        }
         log.info("路径：" + uri + "\t" + uri.getPath());
         if (uri.getPath().contains("pri")) {
             //得到请求头

@@ -11,6 +11,12 @@ import com.onlinebookstore.entity.bookserver.BookType;
 public interface BookTypeService {
 
     /**
+     * 查询所有类型和对应的图书
+     * @return CommonplaceResult
+     */
+    CommonplaceResult selectAllWithBook();
+
+    /**
      * 查询所有类型
      * @return 图书类型集合
      */

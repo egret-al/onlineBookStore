@@ -1,6 +1,7 @@
 package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
+import com.onlinebookstore.entity.bookserver.Book;
 import com.onlinebookstore.entity.bookserver.BookType;
 import com.onlinebookstore.mapper.BookTypeMapper;
 import com.onlinebookstore.service.BookTypeService;
@@ -27,6 +28,28 @@ public class BookTypeServiceImpl implements BookTypeService {
 
     @Resource
     private RedisUtils redisUtils;
+
+    /**
+     * 查询所有类型和对应的图书
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult selectAllWithBook() {
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_TYPE_WITH_BOOK);
+        if (ObjectUtils.isEmpty(o)) {
+            List<BookType> bookTypes = bookTypeMapper.selectAllTypeWithBook(15);
+            if (bookTypes.size() > 0) {
+                try {
+                    redisUtils.set(BookConstantPool.SELECT_ALL_TYPE_WITH_BOOK, bookTypes, BookConstantPool.CACHE_TIME[3]);
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    e.printStackTrace();
+                }
+                return CommonplaceResult.buildSuccessNoMessage(bookTypes);
+            }
+        }
+        return CommonplaceResult.buildSuccessNoMessage(o);
+    }
 
     /**
      * 查询所有类型，因为类型数据很少变化，因此缓存1h

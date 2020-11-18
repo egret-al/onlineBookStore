@@ -22,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookResource implements Serializable {
 
+    private static final long serialVersionUID = -2864167884364020761L;
     /**
      * 自增长id
      */

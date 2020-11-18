@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author rkc
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BookType implements Serializable {
 
+    private static final long serialVersionUID = 1296533636978579980L;
     /**
      * 自增长id
      */
@@ -37,4 +39,9 @@ public class BookType implements Serializable {
      * 图标
      */
     private String img;
+
+    /**
+     * 该分类下的图书
+     */
+    private List<Book> books;
 }

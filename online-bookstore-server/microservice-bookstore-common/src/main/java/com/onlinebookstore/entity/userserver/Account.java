@@ -22,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Account implements Serializable {
 
+    private static final long serialVersionUID = -7190962404861599081L;
     /**
      * 登录账号
      */

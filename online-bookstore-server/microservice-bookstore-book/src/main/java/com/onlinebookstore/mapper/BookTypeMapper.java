@@ -14,6 +14,12 @@ import java.util.List;
 public interface BookTypeMapper {
 
     /**
+     * 查询所有类型下面的所有图书最新的count条图书
+     * @return List<BookType>
+     */
+    List<BookType> selectAllTypeWithBook(int count);
+
+    /**
      * 查询所有类型
      * @return 图书类型集合
      */

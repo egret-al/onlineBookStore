@@ -21,6 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -6686177318399301644L;
     /**
      * 主键自增长字段
      */

@@ -23,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Book implements Serializable {
 
+    private static final long serialVersionUID = 3798972939497431619L;
     /**
      * 自增长id
      */

@@ -22,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookBanner implements Serializable {
 
+    private static final long serialVersionUID = -271571376380759367L;
     /**
      * 自增长id
      */

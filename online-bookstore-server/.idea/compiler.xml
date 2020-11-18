@@ -7,11 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="microservice-bookstore-common" />
-        <module name="microservice-bookstore-order" />
-        <module name="microservice-bookstore-gateway" />
-        <module name="microservice-bookstore-user" />
         <module name="microservice-bookstore-book" />
+        <module name="microservice-bookstore-gateway" />
+        <module name="microservice-bookstore-order" />
+        <module name="microservice-bookstore-common" />
+        <module name="microservice-bookstore-user" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />

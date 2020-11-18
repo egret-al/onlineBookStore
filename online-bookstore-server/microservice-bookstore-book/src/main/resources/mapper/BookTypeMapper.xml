@@ -3,6 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.BookTypeMapper">
+    <resultMap id="TypeWithBookMapper" type="com.onlinebookstore.entity.bookserver.BookType">
+        <id column="sbt_id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="supplement" property="supplement" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+
+        <collection property="books" column="t_id" ofType="com.onlinebookstore.entity.bookserver.Book">
+            <id column="sb_id" property="id" jdbcType="INTEGER"/>
+            <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+            <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+            <result column="author" property="author" jdbcType="VARCHAR"/>
+            <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+            <result column="price" property="price" jdbcType="INTEGER"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+            <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
+            <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAllTypeWithBook" resultMap="TypeWithBookMapper">
+        select sbt.id sbt_id, type, supplement, img, sba.id sb_id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description
+        from sys_book_type sbt
+            left join sys_book sba on sbt.id = sba.t_id
+        where (
+            select count(sba.id)
+            from sys_book sbb
+            where sbb.t_id = sba.t_id
+            and sbb.id &lt;= sba.id
+        ) &lt;= #{count}
+        order by sba.create_time desc, sbt.id;
+    </select>
+
     <select id="selectAllType" resultType="com.onlinebookstore.entity.bookserver.BookType">
         select id, type, supplement, img
         from sys_book_type;

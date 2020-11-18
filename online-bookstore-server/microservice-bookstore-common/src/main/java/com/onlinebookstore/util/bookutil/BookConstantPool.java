@@ -43,5 +43,7 @@ public class BookConstantPool {
 
     public static final String SELECT_ALL_TYPE = "BookTypeServiceImpl.selectAllType";
 
+    public static final String SELECT_ALL_TYPE_WITH_BOOK = "BookTypeServiceImpl.selectAllTypeWithBook";
+
     public static final String SELECT_TYPE_BY_ID = "BookTypeServiceImpl.selectTypeById";
 }

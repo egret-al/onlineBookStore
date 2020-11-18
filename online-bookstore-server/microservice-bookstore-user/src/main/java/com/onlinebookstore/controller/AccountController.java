@@ -1,28 +1,18 @@
 package com.onlinebookstore.controller;
 
-import com.alibaba.nacos.common.util.UuidUtils;
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.AccountService;
-import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
-import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
-import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
 import com.onlinebookstore.util.userutil.UserConstantPool;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,11 +76,11 @@ public class AccountController {
      * @return json
      */
     @PostMapping("pub/registry")
-    public CommonplaceResult registry(@RequestBody AccountWithUser accountWithUser) {
-        accountWithUser.getAccount().setCreateTime(new Date());
-        accountWithUser.getUser().setLastLoginTime(new Date());
-        accountWithUser.getUser().setAccountUsername(accountWithUser.getAccount().getUsername());
-        return accountService.addAccount(accountWithUser.getAccount(), accountWithUser.getUser());
+    public CommonplaceResult registry(@JsonObject("account") Account account, @JsonObject("user") User user) {
+        account.setCreateTime(new Date());
+        user.setLastLoginTime(new Date());
+        user.setAccountUsername(account.getUsername());
+        return accountService.addAccount(account, user);
     }
 
     /**
@@ -193,15 +183,5 @@ public class AccountController {
         } catch (Exception e) {
             return CommonplaceResult.buildErrorNoData(e.getMessage());
         }
-    }
-
-    @Data
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    private static class AccountWithUser {
-
-        private Account account;
-        private User user;
     }
 }

@@ -22,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookStorage implements Serializable {
 
+    private static final long serialVersionUID = 7499509539829152468L;
     /**
      * 自增长id
      */
