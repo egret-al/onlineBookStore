@@ -84,6 +84,17 @@
         android:id="@+id/orderListFragment"
         android:name="com.rkc.onlinebookstore.view.home.order.OrderListFragment"
         android:label="订单列表"
-        tools:layout="@layout/fragment_order_list" />
+        tools:layout="@layout/fragment_order_list" >
+        <action
+            android:id="@+id/action_orderListFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.rkc.onlinebookstore.view.home.order.OrderDetailFragment"
+        android:label="订单详情"
+        tools:layout="@layout/fragment_order_detail" />
 
 </navigation>

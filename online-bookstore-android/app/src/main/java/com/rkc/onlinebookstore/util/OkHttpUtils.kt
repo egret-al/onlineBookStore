@@ -15,8 +15,9 @@ import kotlin.math.sign
 class OKHttpUtils {
 
     companion object {
-//        private const val serverAddress = "http://100.66.30.183:9527"
-        private const val serverAddress = "http://10.127.105.16:9527"
+        private const val serverAddress = "http://100.66.30.183:9527"
+//        private const val serverAddress = "http://10.127.105.16:9527"
+//        private const val serverAddress = "http://10.127.106.16:9527"
         private val okHttpClientBuilder = OkHttpClient().newBuilder().addInterceptor(SignInterceptor())
         private val jsonType = "application/json;charset=utf-8".toMediaTypeOrNull()
 
@@ -24,7 +25,7 @@ class OKHttpUtils {
          * 异步get请求
          */
         fun asyncHttpGet(url: String, callback: Callback) {
-            val request = Request.Builder().get().url(serverAddress + url).build()
+            val request = Request.Builder().delete().get().url(serverAddress + url).build()
             okHttpClientBuilder.build().newCall(request).also { it.enqueue(callback) }
         }
 
@@ -42,6 +43,13 @@ class OKHttpUtils {
             Log.d("asyncHttpPostJson", jsonObject.toString())
             val requestBody = jsonObject.toString().toRequestBody(jsonType)
             okHttpClientBuilder.build().newCall(Request.Builder().url(serverAddress + url).post(requestBody).build()).also { it.enqueue(callback) }
+        }
+
+        /**
+         * 异步delete请求
+         */
+        fun asyncHttpDelete(url: String, callback: Callback) {
+
         }
     }
 }

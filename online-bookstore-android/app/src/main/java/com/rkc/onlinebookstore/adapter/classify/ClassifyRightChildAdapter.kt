@@ -1,7 +1,6 @@
 package com.rkc.onlinebookstore.adapter.classify
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
-import com.rkc.onlinebookstore.adapter.BOOK_BUNDLE_KEY
+import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.book.Book
 import kotlinx.android.synthetic.main.classify_right_child_item.view.*
 

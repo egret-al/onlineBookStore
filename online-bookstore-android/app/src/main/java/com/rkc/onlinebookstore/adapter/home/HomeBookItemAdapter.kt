@@ -1,4 +1,4 @@
-package com.rkc.onlinebookstore.adapter
+package com.rkc.onlinebookstore.adapter.home
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable

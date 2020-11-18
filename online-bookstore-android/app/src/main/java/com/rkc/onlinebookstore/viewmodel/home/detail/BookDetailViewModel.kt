@@ -62,7 +62,9 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
     private fun fillInBook(book: Book?) {
         if (book == null) return
         OKHttpUtils.asyncHttpGet("/book-server/api/v1/book/pub/selectBookContainAllInfoById/${book.id}", object : Callback {
-            override fun onFailure(call: Call, e: IOException) { }
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("error", e.toString())
+            }
 
             override fun onResponse(call: Call, response: Response) {
                 val jsonObject = JSONObject(response.body?.string())

@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
-import com.rkc.onlinebookstore.adapter.BOOK_BUNDLE_KEY
+import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.model.order.ORDER_EXPIRE
 import com.rkc.onlinebookstore.model.order.ORDER_FINISHED

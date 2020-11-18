@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rkc.onlinebookstore.model.user.Account
+import com.rkc.onlinebookstore.model.user.User
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
@@ -46,9 +47,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     val jsonObject = JSONObject(response.body?.string())
                     if (jsonObject.getInt("code") == 1) {
                         val account = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").toString(), Account::class.java)
+                        val user = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").getJSONObject("user").toString(), User::class.java)
+                        //TODO 将用户信息存入sqlite
+
                         val edit = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).edit()
                         edit.putString("username", account.username)
                         edit.putString("password", account.password)
+                        edit.putString("nickname", user.nickname)
                         edit.apply()
                         //setValue(T) 必须在主线程中调用 , 而 postValue(T) 既可以在主线程中调用, 也可以在子线程中调用
                         _loginStatus.postValue(LOGIN_SUCCESS)

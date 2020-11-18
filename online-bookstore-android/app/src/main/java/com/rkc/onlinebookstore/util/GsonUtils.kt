@@ -15,17 +15,19 @@ import java.util.*
 class GsonUtils {
 
     companion object {
-        private val gsonBuilder = GsonBuilder().apply {
-            registerTypeAdapter(Date::class.java, object : JsonDeserializer<Date> {
-                @SuppressLint("SimpleDateFormat")
-                override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Date? {
-                    return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(json?.asString)
-                }
-            })
+        private val instance: Gson by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            GsonBuilder().apply {
+                registerTypeAdapter(Date::class.java, object : JsonDeserializer<Date> {
+                    @SuppressLint("SimpleDateFormat")
+                    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Date? {
+                        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(json?.asString)
+                    }
+                })
+            }.create()
         }
 
         fun getGson() : Gson {
-            return gsonBuilder.create()
+            return instance
         }
     }
 }

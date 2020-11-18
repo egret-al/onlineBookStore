@@ -1,4 +1,4 @@
-package com.rkc.onlinebookstore.adapter
+package com.rkc.onlinebookstore.adapter.book
 
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +17,9 @@ import kotlinx.android.synthetic.main.introduction_img_item.view.*
  * @date 2020/11/13 10:29
  * @version 1.0
  */
-class DetailIntroductionAdapter : ListAdapter<BookResource, DetailIntroductionViewHolder>(DiffCallBack) {
+class DetailIntroductionAdapter : ListAdapter<BookResource, DetailIntroductionViewHolder>(
+    DiffCallBack
+) {
 
     object DiffCallBack : DiffUtil.ItemCallback<BookResource>() {
         override fun areItemsTheSame(oldItem: BookResource, newItem: BookResource): Boolean {
@@ -30,8 +32,10 @@ class DetailIntroductionAdapter : ListAdapter<BookResource, DetailIntroductionVi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailIntroductionViewHolder {
-        val holder = DetailIntroductionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.introduction_img_item, parent, false))
-        return holder
+        return DetailIntroductionViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.introduction_img_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: DetailIntroductionViewHolder, position: Int) {

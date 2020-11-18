@@ -12,8 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
-import com.rkc.onlinebookstore.adapter.HomeBookItemAdapter
-import com.rkc.onlinebookstore.model.book.BookBanner
+import com.rkc.onlinebookstore.adapter.home.HomeBookItemAdapter
 import com.rkc.onlinebookstore.viewmodel.home.home.HomeViewModel
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer

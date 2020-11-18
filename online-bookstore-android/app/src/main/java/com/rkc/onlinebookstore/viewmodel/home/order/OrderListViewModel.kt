@@ -21,8 +21,33 @@ import java.io.IOException
  * @version 1.0
  */
 class OrderListViewModel(application: Application) : AndroidViewModel(application) {
-    private var _orderList = MutableLiveData<List<Order>>().apply { value = arrayListOf() }
+    private var _orderList = MutableLiveData<ArrayList<Order>>().apply { value = arrayListOf() }
     val orderList = _orderList
+
+    private val _orderDelete = MutableLiveData<Int>().apply { value = 0 }
+    val orderDelete = _orderDelete
+
+    /**
+     * 删除订单
+     */
+    fun deleteOrder(serial: String, index: Int) {
+        val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
+        OKHttpUtils.asyncHttpGet("/order-server/api/v1/order/pri/deleteOrder/$serial/$username", object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("error", e.toString())
+            }
+            override fun onResponse(call: Call, response: Response) {
+                val jsonObject = JSONObject(response.body?.string())
+                //保证数据的一致性
+                if (jsonObject.getInt("code") == 1) {
+                    //删除本地
+                    _orderList.value?.removeAt(index)
+                    //因为_orderList.value?.removeAt(index)的操作不能够被view层所观察到，因此我们需要定义一个操作成功的变量来提示view层进行recyclerView的刷新
+                    _orderDelete.postValue(_orderDelete.value?.plus(1))
+                }
+            }
+        })
+    }
 
     fun fetchOrderList() {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
