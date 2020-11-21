@@ -27,6 +27,16 @@
             app:destination="@id/orderListFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_mine_to_addressFragment"
+            app:destination="@id/addressFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_mine_to_mineInfoFragment"
+            app:destination="@id/mineInfoFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
@@ -46,6 +56,11 @@
         <action
             android:id="@+id/action_bookDetailFragment_to_unpaidOrderFragment"
             app:destination="@id/unpaidOrderFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_addressFragment"
+            app:destination="@id/addressFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -95,6 +110,58 @@
         android:id="@+id/orderDetailFragment"
         android:name="com.rkc.onlinebookstore.view.home.order.OrderDetailFragment"
         android:label="订单详情"
-        tools:layout="@layout/fragment_order_detail" />
+        tools:layout="@layout/fragment_order_detail" >
+        <action
+            android:id="@+id/action_orderDetailFragment_to_unpaidOrderFragment"
+            app:destination="@id/unpaidOrderFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.address.AddressFragment"
+        android:label="我的收货地址"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_addressEditFragment"
+            app:destination="@id/addressEditFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressEditFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.address.AddressEditFragment"
+        android:label="编辑收货地址"
+        tools:layout="@layout/fragment_address_edit" >
+        <action
+            android:id="@+id/action_addressEditFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mineInfoFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.info.MineInfoFragment"
+        android:label="我的信息"
+        tools:layout="@layout/fragment_mine_info">
+        <action
+            android:id="@+id/action_mineInfoFragment_to_modifyNicknameFragment"
+            app:destination="@id/modifyNicknameFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mineInfoFragment_to_modifyPhoneFragment"
+            app:destination="@id/modifyPhoneFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyNicknameFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.info.ModifyNicknameFragment"
+        android:label="修改昵称"
+        tools:layout="@layout/fragment_modify_nickname" />
+    <fragment
+        android:id="@+id/modifyPhoneFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.info.ModifyPhoneFragment"
+        android:label="修改手机"
+        tools:layout="@layout/fragment_modify_phone" />
 
 </navigation>

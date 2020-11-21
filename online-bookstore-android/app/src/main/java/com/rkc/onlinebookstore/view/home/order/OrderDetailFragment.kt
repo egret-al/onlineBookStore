@@ -8,16 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.gson.internal.bind.util.ISO8601Utils.format
 import com.rkc.onlinebookstore.R
+import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.adapter.order.ORDER_KEY
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.model.order.ORDER_EXPIRE
 import com.rkc.onlinebookstore.model.order.ORDER_FINISHED
 import com.rkc.onlinebookstore.model.order.ORDER_UN_PAYMENT
 import com.rkc.onlinebookstore.model.order.Order
+import com.rkc.onlinebookstore.viewmodel.home.detail.ORDER_CREATED_KEY
 import com.rkc.onlinebookstore.viewmodel.home.order.OrderDetailViewModel
 import kotlinx.android.synthetic.main.fragment_order_detail.*
+import java.text.DateFormat
+import java.util.*
 
 class OrderDetailFragment : Fragment() {
     private lateinit var orderDetailViewModel: OrderDetailViewModel
@@ -76,6 +82,21 @@ class OrderDetailFragment : Fragment() {
                 orderTextViewScore.text = "-"
                 orderTextViewPaymentTime.text = "--"
                 orderTextViewWhole.text = "-"
+                toUnpaidOrder.visibility = View.VISIBLE
+                toUnpaidOrder.setOnClickListener {
+                    //跳转到支付页面
+                    Bundle().apply {
+                        putParcelable(ORDER_CREATED_KEY, order)
+                        putParcelable(BOOK_BUNDLE_KEY, book)
+                        findNavController().navigate(R.id.action_orderDetailFragment_to_unpaidOrderFragment, this)
+                    }
+                }
+                val calendar = Calendar.getInstance().apply {
+                    time = order.createTime
+                    add(Calendar.MINUTE, 5)
+                }
+                remindTV.visibility = View.VISIBLE
+                remindTV.text = "订单过期时间：" + DateFormat.getDateTimeInstance().format(calendar.time)
             }
         }
         if (order.useScore == 1) {

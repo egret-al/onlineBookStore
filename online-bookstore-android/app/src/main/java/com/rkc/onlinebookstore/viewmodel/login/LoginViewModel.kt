@@ -26,6 +26,12 @@ const val LOGIN_SUCCESS = 1
 const val LOGIN_FAILURE = -1
 const val NET_ERROR = -2
 
+const val USER = "user"
+const val USERNAME = "username"
+const val PASSWORD = "password"
+const val NICKNAME = "nickname"
+const val DEFAULT_ADDRESS = "defaultAddress"
+
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private var _loginStatus = MutableLiveData<Int>().apply { value = 2 }
     val loginStatus: LiveData<Int> = _loginStatus
@@ -47,13 +53,14 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     val jsonObject = JSONObject(response.body?.string())
                     if (jsonObject.getInt("code") == 1) {
                         val account = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").toString(), Account::class.java)
-                        val user = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").getJSONObject("user").toString(), User::class.java)
+                        val user = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").getJSONObject("account").getJSONObject(USER).toString(), User::class.java)
                         //TODO 将用户信息存入sqlite
 
-                        val edit = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).edit()
-                        edit.putString("username", account.username)
-                        edit.putString("password", account.password)
-                        edit.putString("nickname", user.nickname)
+                        val edit = getApplication<Application>().getSharedPreferences(USER, Context.MODE_PRIVATE).edit()
+                        edit.putString(USERNAME, account.username)
+                        edit.putString(PASSWORD, account.password)
+                        edit.putString(NICKNAME, user.nickname)
+                        edit.putInt(DEFAULT_ADDRESS, user.defaultAddressId)
                         edit.apply()
                         //setValue(T) 必须在主线程中调用 , 而 postValue(T) 既可以在主线程中调用, 也可以在子线程中调用
                         _loginStatus.postValue(LOGIN_SUCCESS)

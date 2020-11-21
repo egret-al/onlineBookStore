@@ -29,5 +29,8 @@ data class Order(
     @SerializedName("end_time") val endTime: Date = Date(),
     @SerializedName("order_payment_status") val orderPaymentStatus: Int = -2,
     @SerializedName("use_score") val useScore: Int = -1,
-    @SerializedName("book_name") val bookName: String = ""
+    @SerializedName("book_name") val bookName: String = "",
+    @SerializedName("phone") val phone: String = "",
+    @SerializedName("receiver_name") val receiverName: String = "",
+    @SerializedName("address") val address: String = ""
 ) : Parcelable

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.model.book.BookStorage
 import com.rkc.onlinebookstore.model.order.Order
+import com.rkc.onlinebookstore.model.user.Address
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
@@ -46,6 +47,8 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
     //回调订单
     private val _orderCreated = MutableLiveData<Order>().apply { value = Order() }
     val orderCreated: LiveData<Order> = _orderCreated
+
+    val _hasDefaultAddress = MutableLiveData<Boolean>().apply { value = true }
 
     fun setBook(book: Book?) {
         //因为book中的bookStorage是该页面必须的属性，因此如果没有该属性。需要访问后端查询数据并填充
@@ -91,10 +94,39 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
         _sellingCountLiveData.postValue(_sellingCountLiveData.value?.minus(1))
     }
 
+    fun immediatelyPurchase(book: Book?) {
+        val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
+        if ("" == username || book == null) return
+        val jsonObject = JSONObject().apply {
+            put("account_username", username)
+        }
+        //请求服务器获取默认地址
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/address/pri/selectDefaultAddress", jsonObject,
+            object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.e("error", e.toString())
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val addressJs = JSONObject(response.body?.string())
+                    if (addressJs.getInt("code") == 1) {
+                        //得到默认address
+                        val address = GsonUtils.getGson().fromJson(addressJs.getJSONObject("data").toString(), Address::class.java)
+                        _hasDefaultAddress.postValue(true)
+                        Log.d("默认地址", address.toString())
+                        //请求后台服务器创建订单
+                        doImmediatelyPurchase(book, address)
+                    } else {
+                        _hasDefaultAddress.postValue(false)
+                    }
+                }
+            })
+    }
+
     /**
      * 立即购买
      */
-    fun immediatelyPurchase(book: Book?) {
+    private fun doImmediatelyPurchase(book: Book?, address: Address) {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
         if ("" == username || book == null) return
         val jsonObject = JSONObject().apply {
@@ -104,6 +136,9 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
             put("product_count", _sellingCountLiveData.value)
             put("use_score", _useScore.value)
             put("book_name", book.bookName)
+            put("phone", address.phone)
+            put("receiver_name", address.receiverName)
+            put("address", address.address)
         }
         OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/account/pri/createOrder", jsonObject, object :
             Callback{
