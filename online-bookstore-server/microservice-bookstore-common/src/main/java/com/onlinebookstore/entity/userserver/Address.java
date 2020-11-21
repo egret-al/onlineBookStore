@@ -19,6 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Address implements Serializable {
 
+    private static final long serialVersionUID = -6473025163554349305L;
     /**
      * 主键自增长字段
      */
@@ -29,6 +30,17 @@ public class Address implements Serializable {
      */
     @JsonProperty("account_username")
     private String accountUsername;
+
+    /**
+     * 收货电话号码
+     */
+    private String phone;
+
+    /**
+     * 签收人姓名
+     */
+    @JsonProperty("receiver_name")
+    private String receiverName;
 
     /**
      * 地址

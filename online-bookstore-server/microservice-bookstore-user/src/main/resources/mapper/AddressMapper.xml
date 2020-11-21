@@ -6,6 +6,8 @@
     <resultMap id="BaseAddressMap" type="com.onlinebookstore.entity.userserver.Address">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -13,6 +15,8 @@
     <resultMap id="AddressContainAccountMap" type="com.onlinebookstore.entity.userserver.Address">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <association property="address" column="a_id" javaType="com.onlinebookstore.entity.userserver.Account">
             <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -22,34 +26,50 @@
         </association>
     </resultMap>
 
-    <sql id="baseAddressInfo">
-        id, a_id, address
+    <sql id="addressFields">
+        id, a_id, phone, receiver_name, address
     </sql>
 
-    <sql id="baseAddressInfoNoId">
-        a_id, address
+    <sql id="addressFieldsNoId">
+        a_id, phone, receiver_name, address
     </sql>
 
-    <select id="selectOneById" resultType="com.onlinebookstore.entity.userserver.Address">
-        select <include refid="baseAddressInfo"/>
+    <update id="setDefaultAddress">
+        update sys_user
+        set sys_user.default_address_id = #{address_id}
+        where a_id = #{account};
+    </update>
+
+    <select id="selectDefaultAddress" resultMap="BaseAddressMap">
+        select id, a_id, phone, receiver_name, address
+        from sys_address sa
+        where id in (
+            select default_address_id
+            from sys_user su
+            where su.a_id = #{username}
+        );
+    </select>
+
+    <select id="selectOneById" resultMap="BaseAddressMap">
+        select <include refid="addressFields"/>
         from sys_address
         where id = #{id};
     </select>
 
-    <select id="selectAddressByAccountUsername" resultType="com.onlinebookstore.entity.userserver.Address">
-        select <include refid="baseAddressInfo"/>
+    <select id="selectAddressByAccountUsername" resultMap="BaseAddressMap">
+        select <include refid="addressFields"/>
         from sys_address
         where a_id = #{username};
     </select>
 
     <select id="selectAllAddress" resultType="com.onlinebookstore.entity.userserver.Address">
-        select <include refid="baseAddressInfo"/>
+        select <include refid="addressFields"/>
         from sys_address;
     </select>
 
     <insert id="addAddress" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.onlinebookstore.entity.userserver.Address">
-        insert into sys_address(<include refid="baseAddressInfoNoId"/>)
-        values (#{accountUsername}, #{address});
+        insert into sys_address(<include refid="addressFieldsNoId"/>)
+        values (#{accountUsername}, #{phone}, #{receiverName}, #{address});
     </insert>
 
     <delete id="deleteAddressById">
@@ -58,10 +78,15 @@
     </delete>
 
     <update id="updateAddress" parameterType="com.onlinebookstore.entity.userserver.Address">
-        update sys_address set address = #{address} where id = #{id};
+        update sys_address
+        set phone = #{phone}, receiver_name = #{receiverName}, address = #{address}
+        where id = #{id};
     </update>
 
     <select id="getAddressWithAccountById" resultType="com.onlinebookstore.entity.userserver.Address">
-
+        select *
+        from sys_address sad
+        left join sys_account sa on sa.username = sad.a_id
+        where sad.id = #{id};
     </select>
 </mapper>

@@ -62,6 +62,12 @@ public class User implements Serializable {
     private Date lastLoginTime;
 
     /**
+     * 默认地址的id值，数据库默认值-1，表示没有设置
+     */
+    @JsonProperty("default_address_id")
+    private Integer defaultAddressId = -1;
+
+    /**
      * 账号信息
      */
     private Account account;

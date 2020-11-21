@@ -19,11 +19,14 @@
         <result column="order_payment_status" property="orderPaymentStatus" jdbcType="INTEGER"/>
         <result column="use_score" property="useScore" jdbcType="INTEGER"/>
         <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="orderFields">
         serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
-        payment_time, delivery_time, end_time, order_payment_status, use_score, book_name
+        payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address
     </sql>
 
     <delete id="deleteOrder">
@@ -84,11 +87,10 @@
     <insert id="insertOrder" parameterType="com.onlinebookstore.entity.orderserver.Order">
         insert into sys_order(<include refid="orderFields"/>)
         values (#{serialNumber}, #{bookId}, #{usernameId}, #{orderContent}, #{productCount}, #{wholePrice},
-        #{obtainScore},
-        #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus},
+        #{obtainScore}, #{createTime}, #{paymentTime}, #{deliveryTime}, #{endTime}, #{orderPaymentStatus},
         <if test="useScore == null">0, </if>
-        <if test="useScore != null">1, </if>
-        #{bookName});
+        <if test="useScore != null">#{useScore}, </if>
+        #{bookName}, #{phone}, #{receiverName}, #{address});
     </insert>
 
     <update id="updateOrderStatus">
@@ -102,7 +104,7 @@
         set book_id = #{bookId}, username_id = #{usernameId}, order_content = #{orderContent}, product_count = #{productCount},
             whole_price = #{wholePrice}, obtain_score = #{obtainScore}, create_time = #{createTime}, payment_time = #{paymentTime},
             delivery_time = #{deliveryTime}, end_time = #{endTime}, order_payment_status = #{orderPaymentStatus},
-            use_score = #{useScore}, book_name = #{bookName}
+            use_score = #{useScore}, book_name = #{bookName}, phone = #{phone}, receiver_name = #{receiverName}, address = #{address}
         where serial_number = #{serialNumber};
     </update>
 

@@ -25,6 +25,39 @@ public class UserController {
     private UserService userService;
 
     /**
+     * 修改手机
+     * @param user user
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/modifyPhone")
+    public CommonplaceResult modifyPhone(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getPhone())) return CommonplaceResult.buildErrorNoData("数据不全");
+        return userService.modifyPhone(user);
+    }
+
+    /**
+     * 修改昵称
+     * @param user user
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/modifyNickname")
+    public CommonplaceResult modifyNickname(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getNickname())) return CommonplaceResult.buildErrorNoData("数据不全");
+        return userService.modifyNickname(user);
+    }
+
+    /**
+     * 修改性别
+     * @param user user
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/modifySex")
+    public CommonplaceResult modifySex(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getSex())) return CommonplaceResult.buildErrorNoData("数据不全");
+        return userService.modifySex(user);
+    }
+
+    /**
      * 查询全部用户，不包含账户信息
      * @return 数据集
      */
@@ -45,10 +78,6 @@ public class UserController {
 
     /**
      * 根据账号查询用户信息
-     * 数据格式
-     * {
-     *     'username': '1234567890'
-     * }
      * @param usernameMap 账号
      * @return json数据集
      */

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,8 +19,9 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminAccount {
+public class AdminAccount implements Serializable {
 
+    private static final long serialVersionUID = 2673305417780374317L;
     private Integer id;
     private String username;
     private String password;

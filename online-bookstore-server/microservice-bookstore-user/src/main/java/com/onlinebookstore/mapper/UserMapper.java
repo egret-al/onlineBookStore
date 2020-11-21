@@ -2,6 +2,7 @@ package com.onlinebookstore.mapper;
 
 import com.onlinebookstore.entity.userserver.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +13,30 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
+
+    /**
+     * 修改手机号
+     * @param phone 手机号
+     * @param username 账号
+     * @return 影响行数
+     */
+    int modifyPhone(@Param("phone") String phone, @Param("username") String username);
+
+    /**
+     * 修改昵称
+     * @param nickname 昵称
+     * @param username 账号
+     * @return 影响行数
+     */
+    int modifyNickname(@Param("nickname") String nickname, @Param("username") String username);
+
+    /**
+     * 更改性别
+     * @param username 账号
+     * @param sex 性别
+     * @return 影响行数
+     */
+    int modifySex(@Param("username") String username, @Param("sex") String sex);
 
     /**
      * 添加用户，通常在创建账户时在同一个事务中进行操作

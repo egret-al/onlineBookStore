@@ -19,9 +19,34 @@ import java.util.List;
 @Slf4j
 @Service
 public class AddressServiceImpl implements AddressService {
-
     @Resource
     private AddressMapper addressMapper;
+
+    /**
+     * 设置默认收货地址
+     * @param addressId 收货地址id
+     * @param account 账户
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult setDefaultAddress(Integer addressId, String account) {
+        return addressMapper.setDefaultAddress(addressId, account) > 0 ? CommonplaceResult.buildSuccessNoData("设置成功！")
+                : CommonplaceResult.buildErrorNoData("设置失败！");
+    }
+
+    /**
+     * 查询默认地址
+     * @param username 账号
+     * @return 地址
+     */
+    @Override
+    public CommonplaceResult selectDefaultAddress(String username) {
+        Address address = addressMapper.selectDefaultAddress(username);
+        if (ObjectUtils.isEmpty(address)) {
+            return CommonplaceResult.buildErrorNoData("没有默认地址");
+        }
+        return CommonplaceResult.buildSuccessNoMessage(address);
+    }
 
     /**
      * 根据id查询

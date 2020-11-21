@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
         order.setOrderPaymentStatus(0);
         //创建订单
         orderService.insertOrder(order);
-        //发送异步延时消息，测试为1分钟取消，上线改为30分钟
+        //发送异步延时消息，测试为5分钟取消，上线改为30分钟
         rocketMQMessageSendUtils.sendDelayMessageAsync(RocketMQConstantPool.Topic.R_ORDER_IMPORT, OrderOperationStatusEnum.CANCEL.status,
                 order, new SendCallback() {
                     @Override
@@ -168,6 +168,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CommonplaceResult getAccountContainUserByUsername(String username) {
         Account accountWithUser = accountMapper.getAccountContainUserByUsername(username);
+        if (accountWithUser != null) accountWithUser.setPassword("");
         return accountWithUser == null ? CommonplaceResult.buildErrorNoData("获取失败，不存在该用户！") :
                 CommonplaceResult.buildSuccess(accountWithUser, "获取成功！");
     }

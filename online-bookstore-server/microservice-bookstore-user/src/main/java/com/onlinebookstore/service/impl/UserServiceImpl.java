@@ -22,6 +22,39 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     /**
+     * 修改手机
+     * @param user 用户
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult modifyPhone(User user) {
+        return userMapper.modifyPhone(user.getPhone(), user.getAccountUsername()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                : CommonplaceResult.buildErrorNoData("修改失败");
+    }
+
+    /**
+     * 修改昵称
+     * @param user 用户
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult modifyNickname(User user) {
+        return userMapper.modifyNickname(user.getNickname(), user.getAccountUsername()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                : CommonplaceResult.buildErrorNoData("修改失败");
+    }
+
+    /**
+     * 修改性别
+     * @param user 用户
+     * @return 是否成功
+     */
+    @Override
+    public CommonplaceResult modifySex(User user) {
+        return userMapper.modifySex(user.getAccountUsername(), user.getSex()) > 1 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                : CommonplaceResult.buildErrorNoData("修改失败");
+    }
+
+    /**
      * 添加用户，通常在创建账户时在同一个事务中进行操作
      * @param user 用户信息类
      * @return 影响行数

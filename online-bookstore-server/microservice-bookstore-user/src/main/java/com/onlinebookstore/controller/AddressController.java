@@ -2,9 +2,11 @@ package com.onlinebookstore.controller;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Address;
+import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.AddressService;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +26,28 @@ public class AddressController {
     private AddressService addressService;
 
     /**
+     * 设置默认收货地址
+     * @param addressId 收货地址id
+     * @param account 账户
+     * @return CommonplaceResult
+     */
+    @GetMapping("setDefaultAddress/{var1}/{var2}")
+    public CommonplaceResult setDefaultAddress(@PathVariable("var1") int addressId, @PathVariable("var2") String account) {
+        return addressService.setDefaultAddress(addressId, account);
+    }
+
+    /**
+     * 根据用户获取默认地址
+     * @param user user
+     * @return CommonplaceResult
+     */
+    @PostMapping("selectDefaultAddress")
+    public CommonplaceResult selectDefaultAddress(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getAccountUsername())) return CommonplaceResult.buildErrorNoData("没有默认地址！");
+        return addressService.selectDefaultAddress(user.getAccountUsername());
+    }
+
+    /**
      * 根据地址的id查询地址信息
      * @param id id
      */
@@ -34,22 +58,15 @@ public class AddressController {
 
     /**
      * 根据账号查询所有绑定地址
-     * @param pojo map
+     * @param account account
      */
-    @PostMapping("selectByAccount")
-    public CommonplaceResult selectByAccount(@RequestBody Map<String, String> pojo) {
-        String username = pojo.get(UserConstantPool.USERNAME);
-        log.info("账号：" + username);
-        return addressService.selectAddressByAccountUsername(username);
+    @GetMapping("selectByAccount/{account}")
+    public CommonplaceResult selectByAccount(@PathVariable("account") String account) {
+        return addressService.selectAddressByAccountUsername(account);
     }
 
     /**
      * 添加地址
-     * 数据格式
-     * {
-     *     'account_username': 'xxx',
-     *     'address': 'xxx'
-     * }
      * @param address 地址对象
      */
     @PostMapping("addAddress")
@@ -68,15 +85,11 @@ public class AddressController {
 
     /**
      * 更新地址
-     * 数据格式
-     * {
-     *     'id': 'xxx',
-     *     'address': 'xxx'
-     * }
      * @param addr 地址信息
      */
     @PostMapping("updateAddress")
     public CommonplaceResult updateAddress(@RequestBody Address addr) {
+        log.info(String.valueOf(addr));
         return addressService.updateAddress(addr);
     }
 }

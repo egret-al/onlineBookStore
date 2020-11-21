@@ -11,6 +11,21 @@ import com.onlinebookstore.entity.userserver.Address;
 public interface AddressService {
 
     /**
+     * 设置默认收货地址
+     * @param addressId 收货地址id
+     * @param account 账户
+     * @return CommonplaceResult
+     */
+    CommonplaceResult setDefaultAddress(Integer addressId, String account);
+
+    /**
+     * 查询默认地址
+     * @param username 账号
+     * @return 地址
+     */
+    CommonplaceResult selectDefaultAddress(String username);
+
+    /**
      * 根据id查询地址
      * @param id id
      * @return 地址对象

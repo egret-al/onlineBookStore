@@ -23,103 +23,89 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/comment/CommentsAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/user/Comment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/user/User.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderDetailFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/detail/CommentViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/order/OrderDetailViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/ic_baseline_send_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/landscape.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/leaves.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/mountain.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/comment_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_order_detail.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/menu/activity_main_menu.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/online-bookstore-server.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/annotation/JsonObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/config/WebMvcConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/CommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/handler/JsonObjectArgResolverHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/CommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/CommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/CommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/CommentMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/address/AddressListAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/dao/UserDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/dao/UserDatabase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/user/Address.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/EditInfoFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/address/AddressEditFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/address/AddressFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/info/MineInfoFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/info/ModifyNicknameFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/info/ModifyPhoneFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/address/AddressEditViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/address/AddressViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/info/MineInfoViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/info/ModifyNicknameViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/info/ModifyPhoneViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/bottom_line.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/circular_head.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/ic_baseline_address.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/ic_baseline_brightness_1_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/top_bottom_line.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/drawable/top_line.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/address_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_address.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_address_edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_edit_info.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_mine_info.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_modify_nickname.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_modify_phone.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8/storage_v2/_src_/schema/bookstore_user.EnxIqg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8/storage_v2/_src_/schema/bookstore_user.EnxIqg.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/src/views/book/AddBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/src/views/book/AddBook.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/src/views/order/OrderOverview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/src/views/order/OrderOverview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/src/views/util/EChartGraph.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/src/views/util/EChartGraph.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/DetailIntroductionAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/book/DetailIntroductionAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/HomeBookItemAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/home/HomeBookItemAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/OrderListAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/order/OrderListAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyRightChildAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyRightChildAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/MainHomeActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/MainHomeActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/order/Order.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/order/Order.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/user/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/model/user/User.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/BookDetailFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/BookDetailFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/CommentFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/CommentFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/IntroductionFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/IntroductionFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/home/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/UnpaidOrderFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/UnpaidOrderFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/order/OrderListViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/order/OrderListViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/activity_main_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/activity_main_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/app_bar_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/content_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_comment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_comment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/menu/activity_main_drawer.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/MineFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/mine/MineFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderDetailFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderDetailFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/detail/BookDetailViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/detail/BookDetailViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/home/mine/MineViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/login/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/viewmodel/login/LoginViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_mine.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_mine.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_order_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_order_detail.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/dimens.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8/storage_v2/_src_/schema/bookstore_order.5_9xng.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2c1cc9da-7e7c-4a3f-bf4c-950e927a0cc8/storage_v2/_src_/schema/bookstore_order.5_9xng.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/microservice-bookstore-book.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/handler/JsonObjectArgResolverHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/handler/JsonObjectArgResolverHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookTypeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookTypeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookTypeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookTypeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookTypeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookTypeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/handler/JsonObjectArgResolverHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/handler/JsonObjectArgResolverHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookTypeMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookTypeMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookTypeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookTypeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookTypeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookTypeServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookTypeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookTypeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/microservice-bookstore-common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookBanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookBanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookType.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/BookType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/orderserver/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/orderserver/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/AdminAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/AdminAccount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/userserver/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/util/bookutil/BookConstantPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/util/bookutil/BookConstantPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/META-INF/microservice-bookstore-common.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/Book.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/Book.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookBanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookBanner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookResource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookStorage.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookStorage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookType.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/BookType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Comment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/orderserver/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/orderserver/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/Address.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/AdminAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/AdminAccount.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/userserver/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/util/bookutil/BookConstantPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/util/bookutil/BookConstantPool.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/microservice-bookstore-gateway.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/filter/GatewayAuthorityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/src/main/java/com/onlinebookstore/filter/GatewayAuthorityFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-gateway/target/classes/com/onlinebookstore/filter/GatewayAuthorityFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-gateway/target/classes/com/onlinebookstore/filter/GatewayAuthorityFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/microservice-bookstore-user.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController$AccountWithUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AccountController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-order/src/main/resources/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-order/src/main/resources/mapper/OrderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-order/target/classes/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-order/target/classes/mapper/OrderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/AddressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/AddressMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/AddressService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AddressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AddressServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AddressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/AddressMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AddressController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/AddressController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/AddressMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/AddressMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/mapper/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AddressService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/AddressService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AddressServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AddressServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AddressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/AddressMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/mapper/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/detail/component/BookDetailInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/detail/component/BookDetailInfo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +176,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../JavaCode/temp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../androidCode/jetpack/server" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -203,7 +189,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.34367815" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -434,7 +420,11 @@
       <workItem from="1605617868322" duration="68000" />
       <workItem from="1605618104952" duration="1997000" />
       <workItem from="1605620381751" duration="3293000" />
-      <workItem from="1605686923779" duration="13194000" />
+      <workItem from="1605686923779" duration="15300000" />
+      <workItem from="1605751058754" duration="18363000" />
+      <workItem from="1605831163184" duration="8310000" />
+      <workItem from="1605862581239" duration="14963000" />
+      <workItem from="1605920981826" duration="14381000" />
     </task>
     <servers />
   </component>
@@ -474,11 +464,11 @@
     </state>
     <state x="361" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1599732119850" />
     <state x="361" y="79" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1602297729250" />
-    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser" timestamp="1605613484514">
+    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser" timestamp="1605968027912">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="574" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1601512680549" />
-    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1605613484514" />
+    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1605968027912" />
     <state x="516" y="253" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog" timestamp="1602146142388">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -495,51 +485,51 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="450" height="618" key="DebuggerActiveHint/0.0.1536.864@0.0.1536.864" timestamp="1604882114390" />
-    <state x="542" y="178" key="FileChooserDialogImpl" timestamp="1605619455344">
+    <state x="542" y="178" key="FileChooserDialogImpl" timestamp="1605831458429">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="542" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1601543705673" />
-    <state x="542" y="178" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1605619455344" />
-    <state width="1199" height="385" key="GridCell.Tab.0.bottom" timestamp="1605706594577">
+    <state x="542" y="178" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1605831458429" />
+    <state width="1223" height="332" key="GridCell.Tab.0.bottom" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1605706594577" />
-    <state width="1199" height="385" key="GridCell.Tab.0.center" timestamp="1605706594573">
+    <state width="1223" height="332" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.0.center" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1605706594573" />
-    <state width="1199" height="385" key="GridCell.Tab.0.left" timestamp="1605706594572">
+    <state width="1223" height="332" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.0.left" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1605706594572" />
-    <state width="1199" height="385" key="GridCell.Tab.0.right" timestamp="1605706594577">
+    <state width="1223" height="332" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.0.right" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1605706594577" />
-    <state width="1199" height="385" key="GridCell.Tab.1.bottom" timestamp="1605706594578">
+    <state width="1223" height="332" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.1.bottom" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1605706594578" />
-    <state width="1199" height="385" key="GridCell.Tab.1.center" timestamp="1605706594578">
+    <state width="1223" height="332" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.1.center" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1605706594578" />
-    <state width="1199" height="385" key="GridCell.Tab.1.left" timestamp="1605706594578">
+    <state width="1223" height="332" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.1.left" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1605706594578" />
-    <state width="1199" height="385" key="GridCell.Tab.1.right" timestamp="1605706594578">
+    <state width="1223" height="332" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
+    <state width="1223" height="332" key="GridCell.Tab.1.right" timestamp="1605968359177">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1152" height="351" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1601565378006" />
-    <state width="1199" height="385" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1605706594578" />
+    <state width="1223" height="332" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1605968359177" />
     <state width="1197" height="356" key="GridCell.Tab.2.bottom" timestamp="1604883770980">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -560,24 +550,29 @@
     </state>
     <state width="1177" height="330" key="GridCell.Tab.2.right/0.0.1536.834@0.0.1536.834" timestamp="1600872247100" />
     <state width="1197" height="356" key="GridCell.Tab.2.right/0.0.1536.864@0.0.1536.864" timestamp="1604883770980" />
-    <state x="349" y="159" key="IDE.errors.dialog" timestamp="1605353511973">
+    <state x="349" y="159" key="IDE.errors.dialog" timestamp="1605883332654">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="349" y="153" key="IDE.errors.dialog/0.0.1536.834@0.0.1536.834" timestamp="1600246967145" />
-    <state x="349" y="159" key="IDE.errors.dialog/0.0.1536.864@0.0.1536.864" timestamp="1605353511973" />
-    <state x="147" y="30" width="1130" height="708" key="SettingsEditor" timestamp="1605618130874">
+    <state x="349" y="159" key="IDE.errors.dialog/0.0.1536.864@0.0.1536.864" timestamp="1605883332654" />
+    <state x="147" y="30" width="1130" height="708" key="SettingsEditor" timestamp="1605862701269">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="108" y="33" width="1283" height="738" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1601719728639" />
-    <state x="147" y="30" width="1130" height="708" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1605618130874" />
-    <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599809121300">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="147" y="30" width="1130" height="708" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1605862701269" />
+    <state x="660" y="315" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1605873321514">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="660" y="304" width="339" height="502" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1599809121300" />
+    <state x="660" y="315" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.864@0.0.1536.864" timestamp="1605873321514" />
     <state x="683" y="364" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1599733946002">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="683" y="364" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.834@0.0.1536.834" timestamp="1599733946002" />
+    <state x="300" y="135" key="com.intellij.database.view.ui.DatabasePreviewDialog" timestamp="1605754057995">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="300" y="135" key="com.intellij.database.view.ui.DatabasePreviewDialog/0.0.1536.864@0.0.1536.864" timestamp="1605754057995" />
     <state x="462" y="141" width="617" height="552" key="find.popup" timestamp="1600822566689">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -591,11 +586,11 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1605187762448" />
-    <state x="431" y="161" width="672" height="703" key="search.everywhere.popup" timestamp="1605614807300">
+    <state x="431" y="161" width="672" height="703" key="search.everywhere.popup" timestamp="1605882157344">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1601030016847" />
-    <state x="431" y="161" width="672" height="703" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1605614807300" />
+    <state x="431" y="161" width="672" height="703" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1605882157344" />
     <state x="491" y="334" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1604919465494">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

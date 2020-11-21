@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,8 +21,9 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Order implements Serializable {
 
+    private static final long serialVersionUID = -2411642863150990666L;
     /**
      * 订单编号
      */
@@ -109,4 +111,20 @@ public class Order {
      */
     @JsonProperty("book_name")
     private String bookName;
+
+    /**
+     * 联系电话
+     */
+    private String phone;
+
+    /**
+     * 接收者
+     */
+    @JsonProperty("receiver_name")
+    private String receiverName;
+
+    /**
+     * 地址
+     */
+    private String address;
 }

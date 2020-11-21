@@ -2,6 +2,7 @@ package com.onlinebookstore.mapper;
 
 import com.onlinebookstore.entity.userserver.Address;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +13,21 @@ import java.util.List;
  */
 @Mapper
 public interface AddressMapper {
+
+    /**
+     * 设置默认收货地址
+     * @param addressId 收货地址id
+     * @param account 账户
+     * @return 影响行数
+     */
+    int setDefaultAddress(@Param("address_id") Integer addressId, @Param("account") String account);
+
+    /**
+     * 得到用户的默认地址，如果没有设置则有空
+     * @param username 账号
+     * @return 地址
+     */
+    Address selectDefaultAddress(String username);
 
     /**
      * 根据id查询地址

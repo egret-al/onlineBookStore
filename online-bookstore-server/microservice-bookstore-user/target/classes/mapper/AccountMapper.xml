@@ -26,6 +26,7 @@
             <result column="sex" property="sex" jdbcType="VARCHAR"/>
             <result column="phone" property="phone" jdbcType="VARCHAR"/>
             <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+            <result column="default_address_id" property="defaultAddressId" jdbcType="INTEGER"/>
         </association>
     </resultMap>
 
@@ -34,7 +35,7 @@
     </sql>
 
     <sql id="accountAssociationUser">
-        username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time
+        username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
     </sql>
 
     <insert id="addAccount" keyColumn="username" keyProperty="username">

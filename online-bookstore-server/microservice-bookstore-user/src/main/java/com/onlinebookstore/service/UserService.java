@@ -11,9 +11,30 @@ import com.onlinebookstore.entity.userserver.User;
 public interface UserService {
 
     /**
+     * 修改手机
+     * @param user 用户
+     * @return CommonplaceResult
+     */
+    CommonplaceResult modifyPhone(User user);
+
+    /**
+     * 修改昵称
+     * @param user 用户
+     * @return CommonplaceResult
+     */
+    CommonplaceResult modifyNickname(User user);
+
+    /**
+     * 更改性别
+     * @param user 用户
+     * @return CommonplaceResult
+     */
+    CommonplaceResult modifySex(User user);
+
+    /**
      * 添加用户，通常在创建账户时在同一个事务中进行操作
      * @param user 用户信息类
-     * @return 影响行数
+     * @return CommonplaceResult
      */
     CommonplaceResult addUser(User user);
 
