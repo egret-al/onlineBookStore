@@ -89,6 +89,14 @@ const routes = [{
     meta: {
       requireAuth: true
     }
+  },
+  {
+    path: '/address',
+    name: 'address',
+    component: () => import('../views/inner/other/address/Address.vue'),
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 

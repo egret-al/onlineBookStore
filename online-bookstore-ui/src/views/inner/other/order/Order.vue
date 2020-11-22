@@ -1,23 +1,15 @@
 <template>
   <div class="main">
     <ul>
-      <li
-        class="order-item"
-        v-for="item in orderList"
-        :key="item.serial_number"
-      >
+      <li class="order-item" v-for="item in orderList" :key="item.serial_number">
         <p>订单号：{{ item.serial_number }}</p>
         <p>购买数量：{{ item.product_count }}</p>
         <p>总计：{{ item.whole_price }}</p>
         <p>订单内容：{{ item.order_content }}</p>
         <p>创建时间：{{ item.create_time }}</p>
         <div class="operation">
-          <cube-button class="detail" @click="toOrderDetail(item.serial_number)"
-            >查看详情</cube-button
-          >
-          <cube-button class="delete" @click="deleteOrder(item.serial_number)"
-            >删除</cube-button
-          >
+          <cube-button class="detail" @click="toOrderDetail(item.serial_number)">查看详情</cube-button>
+          <cube-button class="delete" @click="deleteOrder(item.serial_number)">删除</cube-button>
         </div>
       </li>
     </ul>

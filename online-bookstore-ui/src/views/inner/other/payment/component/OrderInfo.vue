@@ -2,6 +2,9 @@
   <div>
     <div class="info">
       <ul>
+        <li>收货人：{{this.order.receiver_name}}</li>
+        <li>收货地址：{{this.order.address}}</li>
+        <li>联系电话：{{this.order.phone}}</li>
         <li>订单号：{{ this.order.serial_number }}</li>
         <li>订单创建时间：{{ this.order.create_time }}</li>
         <li>下单数量：{{ this.order.product_count }}本</li>
@@ -14,9 +17,7 @@
       </ul>
     </div>
     <div class="footer">
-      <cube-button class="cancel-button" @click="cancelOrder"
-        >取消订单</cube-button
-      >
+      <cube-button class="cancel-button" @click="cancelOrder">取消</cube-button>
       <cube-button class="pay-button" @click="pay">购买</cube-button>
     </div>
   </div>

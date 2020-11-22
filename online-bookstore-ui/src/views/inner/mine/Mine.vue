@@ -1,17 +1,14 @@
 <template>
   <div>
-    <img
-      class="headerimg"
-      src="https://cdn.pixabay.com/photo/2020/01/14/02/09/vapor-4763904_1280.jpg"
-      alt=""
-    />
+    <div class="head">
+      <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605784182040&di=ffd7c359f16e02a55265319741d57f6c&imgtype=0&src=http%3A%2F%2Fblog.gqylpy.com%2Fmedia%2Fai%2F2019-09%2F9a6d0d9d-1477-453d-843f-f3b7442390cb.png">
+      <div>
+        <p>{{this.user.nickname}}</p>
+        <p>{{this.username}}</p>
+      </div>
+    </div>
     <ul>
-      <li
-        v-for="item in mineArray"
-        class="mineitem"
-        @click="itemClick(item)"
-        :key="item.label"
-      >
+      <li v-for="item in mineArray" class="mineitem" @click="itemClick(item)" :key="item.label">
         <router-link :to="{ path: item.path }">
           <i class="icon-class" :class="item.icon"></i>
           <span class="minetitle">{{ item.label }}</span>
@@ -23,10 +20,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   components: {},
   data() {
     return {
+      user: {},
       mineArray: [
         {
           label: "我的信息",
@@ -34,19 +34,14 @@ export default {
           path: "/infomation",
         },
         {
-          label: "商品收藏",
-          icon: "cubeic-search",
-          path: "/collection",
-        },
-        {
-          label: "我的足迹",
-          icon: "cubeic-navigation",
-          path: "/footprint",
-        },
-        {
           label: "我的订单",
           icon: "cubeic-square-right",
           path: "/order",
+        },
+        {
+          label: '收货地址',
+          icon: 'cubeic-square-right',
+          path: '/address'
         },
         {
           label: "退出",
@@ -66,7 +61,21 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapState({
+      username: (state) => state.username,
+    }),
+  },
   mounted() {},
+  async created() {
+    //根据账号获取用户信息
+    const userRes = await this.$http.post('/user-server/api/v1/user/pri/getUserInfo', {
+      'username': this.username
+    })
+    if (userRes.code === 1) {
+      this.user = userRes.data
+    }
+  }
 };
 </script>
 <style lang="stylus" scoped>
@@ -82,7 +91,16 @@ export default {
   .minetitle
     display inline-block
     width 85%
-.headerimg
-  height 150px
+.head
+  margin-top 20px
+  height 200px
   width 100%
+  img
+    margin-top 10%
+    width 80px
+    height 40px
+  p
+    color #7E8C8D
+    margin-top 10px
+    font-size 14px
 </style>

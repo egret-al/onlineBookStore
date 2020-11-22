@@ -1,9 +1,6 @@
 <template>
   <div class="main">
-    <p
-      class="title"
-      style="text-align: left; padding-left: 10px; font-size: 18px"
-    >
+    <p class="title" style="text-align: left; padding-left: 10px; font-size: 18px">
       {{ bookData.book_name }}
     </p>
     <hr />
@@ -16,11 +13,7 @@
       <div class="purchase">
         购买数量：<br />
         <button class="sub" @click="subNumber">-</button>
-        <cube-input
-          readonly
-          class="purchase-number"
-          v-model="number"
-        ></cube-input>
+        <cube-input readonly class="purchase-number" v-model="number"></cube-input>
         <button class="add" @click="addNumber">+</button>
         <cube-validator :model="number" :rules="validatorNumber" />
         <cube-switch class="switch-use-score" v-model="useScore">
@@ -39,25 +32,12 @@
       </div>
 
       <div class="purchase-btn">
-        <cube-button class="buy" @click="immediatelyPurchase"
-          >立刻购买</cube-button
-        >
-        <cube-button class="add-cart" style="margin-left: 5px" @click="addCart"
-          >加入购物车</cube-button
-        >
+        <cube-button class="buy" @click="immediatelyPurchase">立刻购买</cube-button>
+        <cube-button class="add-cart" style="margin-left: 5px" @click="addCart">加入购物车</cube-button>
       </div>
       <div class="introduce">
-        <cube-button
-          class="picture-word-introduce"
-          @click="pictureAndWordIntroduce"
-          >图文介绍</cube-button
-        >
-        <cube-button
-          class="show-comment"
-          style="margin-left: 5px"
-          @click="showComment"
-          >查看评论</cube-button
-        >
+        <cube-button class="picture-word-introduce" @click="pictureAndWordIntroduce">图文介绍</cube-button>
+        <cube-button class="show-comment" style="margin-left: 5px" @click="showComment">查看评论</cube-button>
       </div>
     </div>
   </div>
@@ -106,34 +86,39 @@ export default {
     //直接购买
     async immediatelyPurchase() {
       if (typeof this.number === "number") {
-        //console.log('数据合法，发起下单请求！')
-        //发起请求创建订单
-        const result = await this.$http.post(
-          "/user-server/api/v1/account/pri/createOrder",
-          {
-            book_id: this.bookData.id,
-            username_id: this.username,
-            order_content: `下单了${this.number}本《${this.bookData.book_name}》`,
-            product_count: this.number,
-            use_score: this.useScore == true ? 1 : 0,
-          }
-        );
-        console.log(result);
-        const toast = this.$createToast({
-          txt: result.message,
-          type: "correct",
-          time: 1000,
-        });
-        toast.show();
-        //跳转到支付页面
-        let serialNumber = result.data.serial_number;
-        this.$router.push({
-          path: "/payment",
-          query: { serialNumber: serialNumber },
-        });
+        //请求服务器得到默认的收货地址
+        const defaultAddressRes = await this.$http.post('/user-server/api/v1/address/pri/selectDefaultAddress', {
+          'account_username': this.username
+        })
+        console.log(defaultAddressRes)
+        if (defaultAddressRes.code == 1) {
+          //发起创建订单的请求
+          const createOrderRes = await this.$http.post('/user-server/api/v1/account/pri/createOrder', {
+            'book_id': this.bookData.id,
+            'username_id': this.username,
+            'order_content': `下单了${this.number}本《${this.bookData.book_name}》`,
+            'product_count': this.number,
+            'use_score': this.useScore == true ? 1 : 0,
+            'book_name': this.bookData.book_name,
+            'phone': defaultAddressRes.data.phone,
+            'receiver_name': defaultAddressRes.data.receiver_name,
+            'address': defaultAddressRes.data.address
+          })
+          console.log(createOrderRes)
+          const toast = this.$createToast({
+            txt: createOrderRes.message,
+            type: 'correct',
+            time: 1000
+          })
+          toast.show()
+          let serialNumber = createOrderRes.data.serial_number
+          this.$router.push({
+            path: '/payment',
+            query: { serialNumber: serialNumber }
+          })
+        }
       } else {
-        //数据非法，归零
-        this.number = 0;
+        this.number = 0
       }
     },
 
