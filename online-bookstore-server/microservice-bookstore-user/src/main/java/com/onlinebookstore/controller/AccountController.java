@@ -31,6 +31,19 @@ public class AccountController {
     private AccountService accountService;
 
     /**
+     * 余额充值接口
+     * @param map 充值参数
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/topUpResidue")
+    public CommonplaceResult topUpResidue(@RequestBody Map<String, String> map) {
+        String username = map.get(UserConstantPool.USERNAME);
+        String count = map.get(UserConstantPool.COUNT);
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(count)) return CommonplaceResult.buildErrorNoData("数据不全！");
+        return accountService.topUpResidue(username, Integer.parseInt(count));
+    }
+
+    /**
      * 购买图书接口
      */
     @GetMapping("pri/purchaseBook/{serialNumber}")
@@ -125,23 +138,15 @@ public class AccountController {
 
     /**
      * 修改账号密码
-     * 数据格式：
-     * {
-     *     'username': '1234567890',
-     *     'oldPassword': 'xxxxxx',
-     *     'newPassword': 'xxxxxx'
-     * }
-     * @param modifyInfo 存放账号、旧密码、新密码的map
      * @return 数据集
      */
     @PostMapping("pri/modifyPassword")
-    public CommonplaceResult modifyPasswordByUsername(@RequestBody Map<String, String> modifyInfo) {
-        String username = modifyInfo.get(UserConstantPool.USERNAME);
-        String oldPassword = modifyInfo.get(UserConstantPool.OLD_PASSWORD);
-        String newPassword = modifyInfo.get(UserConstantPool.NEW_PASSWORD);
-        log.info(username + "\t" + oldPassword + "\t" + newPassword);
+    public CommonplaceResult modifyPasswordByUsername(@RequestBody Map<String, String> map) {
+        String username = map.get("username");
+        String oldPassword = map.get("oldPassword");
+        String newPassword = map.get("newPassword");
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
-            return CommonplaceResult.buildErrorNoData("信息不全！修改失败！");
+            return CommonplaceResult.buildErrorNoData("数据不全！");
         }
         return accountService.modifyPasswordByUsername(username, oldPassword, newPassword);
     }
@@ -173,6 +178,7 @@ public class AccountController {
      * }
      * @param operateInfo 前端传递的信息
      */
+    @Deprecated
     @PostMapping("pri/operateBalance")
     public CommonplaceResult operateBalance(@RequestBody Map<String, Object> operateInfo) {
         try {

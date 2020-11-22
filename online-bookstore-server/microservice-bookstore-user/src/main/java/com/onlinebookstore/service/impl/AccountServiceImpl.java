@@ -58,6 +58,20 @@ public class AccountServiceImpl implements AccountService {
     private RocketMQMessageSendUtils rocketMQMessageSendUtils;
 
     /**
+     * 充值余额
+     * @param username 账号
+     * @param count 数量
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult topUpResidue(String username, int count) {
+        //TODO 结合微信支付，应该先扣除微信余额再进行添加，并且需要进行事务控制
+        if (count <= 0) return CommonplaceResult.buildErrorNoData("非法操作！");
+        return accountMapper.modifyBalance(username, count) > 0 ? CommonplaceResult.buildSuccessNoData("充值成功！") :
+                CommonplaceResult.buildErrorNoData("充值失败！");
+    }
+
+    /**
      * 创建订单
      * @param order 订单
      */
@@ -140,24 +154,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
-     * 根据账号修改密码
-     * @param username 账号
-     * @param oldPassword 旧密码
-     * @param password 新密码
-     * @return 影响行数
+     * 修改密码
+     * @param newPassword 新密码
+     * @return CommonplaceResult
      */
     @Override
-    public CommonplaceResult modifyPasswordByUsername(String username, String oldPassword, String password) {
-        //验证账号密码是否正确，如果正确则直接进行修改操作，否则修改失败
-        Account account = accountMapper.selectAccountByUsernameAndPassword(username, oldPassword);
-        if (account == null) {
-            //密码错误，匹配失败
-            log.warn(username + "密码错误，修改失败！");
-            return CommonplaceResult.buildErrorNoData("修改失败，密码错误！");
-        }
-        //匹配成功，可以进行修改操作
-        int row = accountMapper.modifyPasswordByUsername(username, password);
-        return row > 0 ? CommonplaceResult.buildSuccessNoData("修改成功！") : CommonplaceResult.buildErrorNoData("密码不能和旧密码相同！");
+    public CommonplaceResult modifyPasswordByUsername(String username, String oldPassword, String newPassword) {
+        return accountMapper.modifyPasswordByUsername(username, oldPassword, newPassword) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                : CommonplaceResult.buildErrorNoData("修改失败，账号或密码错误！");
     }
 
     /**

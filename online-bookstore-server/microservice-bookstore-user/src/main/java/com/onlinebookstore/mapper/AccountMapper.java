@@ -43,11 +43,13 @@ public interface AccountMapper {
     List<Account> selectAllAccount();
 
     /**
-     * 根据账号修改密码
+     * 修改密码
      * @param username 账号
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
      * @return 影响行数
      */
-    int modifyPasswordByUsername(@Param("username") String username, @Param("password") String password);
+    int modifyPasswordByUsername(@Param("username") String username, @Param("oldPassword") String oldPassword, @Param("newPassword") String newPassword);
 
     /**
      * 根据账号修改积分

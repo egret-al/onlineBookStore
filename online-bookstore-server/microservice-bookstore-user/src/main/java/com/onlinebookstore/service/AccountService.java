@@ -13,6 +13,13 @@ import java.util.List;
  * @date 2020/9/11 15:43
  */
 public interface AccountService {
+    /**
+     * 充值余额
+     * @param username 账号
+     * @param count 数量
+     * @return CommonplaceResult
+     */
+    CommonplaceResult topUpResidue(String username, int count);
 
     /**
      * 创建订单
@@ -42,13 +49,11 @@ public interface AccountService {
     List<Account> selectAllAccount();
 
     /**
-     * 根据账号修改密码
-     * @param username 账号
-     * @param oldPassword 旧密码
-     * @param password 新密码
-     * @return 影响行数
+     * 修改密码
+     * @param newPassword 新密码
+     * @return CommonplaceResult
      */
-    CommonplaceResult modifyPasswordByUsername(String username, String oldPassword, String password);
+    CommonplaceResult modifyPasswordByUsername(String username, String oldPassword, String newPassword);
 
 
     /**

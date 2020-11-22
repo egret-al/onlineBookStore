@@ -63,8 +63,8 @@
     
     <update id="modifyPasswordByUsername">
         update sys_account
-        set password = #{password}
-        where username = #{username};
+        set password = #{newPassword}
+        where username = #{username} and password = #{oldPassword};
     </update>
 
     <update id="modifyScoreByUsername">
