@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -31,7 +32,8 @@ class MineInfoFragment : Fragment() {
             MineInfoViewModel::class.java)
         load()
         mineInfoViewModel.fetchUserAndAccount()
-        updatePassword.setOnClickListener {  }
+        //修改密码
+        updatePassword.setOnClickListener { findNavController().navigate(R.id.action_mineInfoFragment_to_modifyPasswordFragment, null) }
 
         sexRG.setOnCheckedChangeListener { group, checkedId ->
             run {
@@ -57,6 +59,13 @@ class MineInfoFragment : Fragment() {
             Bundle().apply {
                 putParcelable(ACCOUNT_BUNDLE_KEY, mineInfoViewModel.accountLiveData.value)
                 findNavController().navigate(R.id.action_mineInfoFragment_to_modifyPhoneFragment, this)
+            }
+        }
+        //余额充值
+        addResidue.setOnClickListener {
+            Bundle().apply {
+                putParcelable(ACCOUNT_BUNDLE_KEY, mineInfoViewModel.accountLiveData.value)
+                findNavController().navigate(R.id.action_mineInfoFragment_to_topUpFragment, this)
             }
         }
     }

@@ -16,7 +16,7 @@ data class Account(
     @SerializedName("username") var username: String = "",
     @SerializedName("password") var password: String = "",
     @SerializedName("score") var score: Int = 0,
-    @SerializedName("create_time") var createTime: Date = Date(),
+    @SerializedName("create_time") var createTime: Date? = null,
     @SerializedName("balance") var balance: Int = 0,
 ) : Parcelable {
     @IgnoredOnParcel

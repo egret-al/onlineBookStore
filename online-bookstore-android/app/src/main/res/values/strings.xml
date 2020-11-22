@@ -117,4 +117,22 @@
     <string name="modify_password">修改密码</string>
     <string name="male">男</string>
     <string name="female">女</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="top_up">充值</string>
+    <string name="top_up_account">充值账号</string>
+    <string name="count_topped_up">充值金额</string>
+    <string name="receiver2">收货人：</string>
+    <string name="receiving_address2">收货地址：</string>
+    <string name="phone2">手机号码：</string>
+
+    <string-array name="alternative_count">
+        <item>6</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
 </resources>

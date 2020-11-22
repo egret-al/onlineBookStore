@@ -152,6 +152,16 @@
             app:destination="@id/modifyPhoneFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mineInfoFragment_to_modifyPasswordFragment"
+            app:destination="@id/modifyPasswordFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mineInfoFragment_to_topUpFragment"
+            app:destination="@id/topUpFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/modifyNicknameFragment"
@@ -163,5 +173,15 @@
         android:name="com.rkc.onlinebookstore.view.home.mine.info.ModifyPhoneFragment"
         android:label="修改手机"
         tools:layout="@layout/fragment_modify_phone" />
+    <fragment
+        android:id="@+id/modifyPasswordFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.info.ModifyPasswordFragment"
+        android:label="修改密码"
+        tools:layout="@layout/fragment_modify_password" />
+    <fragment
+        android:id="@+id/topUpFragment"
+        android:name="com.rkc.onlinebookstore.view.home.mine.info.TopUpFragment"
+        android:label="余额充值"
+        tools:layout="@layout/fragment_top_up" />
 
 </navigation>

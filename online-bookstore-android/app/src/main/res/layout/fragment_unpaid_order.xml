@@ -178,10 +178,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/order_serial"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView71" />
 
     <TextView
         android:id="@+id/unpaidTextViewSerialNumber"
@@ -275,4 +275,63 @@
         app:layout_constraintBottom_toBottomOf="@+id/unpaidButtonCancelOrder"
         app:layout_constraintStart_toEndOf="@+id/unpaidButtonCancelOrder"
         app:layout_constraintTop_toTopOf="@+id/unpaidButtonCancelOrder" />
+
+    <TextView
+        android:id="@+id/textView65"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="@string/receiver2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+    <TextView
+        android:id="@+id/receiverTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/receiver_name_example"
+        app:layout_constraintBottom_toBottomOf="@+id/textView65"
+        app:layout_constraintStart_toEndOf="@+id/textView65"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+    <TextView
+        android:id="@+id/textView69"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/receiving_address2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView65" />
+
+    <TextView
+        android:id="@+id/receivingAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/address_example"
+        app:layout_constraintBottom_toBottomOf="@+id/textView69"
+        app:layout_constraintStart_toEndOf="@+id/textView69"
+        app:layout_constraintTop_toTopOf="@+id/textView69" />
+
+    <TextView
+        android:id="@+id/textView71"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/phone2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView69" />
+
+    <TextView
+        android:id="@+id/contactPhoneTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/phone_example"
+        app:layout_constraintBottom_toBottomOf="@+id/textView71"
+        app:layout_constraintStart_toEndOf="@+id/textView71"
+        app:layout_constraintTop_toTopOf="@+id/textView71" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.home.mine.info.TopUpFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/top_bottom_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView59"
+            android:theme="@style/labelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/top_up_account"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/accountToppedUpTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/account_example"
+            android:theme="@style/labelTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textView59"
+            app:layout_constraintStart_toEndOf="@+id/textView59"
+            app:layout_constraintTop_toTopOf="@+id/textView59" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bottom_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
+
+        <TextView
+            android:id="@+id/textView66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/account_residue"
+            android:theme="@style/labelTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/accountResidueTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/account_residue_example"
+            android:theme="@style/labelTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView66"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout13"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bottom_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
+
+        <TextView
+            android:id="@+id/textView68"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/count_topped_up"
+            android:theme="@style/labelTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:theme="@style/labelTextView"
+            android:id="@+id/alternativeSpinner"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView68"
+            android:entries="@array/alternative_count"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/topUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/top_up"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13" />
+</androidx.constraintlayout.widget.ConstraintLayout>

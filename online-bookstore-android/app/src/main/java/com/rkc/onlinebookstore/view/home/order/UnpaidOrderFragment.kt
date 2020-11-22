@@ -73,6 +73,9 @@ class UnpaidOrderFragment : Fragment() {
             .placeholder(R.drawable.book_placeholder)
             .into(unpaidImageViewMainCover)
 
+        receiverTV.text = order?.receiverName
+        receivingAddress.text = order?.address
+        contactPhoneTV.text = order?.phone
         unpaidTextViewSerialNumber.text = order?.serialNumber
         unpaidTextViewOrderCreateTime.text = order?.createTime.toString()
         unpaidTextViewProductCount.text = "${order?.productCount}本"
