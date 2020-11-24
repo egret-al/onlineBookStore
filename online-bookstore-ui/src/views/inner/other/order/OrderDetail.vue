@@ -21,30 +21,31 @@
           <li>订单号：{{ this.order.serial_number }}</li>
           <li>订单创建时间：{{ this.order.create_time }}</li>
           <li>下单数量：{{ this.order.product_count }}本</li>
-          <li v-if="this.order.order_payment_status == -1">
-            订单状态：<span class="expire">订单过期，请重新下单</span>
+
+          <li>订单状态：
+              <span v-if="this.order.order_payment_status == -1" class="expire">订单过期，请重新下单</span>
+              <span v-if="this.order.order_payment_status == 0" class="unpaid">未支付</span>
+              <span v-if="this.order.order_payment_status == 1" class="finish">已支付</span>
           </li>
-          <li v-if="this.order.order_payment_status == 0">
-            订单状态：<span class="unpayment">未支付</span>
-          </li>
-          <li v-if="this.order.order_payment_status == 1">
-            订单状态：<span class="unpayment">已支付</span>
-          </li>
-          <li v-if="this.order.order_payment_status == 1">
-            发货时间：{{ this.order.delivery_time }}
-          </li>
-          <li>可获积分：{{ this.order.obtain_score }}</li>
-          <li v-if="this.order.order_payment_status == 1">
-            支付时间：{{ this.order.payment_time }}
-          </li>
-          <li v-if="this.order.order_payment_status == 1">
-            使用积分抵扣：<span v-if="this.order.use_score == 1">是</span
-            ><span v-if="this.order.use_score != 1">否</span>
-          </li>
-          <li v-if="this.order.order_payment_status == 1">
-            支付账号：{{ this.order.username_id }}
-          </li>
-          <li>总计：{{ this.order.whole_price }}</li>
+          <li style="margin-top: 20px">收货人姓名：{{this.order.receiver_name}}</li>
+          <li>联系电话：{{this.order.phone}}</li>
+          <li>收货地址：{{this.order.address}}</li>
+          <div class="operation">
+            <cube-button @click="payment" class="to-pay" v-if="this.order.order_payment_status == 0">去支付</cube-button>
+          </div>
+          <div v-if="this.order.order_payment_status == 1">
+            <li>发货时间：{{ this.order.delivery_time }}</li>
+            <li>可获积分：{{ this.order.obtain_score }}</li>
+            <li>支付时间：{{ this.order.payment_time }}</li>
+            <li>
+              使用积分抵扣：<span v-if="this.order.use_score == 1">是</span>
+              <span v-if="this.order.use_score != 1">否</span>
+            </li>
+            <li>
+              支付账号：{{ this.order.username_id }}
+            </li>
+            <li>总计：{{ this.order.whole_price }}</li>
+          </div>
         </ul>
       </div>
     </div>
@@ -76,7 +77,11 @@ export default {
       book: {},
     };
   },
-  methods: {},
+  methods: {
+    payment() {
+      this.$router.push({ path: '/payment', query: { serialNumber: this.order.serial_number } })
+    }
+  },
   mounted() {},
 };
 </script>
@@ -103,12 +108,15 @@ export default {
         text-align left
         padding-left 10%
         margin-top 5px
+
 .order-info .info
   padding-top 20px
   width 100%
   .expire
+    color gray
+  .unpaid
     color red
-  .unpayment
+  .finish
     color green
   ul
     margin-top 10px
@@ -118,4 +126,16 @@ export default {
       text-align left
       padding-left 10%
       margin-top 3px
+  .operation
+    display flex
+    justify-content center
+    .to-pay
+      margin-top 30px
+      height 40px
+      line-height 0px
+      width 30%
+      font-size 13px
+      background-color #fff
+      color #26a2ff
+      border 1px solid #26a2ff
 </style>

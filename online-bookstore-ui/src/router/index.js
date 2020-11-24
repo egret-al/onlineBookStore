@@ -97,6 +97,62 @@ const routes = [{
     meta: {
       requireAuth: true
     }
+  },
+  {
+    path: '/address-edit',
+    name: 'addressEdit',
+    component: () => import('../views/inner/other/address/AddressEdit.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/address-add',
+    name: 'addressAdd',
+    component: () => import('../views/inner/other/address/AddressAdd.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/infomation',
+    name: 'infomation',
+    component: () => import('../views/inner/mine/info/MineInfo.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/modify-nickname',
+    name: 'modifyNickname',
+    component: () => import('../views/inner/mine/info/ModidyNickname.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/modify-password',
+    name: 'modifyPassword',
+    component: () => import('../views/inner/mine/info/ModifyPassword.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/modify-phone',
+    name: 'modifyPhone',
+    component: () => import('../views/inner/mine/info/ModifyPhone.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/top-up',
+    name: 'topUp',
+    component: () => import('../views/inner/mine/info/TopUp.vue'),
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 

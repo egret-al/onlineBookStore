@@ -4,9 +4,14 @@
       <li class="order-item" v-for="item in orderList" :key="item.serial_number">
         <p>订单号：{{ item.serial_number }}</p>
         <p>购买数量：{{ item.product_count }}</p>
-        <p>总计：{{ item.whole_price }}</p>
+        <p v-if="item.order_payment_status == 1">总计：{{ item.whole_price }}</p>
         <p>订单内容：{{ item.order_content }}</p>
         <p>创建时间：{{ item.create_time }}</p>
+        <p>订单状态：
+          <span v-if="item.order_payment_status == 1" class="finish">已完成</span>
+          <span v-if="item.order_payment_status == 0" class="unpaid">未支付</span>
+          <span v-if="item.order_payment_status == -1" class="expire">已过期</span>
+          </p>
         <div class="operation">
           <cube-button class="detail" @click="toOrderDetail(item.serial_number)">查看详情</cube-button>
           <cube-button class="delete" @click="deleteOrder(item.serial_number)">删除</cube-button>
@@ -101,6 +106,12 @@ export default {
     padding-top 10px
     font-size 13px
     padding-bottom 5px
+    .finish
+      color green
+    .expire
+      color gray
+    .unpaid
+      color red
     p
       text-align left
       padding-left 20px
