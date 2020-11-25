@@ -116,6 +116,16 @@
         sb.id, book_name, isbn, author, publisher, price, create_time, t_id, sbs.id as sid, main_cover, description, b_id, last_add_time, residue_count
     </sql>
 
+    <select id="selectBookByIds" resultMap="BookAssociationBookStorage">
+        select <include refid="bookAssociationBookStorage"/>
+        from sys_book sb
+        left join sys_book_storage sbs on sb.id = sbs.b_id
+        where sb.id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="addBook" useGeneratedKeys="true" keyProperty="id">
         insert into sys_book(book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description)
         values (#{bookName}, #{isbn}, #{author}, #{publisher}, #{price}, #{createTime}, #{typeId}, #{mainCover}, #{description});

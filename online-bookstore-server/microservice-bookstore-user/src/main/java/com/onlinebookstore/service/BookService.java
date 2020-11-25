@@ -5,6 +5,7 @@ import com.onlinebookstore.entity.bookserver.BookStorage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +16,14 @@ import java.util.Map;
  */
 @FeignClient("book-server")
 public interface BookService {
+
+    /**
+     * 根据id列表查询Book集合
+     * @param ids id列表
+     * @return Book集合
+     */
+    @PostMapping(value = "/api/v1/book/pri/selectBookByIds")
+    CommonplaceResult selectBookByIds(@RequestBody List<Integer> ids);
 
     /**
      * 得到所有图书的所有信息，包括库存和资源信息

@@ -13,6 +13,13 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * 根据id列表查询Book集合
+     * @param ids id列表
+     * @return Book集合
+     */
+    CommonplaceResult selectBookByIds(List<Integer> ids);
+
+    /**
      * 添加图书和资源
      * @param book book
      * @return CommonplaceResult

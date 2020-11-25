@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,19 @@ public class BookServiceImpl implements BookService {
 
     @Resource
     private RedisUtils redisUtils;
+
+    /**
+     * 根据id列表查询Book集合
+     * @param ids id列表
+     * @return Book集合
+     */
+    @Override
+    public CommonplaceResult selectBookByIds(List<Integer> ids) {
+        if (ids.size() == 0) {
+            return CommonplaceResult.buildSuccessNoMessage(new ArrayList<Book>());
+        }
+        return CommonplaceResult.buildSuccessNoMessage(bookMapper.selectBookByIds(ids));
+    }
 
     /**
      * 添加图书、资源和库存

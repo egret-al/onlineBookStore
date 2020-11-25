@@ -68,13 +68,13 @@
         values (#{accountUsername}, #{nickname}, #{birthday}, #{sex}, #{phone}, #{lastLoginTime}, -1);
     </insert>
 
-    <select id="selectUserByUsername" resultType="com.onlinebookstore.entity.userserver.User">
+    <select id="selectUserByUsername" resultMap="BaseUserMap">
         select <include refid="baseUserInfo"/>
         from sys_user
         where a_id = #{accountUsername};
     </select>
 
-    <select id="selectAllUser" resultType="com.onlinebookstore.entity.userserver.User">
+    <select id="selectAllUser" resultMap="BaseUserMap">
         select <include refid="baseUserInfo"/>
         from sys_user;
     </select>

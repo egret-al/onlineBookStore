@@ -15,6 +15,13 @@ import java.util.List;
 public interface BookMapper {
 
     /**
+     * 根据id列表查询Book集合
+     * @param ids id列表
+     * @return Book集合
+     */
+    List<Book> selectBookByIds(@Param("ids") List<Integer> ids);
+
+    /**
      * 添加图书
      * @param book 图书
      * @return 影响行数

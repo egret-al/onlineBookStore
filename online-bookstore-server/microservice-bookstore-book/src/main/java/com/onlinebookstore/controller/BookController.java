@@ -11,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +48,16 @@ public class BookController {
 
     @Resource
     private BookTypeService bookTypeService;
+
+    /**
+     * 根据id列表查询Book集合
+     * @param ids id列表
+     * @return Book集合
+     */
+    @PostMapping("pri/selectBookByIds")
+    public CommonplaceResult selectBookByIds(@RequestBody List<Integer> ids) {
+        return bookService.selectBookByIds(ids);
+    }
 
     /**
      * 添加图书和资源（图片）
