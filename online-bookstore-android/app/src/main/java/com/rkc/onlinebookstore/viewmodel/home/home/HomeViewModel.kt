@@ -49,6 +49,28 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
+     * 模糊查询
+     */
+    fun fuzzyMatch(str: String) {
+        OKHttpUtils.asyncHttpPostJson("/book-server/api/v1/book/pub/selectAllInfoLike", JSONObject().apply { put("book_name", str) },
+            object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.e("error", e.toString())
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObject = JSONObject(response.body?.string())
+                    if (jsonObject.getInt("code") == 1) {
+                        val res = GsonUtils.getGson().fromJson<List<Book>>(jsonObject.getJSONArray("data").toString(), getType(List::class.java, Book::class.java))
+                        _bookListLiveData.postValue(res)
+                    } else {
+                        Log.e(TAG, jsonObject.getString("message"))
+                    }
+                }
+            })
+    }
+
+    /**
      * 获取图书列表
      */
     fun fetchBookList() {
@@ -65,8 +87,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     val res = GsonUtils.getGson().fromJson<List<Book>>(str, getType(List::class.java, Book::class.java))
                     _bookListLiveData.postValue(res)
                 } else {
-                    //TODO 请求失败
-                    Log.e(TAG, "onResponse: 网络错误", )
+                    Log.e(TAG, jsonObject.getString("message"))
                 }
             }
         })

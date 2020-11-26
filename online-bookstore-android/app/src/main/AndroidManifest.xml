@@ -15,6 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".view.home.MainHomeActivity"
             android:label="@string/title_activity_main_home"/>
         <activity android:name=".view.login.MainActivity">

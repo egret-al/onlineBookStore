@@ -2,10 +2,10 @@ package com.rkc.onlinebookstore.view.home.home
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +24,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
+        //显示工具条
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -78,6 +80,29 @@ class HomeFragment : Fragment() {
 
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener { homeViewModel.fetchBookList() }
+    }
+
+    /**
+     * 之所以在fragment中写菜单是因为避免搜索框出现在该Activity下的所有fragment
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        //显示工具栏菜单
+        inflater.inflate(R.menu.main_home, menu)
+        val searchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
+        searchView.maxWidth = 1000
+        //添加文本监听器
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //进行模糊查询显示
+                homeViewModel.fuzzyMatch(newText!!)
+                return true
+            }
+        })
     }
 
     override fun onStart() {
