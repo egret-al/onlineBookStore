@@ -245,6 +245,17 @@ public class BookController {
     }
 
     /**
+     * 模糊查询：得到所有图书的所有信息，包括库存和资源信息
+     */
+    @PostMapping("pub/selectAllInfoLike")
+    public CommonplaceResult selectAllInfoLike(@RequestBody Book book) {
+        if (book.getBookName().length() == 0) {
+            return bookService.selectAllBookInfo();
+        }
+        return bookService.selectAllBookInfoLike(book.getBookName());
+    }
+
+    /**
      * 得到所有图书的信息，包括图书信息和库存信息
      */
     @GetMapping("pub/selectAllBookAndStorage")
@@ -258,6 +269,17 @@ public class BookController {
     @GetMapping("pub/selectBookAndResource")
     public CommonplaceResult selectBookAndResource() {
         return bookService.selectAllBookWithResource();
+    }
+
+    /**
+     * 模糊查询：得到所有的图书信息，包括图书信息和资源信息
+     */
+    @PostMapping("pub/selectBookAndResourceLike")
+    public CommonplaceResult selectBookAndResourceLike(@RequestBody Book book) {
+        if (book.getBookName().length() == 0) {
+            return bookService.selectAllBookWithResource();
+        }
+        return bookService.selectAllBookWithResourceLike(book.getBookName());
     }
 
     /**

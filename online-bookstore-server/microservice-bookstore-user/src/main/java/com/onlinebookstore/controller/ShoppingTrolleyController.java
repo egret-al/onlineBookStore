@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author rkc
@@ -80,6 +81,7 @@ public class ShoppingTrolleyController {
      */
     @PostMapping("insertShoppingTrolley")
     public CommonplaceResult insertShoppingTrolley(@RequestBody ShoppingTrolley shoppingTrolley) {
+        shoppingTrolley.setCreateTime(new Date());
         return shoppingTrolleyService.insertShoppingTrolley(shoppingTrolley);
     }
 

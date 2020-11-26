@@ -15,6 +15,20 @@ import java.util.List;
 public interface BookMapper {
 
     /**
+     * 模糊查询
+     * @param str 查询字符串
+     * @return 图书信息+资源信息
+     */
+    List<Book> selectAllBookWithResourceLike(String str);
+
+    /**
+     * 模糊查询
+     * @param str 查询字符串
+     * @return 图书信息+库存信息+资源信息
+     */
+    List<Book> selectAllBookInfoLike(String str);
+
+    /**
      * 根据id列表查询Book集合
      * @param ids id列表
      * @return Book集合

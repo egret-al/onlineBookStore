@@ -136,11 +136,28 @@
         from sys_book;
     </select>
 
+    <select id="selectAllBookInfoLike" resultMap="BookContainBookResourceWithStorage">
+        select <include refid="bookCollectionBookResourceWithBookStorage"/>
+        from sys_book_storage sbs
+        left join sys_book sb on sbs.b_id = sb.id
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        where book_name like concat('%', #{str}, '%')
+        order by sb.create_time desc;
+    </select>
+
     <select id="selectAllBookInfo" resultMap="BookContainBookResourceWithStorage">
         select <include refid="bookCollectionBookResourceWithBookStorage"/>
         from sys_book_storage sbs
         left join sys_book sb on sbs.b_id = sb.id
         left join sys_book_resource sbr on sb.id = sbr.b_id
+        order by sb.create_time desc;
+    </select>
+
+    <select id="selectAllBookWithResourceLike" resultMap="BookContainBookResource">
+        select <include refid="bookCollectionBookResource"/>
+        from sys_book sb
+        left join sys_book_resource sbr on sb.id = sbr.b_id
+        where book_name like concat('%', #{str}, '%')
         order by sb.create_time desc;
     </select>
 

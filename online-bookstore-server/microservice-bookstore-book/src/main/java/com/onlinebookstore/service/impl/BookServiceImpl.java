@@ -45,6 +45,49 @@ public class BookServiceImpl implements BookService {
     private RedisUtils redisUtils;
 
     /**
+     * @see BookServiceImpl#selectAllBookInfo 方法的模糊查询
+     * @param str 查询字符串
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult selectAllBookInfoLike(String str) {
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_INFO_LIKE + str);
+        if (!ObjectUtils.isEmpty(o)) {
+            //不为空说明缓存有数据，直接把redis中取出的数据返回
+            log.info("通过缓存读取的数据");
+            return CommonplaceResult.buildSuccessNoMessage(o);
+        }
+        List<Book> books = bookMapper.selectAllBookInfoLike(str);
+        if (ObjectUtils.isEmpty(books) || books.size() == 0) {
+            return CommonplaceResult.buildErrorNoData("数据异常！");
+        }
+        log.info("通过数据库读取的数据");
+        //加入redis缓存，时间1分钟+随机时间（秒）
+        long cacheTime = BookConstantPool.CACHE_TIME[1];
+        redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_INFO + str, books, cacheTime + randomUtils.getInt(100));
+        return CommonplaceResult.buildSuccessNoMessage(books);
+    }
+
+    /**
+     * @see BookServiceImpl#selectAllBookWithResource 方法的模糊查询
+     * @param str 查询字符串
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult selectAllBookWithResourceLike(String str) {
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_WITH_RESOURCE_LIKE + str);
+        if (!ObjectUtils.isEmpty(o)) {
+            return CommonplaceResult.buildSuccessNoMessage(o);
+        }
+        List<Book> books = bookMapper.selectAllBookWithResourceLike(str);
+        if (!ObjectUtils.isEmpty(books) && books.size() > 0) {
+            redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_WITH_RESOURCE_LIKE + str, books, BookConstantPool.CACHE_TIME[1]);
+            return CommonplaceResult.buildSuccessNoMessage(books);
+        }
+        return CommonplaceResult.buildErrorNoData("数据异常！");
+    }
+
+    /**
      * 根据id列表查询Book集合
      * @param ids id列表
      * @return Book集合

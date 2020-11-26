@@ -4,6 +4,7 @@ import com.onlinebookstore.entity.userserver.ShoppingTrolley;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public interface ShoppingTrolleyMapper {
      * @param shoppingTrolley 商品购物车
      * @return 影响行数
      */
-    int insertShoppingTrolley(ShoppingTrolley shoppingTrolley);
+    int insertShoppingTrolley(ShoppingTrolley shoppingTrolley) throws SQLIntegrityConstraintViolationException;
 
     /**
      * 改变收藏数量

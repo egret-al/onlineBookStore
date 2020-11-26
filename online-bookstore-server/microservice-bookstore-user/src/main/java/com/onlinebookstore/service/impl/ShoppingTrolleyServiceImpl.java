@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 /**
@@ -102,8 +103,12 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
         if (ObjectUtils.isEmpty(shoppingTrolley)) {
             return CommonplaceResult.buildErrorNoData("非法请求！");
         }
-        return shoppingTrolleyMapper.insertShoppingTrolley(shoppingTrolley) > 0 ? CommonplaceResult.buildSuccessNoData("添加成功！") :
-                CommonplaceResult.buildErrorNoData("添加失败！");
+        try {
+            shoppingTrolleyMapper.insertShoppingTrolley(shoppingTrolley);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return CommonplaceResult.buildErrorNoData("不能重复添加！");
+        }
+        return CommonplaceResult.buildSuccessNoData("添加成功！");
     }
 
     @Override
