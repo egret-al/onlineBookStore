@@ -183,5 +183,16 @@
         android:name="com.rkc.onlinebookstore.view.home.mine.info.TopUpFragment"
         android:label="余额充值"
         tools:layout="@layout/fragment_top_up" />
+    <fragment
+        android:id="@+id/nav_shopping"
+        android:name="com.rkc.onlinebookstore.view.home.shopping.ShoppingTrolleyFragment"
+        android:label="购物车"
+        tools:layout="@layout/fragment_shopping_trolley" >
+        <action
+            android:id="@+id/action_nav_shopping_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
 </navigation>

@@ -12,7 +12,7 @@ import kotlin.collections.ArrayList
  * @version 1.0
  */
 @Parcelize
-data class Book (
+data class Book(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("book_name") val bookName: String = "",
     @SerializedName("isbn") val isbn: String = "",
@@ -23,6 +23,6 @@ data class Book (
     @SerializedName("t_id") val typeId: Int = -1,
     @SerializedName("main_cover") val mainCover: String = "",
     @SerializedName("description") val description: String = "",
-    @SerializedName("bookResources") var bookResources: ArrayList<BookResource> = arrayListOf(),
+    @SerializedName("bookResources") var bookResources: ArrayList<BookResource>? = null,
     @SerializedName("bookStorage") var bookStorage: BookStorage = BookStorage()
 ) : Parcelable

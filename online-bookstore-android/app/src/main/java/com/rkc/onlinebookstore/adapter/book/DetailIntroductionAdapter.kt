@@ -17,9 +17,7 @@ import kotlinx.android.synthetic.main.introduction_img_item.view.*
  * @date 2020/11/13 10:29
  * @version 1.0
  */
-class DetailIntroductionAdapter : ListAdapter<BookResource, DetailIntroductionViewHolder>(
-    DiffCallBack
-) {
+class DetailIntroductionAdapter : ListAdapter<BookResource, DetailIntroductionViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<BookResource>() {
         override fun areItemsTheSame(oldItem: BookResource, newItem: BookResource): Boolean {

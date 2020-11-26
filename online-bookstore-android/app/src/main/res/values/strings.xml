@@ -126,6 +126,12 @@
     <string name="receiver2">收货人：</string>
     <string name="receiving_address2">收货地址：</string>
     <string name="phone2">手机号码：</string>
+    <string name="shopping_trolley">购物车</string>
+    <string name="count">数量：</string>
+    <string name="collect_count_example">2</string>
+    <string name="detail">查看详情</string>
+    <string name="collect_time">收藏时间：</string>
+    <string name="no_trolley">购物车为空！！！</string>
 
     <string-array name="alternative_count">
         <item>6</item>

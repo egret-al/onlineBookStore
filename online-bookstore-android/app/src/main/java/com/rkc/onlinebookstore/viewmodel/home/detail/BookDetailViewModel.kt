@@ -7,9 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rkc.onlinebookstore.model.book.Book
-import com.rkc.onlinebookstore.model.book.BookStorage
 import com.rkc.onlinebookstore.model.order.Order
 import com.rkc.onlinebookstore.model.user.Address
+import com.rkc.onlinebookstore.util.AbstractOkHttpCallback
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
@@ -48,11 +48,35 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
     private val _orderCreated = MutableLiveData<Order>().apply { value = Order() }
     val orderCreated: LiveData<Order> = _orderCreated
 
-    val _hasDefaultAddress = MutableLiveData<Boolean>().apply { value = true }
+    val hasDefaultAddress = MutableLiveData<Boolean>().apply { value = true }
+
+    private val _addSuccess = MutableLiveData<Int>().apply { value = 0 }
+    private val _addFailure = MutableLiveData<Int>().apply { value = 0 }
+    val addSuccess = _addSuccess
+    val addFailure = _addFailure
+
+    fun addToShoppingTrolley() {
+        val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
+        if ("" == username) return
+        val jo = JSONObject().apply {
+            put("book_id", book.value!!.id)
+            put("account_username", username)
+            put("collect_count", _sellingCountLiveData.value)
+        }
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/shopping/pri/insertShoppingTrolley", jo, object : AbstractOkHttpCallback() {
+            override fun doFailure() {
+                _addFailure.postValue(_addFailure.value?.plus(1))
+            }
+
+            override fun doSuccess() {
+                _addSuccess.postValue(_addSuccess.value?.plus(1))
+            }
+        })
+    }
 
     fun setBook(book: Book?) {
         //因为book中的bookStorage是该页面必须的属性，因此如果没有该属性。需要访问后端查询数据并填充
-        if (book?.bookStorage != null) {
+        if (book?.bookStorage != null && book.bookResources != null) {
             _book.postValue(book)
             return
         }
@@ -112,12 +136,12 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
                     if (addressJs.getInt("code") == 1) {
                         //得到默认address
                         val address = GsonUtils.getGson().fromJson(addressJs.getJSONObject("data").toString(), Address::class.java)
-                        _hasDefaultAddress.postValue(true)
+                        hasDefaultAddress.postValue(true)
                         Log.d("默认地址", address.toString())
                         //请求后台服务器创建订单
                         doImmediatelyPurchase(book, address)
                     } else {
-                        _hasDefaultAddress.postValue(false)
+                        hasDefaultAddress.postValue(false)
                     }
                 }
             })

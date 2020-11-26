@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -70,7 +69,7 @@ class BookDetailFragment : Fragment() {
             }
         }
         //加入购物车
-        detailButtonAddToCart.setOnClickListener {  }
+        detailButtonAddToCart.setOnClickListener { bookDetailViewModel.addToShoppingTrolley() }
         //查看评论
         detailButtonComment.setOnClickListener {
             Bundle().apply {
@@ -110,13 +109,16 @@ class BookDetailFragment : Fragment() {
             }
         })
         //观察是否存在默认收货地址
-        bookDetailViewModel._hasDefaultAddress.observe(viewLifecycleOwner, {
+        bookDetailViewModel.hasDefaultAddress.observe(viewLifecycleOwner, {
             if (!it) {
                 findNavController().navigate(R.id.action_bookDetailFragment_to_addressFragment)
                 //恢复初始属性，避免无法返回
-                bookDetailViewModel._hasDefaultAddress.value = true
+                bookDetailViewModel.hasDefaultAddress.value = true
             }
         })
+
+        bookDetailViewModel.addSuccess.observe(viewLifecycleOwner, { if (it != 0) Toast.makeText(requireContext(), "添加成功！", Toast.LENGTH_SHORT).show() })
+        bookDetailViewModel.addFailure.observe(viewLifecycleOwner, { if (it != 0) Toast.makeText(requireContext(), "不能重复添加！", Toast.LENGTH_SHORT).show() })
     }
 
     @SuppressLint("SetTextI18n")
