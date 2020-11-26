@@ -123,7 +123,28 @@ export default {
     },
 
     //加入购物车
-    addCart() {},
+    async addCart() {
+      const res = await this.$http.post('/user-server/api/v1/shopping/pri/insertShoppingTrolley', {
+        'book_id': this.bookData.id,
+        'account_username': this.username,
+        'collect_count': this.number
+      })
+      if (res.code === 1) {
+          const toast = this.$createToast({
+            txt: res.message,
+            type: 'correct',
+            time: 1000
+          })
+          toast.show()
+      } else {
+        const toast = this.$createToast({
+            txt: '不能重复添加！',
+            type: 'error',
+            time: 1000
+          })
+          toast.show()
+      }
+    },
 
     //图文信息（详细介绍）
     pictureAndWordIntroduce() {

@@ -1,56 +1,65 @@
 <template>
   <div class="main">
-    <div class="goods" v-for="(item, index) in cartArr" :key="index">
-      {{item.title}}
-      <div class="goodsRight">
-        <i class="cubeic-remove" @click="removeCart(index)"></i>
-        <span>{{item.cartCount}}</span>
-        <i class="cubeic-add" @click="addCart(index)"></i>
-      </div>
+    <div v-if="this.shoppingTrolleys.length == 0" class="no-shopping">
+      <span class="des">购物车为空！</span>
+      <router-link :to="{path: '/footer/index'}">
+        <span class="to-index">去购物</span>
+      </router-link>
     </div>
-    <cube-button style="margin: 10px 0;">下单</cube-button>
-    <cube-button @click="clearAll">清空购物车</cube-button>
+    <div class="shoppingList" v-if="this.shoppingTrolleys.length != 0">
+      <cart-item @refreshCart="refreshCart" v-for="item in shoppingTrolleys" :key="item.id" :shoppingTrolley="item"></cart-item>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
+import CartItem from './component/CartItem'
 
 export default {
-  components: {},
-  data() {
-    return {}
+  components: {
+    CartItem
   },
+
+  data() {
+    return {
+      shoppingTrolleys: []
+    }
+  },
+
   computed: {
     ...mapState({
-      cartArr: (state) => state.cartArray,
+      username: (state) => state.username,
     }),
   },
+
   methods: {
-    //减少商品
-    removeCart(index) {
-      this.$store.commit('subNumber', index)
-    },
-
-    //增加商品
-    addCart(index) {
-      this.$store.commit('addNumber', index)
-    },
-
-    //清空购物车
-    clearAll() {
-      this.$store.commit('clearAllCart')
-    },
+    async refreshCart() {
+      const res = await this.$http.post('/user-server/api/v1/shopping/pri/selectCompleteProductByAccount', {
+        'username': this.username
+      })
+      if (res.code === 1) {
+        this.shoppingTrolleys = res.data
+      }
+    }
   },
-  mounted() {},
+
+  mounted() {
+
+  },
+
+  async created() {
+    this.refreshCart()
+  }
 }
 </script>
 <style lang="stylus" scoped>
-.goods
-  padding 10px
-  text-align left
-  .goodsRight
-    float right
-  i
-    font-size 18px
+.main
+  margin-top 20px
+.no-shopping
+  padding-top 100px
+  width 100%
+  height 300px
+  .to-index
+    color blue
 </style>
