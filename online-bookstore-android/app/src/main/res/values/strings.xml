@@ -132,6 +132,7 @@
     <string name="detail">查看详情</string>
     <string name="collect_time">收藏时间：</string>
     <string name="no_trolley">购物车为空！！！</string>
+    <string name="no_book_message">暂无该类商品！</string>
 
     <string-array name="alternative_count">
         <item>6</item>

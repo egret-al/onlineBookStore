@@ -15,6 +15,11 @@
             app:destination="@id/bookDetailFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_bookTypeHomeFragment"
+            app:destination="@id/bookTypeHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -190,6 +195,17 @@
         tools:layout="@layout/fragment_shopping_trolley" >
         <action
             android:id="@+id/action_nav_shopping_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookTypeHomeFragment"
+        android:name="com.rkc.onlinebookstore.view.home.home.BookTypeHomeFragment"
+        android:label="类型"
+        tools:layout="@layout/fragment_book_type_home" >
+        <action
+            android:id="@+id/action_bookTypeHomeFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />

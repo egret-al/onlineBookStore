@@ -25,8 +25,10 @@ import kotlinx.android.synthetic.main.home_list_book_item.view.*
  * @version 1.0
  */
 const val BOOK_BUNDLE_KEY = "book"
+const val NAV_HOME = 1
+const val BOOK_TYPE = 2
 
-class HomeBookItemAdapter : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBack) {
+class HomeBookItemAdapter(private val from: Int) : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<Book>() {
         override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
@@ -45,7 +47,10 @@ class HomeBookItemAdapter : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBa
             val book = getItem(holder.absoluteAdapterPosition)
             Bundle().apply {
                 putParcelable(BOOK_BUNDLE_KEY, book)
-                holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment, this)
+                when (from) {
+                    NAV_HOME -> holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment, this)
+                    BOOK_TYPE -> holder.itemView.findNavController().navigate(R.id.action_bookTypeHomeFragment_to_bookDetailFragment, this)
+                }
             }
         }
         return holder

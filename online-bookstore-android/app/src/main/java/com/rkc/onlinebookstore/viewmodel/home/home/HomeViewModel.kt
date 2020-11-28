@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.model.book.BookBanner
+import com.rkc.onlinebookstore.model.book.BookType
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.KotlinType.Companion.getType
 import com.rkc.onlinebookstore.util.OKHttpUtils
@@ -26,6 +27,26 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _bookBannerLiveData = MutableLiveData<List<BookBanner>>().apply { value = mutableListOf() }
     val bookBannerLiveData: LiveData<List<BookBanner>> = _bookBannerLiveData
+
+    private val _bookTypeLiveData = MutableLiveData<List<BookType>>()
+    val bookTypeLiveData = _bookTypeLiveData
+
+    fun fetchBookTypes() {
+        OKHttpUtils.asyncHttpGet("/book-server/api/v1/book/pub/selectAllType", object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("error", e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val js = JSONObject(response.body?.string())
+                if (js.getInt("code") == 1) {
+                    _bookTypeLiveData.postValue(GsonUtils.getGson().fromJson(js.getJSONArray("data").toString(), getType(List::class.java, BookType::class.java)))
+                } else {
+                    Log.e("error", js.getString("message"))
+                }
+            }
+        })
+    }
 
     /**
      * 获取轮播图

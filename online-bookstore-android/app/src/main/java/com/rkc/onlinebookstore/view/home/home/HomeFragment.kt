@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
+import com.rkc.onlinebookstore.adapter.home.BookTypeListAdapter
 import com.rkc.onlinebookstore.adapter.home.HomeBookItemAdapter
+import com.rkc.onlinebookstore.adapter.home.NAV_HOME
 import com.rkc.onlinebookstore.viewmodel.home.home.HomeViewModel
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
@@ -31,12 +33,17 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val homeBookItemAdapter = HomeBookItemAdapter()
+        val homeBookItemAdapter = HomeBookItemAdapter(NAV_HOME)
+        val bookTypeAdapter = BookTypeListAdapter()
 
         //recyclerView设置适配器
         bookListRecyclerView.apply {
             adapter = homeBookItemAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
+        bookTypeRV.apply {
+            adapter = bookTypeAdapter
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
         }
 
         //观察图书列表的数据变化
@@ -46,6 +53,12 @@ class HomeFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         })
         homeViewModel.fetchBookList()
+
+        homeViewModel.bookTypeLiveData.observe(viewLifecycleOwner, {
+            bookTypeAdapter.submitList(it)
+        })
+        homeViewModel.fetchBookTypes()
+
         //轮播图
         homeViewModel.bookBannerLiveData.observe(viewLifecycleOwner, { it ->
             bookBanner.setImageLoader(object : ImageLoader() {
