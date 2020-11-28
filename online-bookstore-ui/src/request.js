@@ -8,26 +8,27 @@ axios.defaults.timeout = 5000
 //http全局拦截，将token放在header上面到后端
 //请求拦截
 axios.interceptors.request.use(config => {
-  if (store.state.token) {
-    config.headers.token = store.state.token
+  try {
+    if (store.state.token) {
+      config.headers.token = store.state.token
+    }
+  } catch (e) {
+    console.log('error')
   }
   return config
 })
 //响应拦截
 axios.interceptors.response.use(response => {
   if (response.status === 200) {
-    const data = response.data
-    //约定如果返回状态码是-1则为token过期
-    if (data.code === -1) {
-      //需要重新登录
-      store.commit('setToken', '')
-      localStorage.removeItem('token')
-      //跳转到login页面
-      router.replace({
-        path: '/login'
-      })
-    }
-    return data
+    return response.data
+  } else if (response.status === 401) {
+    //需要重新登录
+    store.commit('setToken', '')
+    localStorage.removeItem('token')
+    //跳转到login页面
+    router.replace({
+      path: '/login'
+    })
   }
   return response
 })

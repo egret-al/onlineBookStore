@@ -13,14 +13,12 @@
       <cube-slide-item v-for="(list, index) in classifyList" :key="index">
         <ul class="listUl">
           <li class="listLi" v-for="(item, index1) in list" :key="index1">
-            <!-- <a :href="item.url">
-              <img :src="item.image" alt="" />
-              <p>{{ item.label }}</p>
-            </a> -->
-            <a>
-              <img :src="item.img" :alt="item.img" />
-              <p>{{item.type}}</p>
-            </a>
+            <router-link :to="{path: '/book-type', query: {id: item.id}}">
+              <a>
+                <img :src="item.img" :alt="item.img" />
+                <p>{{item.type}}</p>
+              </a>
+            </router-link>
           </li>
         </ul>
       </cube-slide-item>

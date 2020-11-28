@@ -37,7 +37,11 @@
       </div>
       <div class="introduce">
         <cube-button class="picture-word-introduce" @click="pictureAndWordIntroduce">图文介绍</cube-button>
-        <cube-button class="show-comment" style="margin-left: 5px" @click="showComment">查看评论</cube-button>
+        <cube-button class="show-comment" style="margin-left: 5px" @click="showComment">
+          <router-link :to="{path: '/comment', query: {id: this.bookData.id}}">
+            查看评论
+          </router-link>
+        </cube-button>
       </div>
     </div>
   </div>
@@ -54,6 +58,7 @@ export default {
     },
   },
   components: {},
+  
   data() {
     return {
       number: 1,
@@ -64,6 +69,7 @@ export default {
       useScore: false,
     };
   },
+
   computed: {
     ...mapState({
       username: (state) => state.username,
@@ -224,6 +230,7 @@ export default {
     .buy
       background-color #26a2ff
     .add-cart
+      padding-left 10px
       background-color #EF4F4F
   .info
     li

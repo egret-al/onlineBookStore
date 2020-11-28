@@ -62,6 +62,14 @@ const routes = [{
     component: () => import('../views/inner/detail/BookDetail.vue')
   },
   {
+    path: '/comment',
+    name: 'comment',
+    component: () => import('../views/inner/detail/comment/Comment.vue'),
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
     path: '/introduce',
     name: 'introduce',
     component: () => import('../views/inner/detail/BookIntroduce.vue')
@@ -153,6 +161,11 @@ const routes = [{
     meta: {
       requireAuth: true
     }
+  },
+  {
+    path: '/book-type',
+    name: 'bookType',
+    component: () => import('../views/inner/index/BookTypeIndex.vue')
   }
 ]
 

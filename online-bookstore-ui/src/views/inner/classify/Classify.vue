@@ -2,16 +2,16 @@
   <div class="main">
     <cube-scroll class="leftPanel">
       <ul>
-        <li v-for="(list, index) in tabsLabel" @click="selectList(index)" :key="index" :class="list.active ? 'active' : ''">
-          {{ list.label }}
+        <li v-for="(item, index) in typeList" @click="selectItem(item.id)" :key="index" :class="item.active ? 'active' : ''">
+          {{ item.type }}
         </li>
       </ul>
     </cube-scroll>
     <cube-scroll class="rightPanel">
       <ul>
-        <li v-for="(tag, index) in tags" :key="index">
-          <img :src="tag.image" alt="" />
-          <p>{{ tag.label }}<i class="cubeic-add" @click="addToCart($event, tag)"></i></p>
+        <li v-for="(book, index) in showBookList" :key="index">
+          <img :src="book.main_cover" alt="" />
+          <p>{{ book.book_name }}<i class="cubeic-add" @click="addToCart($event, book)"></i></p>
         </li>
       </ul>
     </cube-scroll>
@@ -36,82 +36,26 @@ export default {
         show: false,
         el: '',
       },
-      tags: [],
-      tabsLabel: [
-        {
-          label: '热门推荐',
-          active: true,
-        },
-        {
-          label: '手机数码',
-          active: false,
-        },
-        {
-          label: '家用电器',
-          active: false,
-        },
-        {
-          label: '家用空调',
-          active: false,
-        },
-        {
-          label: '电脑产品',
-          active: false,
-        },
-        {
-          label: '计生情趣',
-          active: false,
-        },
-        {
-          label: '美妆护肤',
-          active: false,
-        },
-        {
-          label: '口红',
-          active: false,
-        },
-        {
-          label: '手袋',
-          active: false,
-        },
-        {
-          label: '金银财宝',
-          active: false,
-        },
-        {
-          label: '手机数码',
-          active: false,
-        },
-        {
-          label: '手机数码',
-          active: false,
-        },
-      ],
+      showBookList: [],
+      typeList: [ ],
     }
   },
   methods: {
     //点击左侧分类
-    selectList(index) {
-      this.tabsLabel.forEach((val, ind) => {
-        if (ind === index) {
-          val.active = true
+    selectItem(id) {
+      this.typeList.forEach((value, index) => {
+        if (value.id === id) {
+          value.active = true
+          this.showBookList = value.books
         } else {
-          val.active = false
+          value.active = false
         }
       })
-      this.getClassify(index)
-    },
-    //获取分类
-    async getClassify(index) {
-      const result = await this.$http.get('/api/classify', {
-        params: {type: index},
-      })
-      this.tags = result.data
     },
 
     //添加商品到购物车
-    addToCart(e, tag) {
-      this.$store.commit('addCart', tag)
+    addToCart(e, book) {
+      this.$store.commit('addCart', book)
       //显示小球
       this.ball.show = true
       //获取点击的元素
@@ -151,8 +95,9 @@ export default {
       //结束隐藏小球
       this.ball.show = false
       el.style.display = 'none'
-    },
+    }, 
   },
+
   mounted() {
     //设置滚动盒子的高度
     const leftPanel = document.querySelector('.leftPanel')
@@ -161,8 +106,17 @@ export default {
     leftPanel.style.height = bodyHeight - 60 + 'px'
     rightPanel.style.height = bodyHeight - 60 + 'px'
   },
-  created() {
-    this.getClassify(0)
+
+  async created() {
+    const res = await this.$http.get('/book-server/api/v1/book/pub/selectAllTypeWithBook')
+    if (res.code === 1) {
+      this.typeList = res.data
+      for (let i = 0; i < this.typeList.length; i++) {
+        if (i == 0) this.typeList[i].active = true
+        else this.typeList[i].active = false 
+      }
+      this.showBookList = this.typeList[0].books
+    }
   },
 }
 </script>
@@ -180,6 +134,7 @@ export default {
       height 16px
       transition all 1s linear
 .main
+  margin-top 20px
   display flex
   .leftPanel
     width 30%
@@ -206,4 +161,8 @@ export default {
         img
           width 80px
           height 80px
+        p
+          overflow hidden
+          text-overflow ellipsis
+          font-size 12px
 </style>
