@@ -237,6 +237,16 @@ public class BookController {
     }
 
     /**
+     * 根据类型查询图书的接口
+     * @param id 类型id
+     * @return CommonplaceResult
+     */
+    @GetMapping("pub/selectAllInfoByType/{typeId}")
+    public CommonplaceResult selectAllInfoByType(@PathVariable("typeId") int id) {
+        return bookService.selectAllBookInfoByType(id);
+    }
+
+    /**
      * 得到所有图书的所有信息，包括库存和资源信息
      */
     @GetMapping("pub/selectAllInfo")
@@ -261,6 +271,16 @@ public class BookController {
     @GetMapping("pub/selectAllBookAndStorage")
     public CommonplaceResult selectAllBookAndStorage() {
         return bookService.selectAllBookWithStorage();
+    }
+
+    /**
+     * 根据类型查询图书
+     * @param id 类型id
+     * @return CommonplaceResult
+     */
+    @GetMapping("pub/selectAllBookWithResourceByType/{typeId}")
+    public CommonplaceResult selectAllBookWithResourceByType(@PathVariable("typeId") int id) {
+        return bookService.selectAllBookWithResourceByType(id);
     }
 
     /**

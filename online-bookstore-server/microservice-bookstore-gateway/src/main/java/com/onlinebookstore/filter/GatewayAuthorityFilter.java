@@ -55,7 +55,7 @@ public class GatewayAuthorityFilter implements GlobalFilter, Ordered {
                 //解析令牌
                 JwtUtil.parseJwt(token);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("UNAUTHORIZED：" + token + "已过期");
                 //解析token出错，说明令牌过期或者伪造等不合法情况出现
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 //返回

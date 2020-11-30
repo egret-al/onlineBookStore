@@ -15,6 +15,19 @@ import java.util.List;
 public interface BookMapper {
 
     /**
+     * 根据类型查询所有图书信息（顺序为图书创建时间的倒序）
+     * @return 图书信息+资源信息
+     */
+    List<Book> selectAllBookWithResourceByType(int typeId);
+
+    /**
+     * 根据图书类型查询列表
+     * @param typeId 类型id
+     * @return 结果
+     */
+    List<Book> selectAllBookInfoByType(int typeId);
+
+    /**
      * 模糊查询
      * @param str 查询字符串
      * @return 图书信息+资源信息

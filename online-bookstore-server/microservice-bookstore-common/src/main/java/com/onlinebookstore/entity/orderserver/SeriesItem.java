@@ -5,19 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * 图表每项的集合，由多个CoordinateAxisItem组成，能够构成一个基本的图表数据
  * @author rkc
- * @date 2020/11/2 9:33
  * @version 1.0
+ * @date 2020/11/29 10:26
  */
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderCoordinateAxis<X, Y> {
+public class SeriesItem implements Serializable {
+    private static final long serialVersionUID = 1060395470395142349L;
 
-    private List<OrderCoordinateAxisItem<X, Y>> orderCoordinateAxisItemList;
+    private List<Integer> data;
+    private String name;
+    private String type;
 }

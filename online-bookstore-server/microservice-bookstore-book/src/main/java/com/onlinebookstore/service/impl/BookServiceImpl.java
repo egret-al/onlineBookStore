@@ -45,6 +45,46 @@ public class BookServiceImpl implements BookService {
     private RedisUtils redisUtils;
 
     /**
+     * 根据类型查询图书
+     * @see BookServiceImpl#selectAllBookWithResource
+     * @param typeId 类型id
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult selectAllBookWithResourceByType(int typeId) {
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_WITH_RESOURCE_BY_TYPE + typeId);
+        if (!ObjectUtils.isEmpty(o)) {
+            return CommonplaceResult.buildSuccessNoMessage(o);
+        }
+        List<Book> books = bookMapper.selectAllBookWithResourceByType(typeId);
+        if (!ObjectUtils.isEmpty(books) && books.size() > 0) {
+            redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_WITH_RESOURCE_BY_TYPE + typeId, books, BookConstantPool.CACHE_TIME[1]);
+            return CommonplaceResult.buildSuccessNoMessage(books);
+        }
+        return CommonplaceResult.buildErrorNoData("数据异常！");
+    }
+
+    /**
+     * 根据类型查询图书
+     * @see BookServiceImpl#selectAllBookInfo()
+     * @param typeId 类型id
+     * @return BookConstantPool.CACHE_TIME[1];
+     */
+    @Override
+    public CommonplaceResult selectAllBookInfoByType(int typeId) {
+        Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_INFO_TYPE + typeId);
+        if (!ObjectUtils.isEmpty(o)) {
+            return CommonplaceResult.buildSuccessNoMessage(o);
+        }
+        List<Book> books = bookMapper.selectAllBookInfoByType(typeId);
+        if (!ObjectUtils.isEmpty(books) && books.size() > 0) {
+            redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_INFO_TYPE + typeId, books, BookConstantPool.CACHE_TIME[1]);
+            return CommonplaceResult.buildSuccessNoMessage(books);
+        }
+        return CommonplaceResult.buildError(books, "没有该类型的商品！");
+    }
+
+    /**
      * @see BookServiceImpl#selectAllBookInfo 方法的模糊查询
      * @param str 查询字符串
      * @return CommonplaceResult
@@ -58,9 +98,9 @@ public class BookServiceImpl implements BookService {
             return CommonplaceResult.buildSuccessNoMessage(o);
         }
         List<Book> books = bookMapper.selectAllBookInfoLike(str);
-        if (ObjectUtils.isEmpty(books) || books.size() == 0) {
-            return CommonplaceResult.buildErrorNoData("数据异常！");
-        }
+//        if (ObjectUtils.isEmpty(books) || books.size() == 0) {
+//            return CommonplaceResult.buildErrorNoData("数据异常！");
+//        }
         log.info("通过数据库读取的数据");
         //加入redis缓存，时间1分钟+随机时间（秒）
         long cacheTime = BookConstantPool.CACHE_TIME[1];
@@ -84,7 +124,7 @@ public class BookServiceImpl implements BookService {
             redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_WITH_RESOURCE_LIKE + str, books, BookConstantPool.CACHE_TIME[1]);
             return CommonplaceResult.buildSuccessNoMessage(books);
         }
-        return CommonplaceResult.buildErrorNoData("数据异常！");
+        return CommonplaceResult.buildError(books, "没有匹配的数据！");
     }
 
     /**

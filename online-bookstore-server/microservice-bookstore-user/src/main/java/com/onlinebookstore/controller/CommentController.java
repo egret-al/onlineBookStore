@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/comment")
+@RequestMapping("/api/v1/comment/pri")
 public class CommentController {
     @Resource
     private CommentService commentService;

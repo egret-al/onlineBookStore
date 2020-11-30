@@ -23,9 +23,13 @@ public class BookConstantPool {
 
     public static final String SELECT_ALL_BOOK_INFO_LIKE = "selectAllBookInfoLike";
 
+    public static final String SELECT_ALL_BOOK_INFO_TYPE = "selectAllBookInfoType";
+
     public static final String SELECT_ALL_BOOK_ALONE_BY_ID = "selectAllBookAloneById";
 
     public static final String SELECT_ALL_BOOK_WITH_RESOURCE = "selectAllBookWithResource";
+
+    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_TYPE = "selectAllBookWithResourceByType";
 
     public static final String SELECT_ALL_BOOK_WITH_RESOURCE_LIKE = "selectAllBookWithResourceLike";
 

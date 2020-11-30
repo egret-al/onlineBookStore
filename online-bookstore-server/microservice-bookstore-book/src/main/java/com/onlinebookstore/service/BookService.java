@@ -13,6 +13,20 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * 根据类型查询图书
+     * @param typeId 类型id
+     * @return CommonplaceResult
+     */
+    CommonplaceResult selectAllBookWithResourceByType(int typeId);
+
+    /**
+     * 根据类型查询
+     * @param typeId 类型id
+     * @return CommonplaceResult
+     */
+    CommonplaceResult selectAllBookInfoByType(int typeId);
+
+    /**
      * 模糊查询
      * @param str 查询字符串
      * @return 图书信息+库存信息+资源信息
