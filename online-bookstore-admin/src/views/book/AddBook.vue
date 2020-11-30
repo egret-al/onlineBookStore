@@ -1,242 +1,180 @@
 <template>
-    <div class="root">
-        <div class="search">
-            <el-input placeholder="请输入logo名称" v-model="keyword" clearable class="input-with-select">
-                <el-button @click="goSearch" slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-        </div>
-        <el-table :data="tableData" style="width: 100%" :default-sort="{prop: 'createDate', order: 'descending'}">
-            <el-table-column prop="name" label="logo名称" show-overflow-tooltip></el-table-column>
-            <el-table-column label="上传日期" prop="createDate" sortable>
-                <!-- <template slot-scope="scope">{{ scope.row.createDate }}</template> -->
-            </el-table-column>
-            <el-table-column prop="img_url" label="logo预览">
-                <div slot-scope="scope" class="my-pic">
-                    <el-image @click="imgClick(scope.row.imgUrl)" fit="scale-down" style="width: 120px; height: 120px" :src="scope.row.imgUrl" :preview-src-list="srcList"></el-image>
-                </div>
-            </el-table-column>
-            <el-table-column label="操作">
-                <div slot-scope="scope">
-                    <el-button @click="deleteLogo(scope.row.id)" size="small" type="danger" round>删除</el-button>
-                    <el-button @click="downloadFile(scope.row.name,scope.row.imgUrl)" size="small" type="primary" round>下载</el-button>
-                </div>
-            </el-table-column>
-        </el-table>
-        <el-pagination class="pagination" background layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="pageChange" @prev-click="pageChange" @next-click="pageChange"></el-pagination>
-        <el-upload class="upload template" :headers="headers" action="http://219.228.76.43:8886/admin/upload" :on-success="uploadSuccess">
-            <el-button size="small" type="primary">上传logo</el-button>
-            <div slot="tip" class="el-upload__tip">.png格式 尺寸200*200以内</div>
-        </el-upload>
-    </div>
+  <div class="root">
+    <el-form :model="bookForm" :rules="rules" ref="bookForm" label-width="100px" class="demo-ruleForm">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="图书名称" prop="book_name">
+              <el-input v-model="bookForm.book_name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="ISBN" prop="isbn">
+              <el-input v-model="bookForm.isbn"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="作者" prop="author">
+              <el-input v-model="bookForm.author"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="出版社" prop="publisher">
+              <el-input v-model="bookForm.publisher"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="5">
+            <el-form-item label="价格" prop="price">
+              <el-input v-model.number="bookForm.price"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="7">
+            <el-form-item label="类型">
+              <el-select placeholder="请选择图书类型" v-model="bookForm.type" prop="book_type">
+                <el-option v-for="item in typeList" :key="item.id" :label="item.type" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="封面cdn" prop="main_cover">
+              <el-input v-model="bookForm.main_cover"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="内容描述" prop="description">
+          <el-input type="textarea" v-model="bookForm.description"></el-input>
+        </el-form-item>
+      </el-card>
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <el-form-item label="图片资源" prop="imgResourcesString">
+              <el-input v-model="bookForm.imgResourcesString" placeholder="多个CDN地址以英文逗号分隔，添加顺序将影响显示顺序"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="5">
+            <el-form-item label="库存" prop="residue">
+              <el-input v-model.number="bookForm.residue" placeholder="只能输入大于0的正整数"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-card>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('bookForm')">立即创建</el-button>
+        <el-button @click="resetForm('bookForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
 export default {
-    data () {
-        return {
-            keyword: '',
-            pageSize: 6,
-            total: 6, // task总数
-            srcList: [],
-            tableData: [],
-            headers: {
-                token: localStorage.getItem('token')
-            }
-        };
-    },
-    created: function () {
-        this.getLogoList();
-    },
-    methods: {
-        imgClick (imgUrl) {
-            this.srcList = [imgUrl];
-        },
+  data() {
+    return {
+      bookForm: {
+        book_name: '',
+        isbn: '',
+        author: '',
+        publisher: '',
+        price: 0,
+        main_cover: '',
+        type: '',
+        description: '',
+        
+        imgResourcesString: '',
 
-        getLogoList (page = 1, limit = 6) {
-            /*
-            let that = this;
-            this.req({
-              url: `getLogoList?page=${page}&limit=${limit}`,
-              data: {},
-              method: "GET"
-            }).then(
-              res => {
-                console.log("res :", res);
-                that.total = res.data.total;
-                let tableData = res.data.data;
-                for (let i = 0; i < tableData.length; i++) {
-                  tableData[i].createDate = that.getTime(tableData[i].createDate);
-                }
-                that.tableData = tableData;
-              },
-              err => {
-                console.log("err :", err);
-              }
-            );
-            */
-        },
-        deleteLogo (id) {
-            /*
-            let that = this;
-            this.$confirm("此操作将删除该文件, 是否继续?", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            })
-              .then(() => {
-                that
-                  .req({
-                    url: "deleteLogo?id=" + id,
-                    data: {},
-                    method: "GET"
-                  })
-                  .then(
-                    res => {
-                      console.log("res :", res);
-                      that.getLogoList();
-                      that.$message("删除成功~");
-                    },
-                    err => {
-                      console.log("err :", err);
-                    }
-                  );
-              })
-              .catch(() => {
-                this.$message({
-                  type: "info",
-                  message: "已取消删除"
-                });
-              });
-              */
-        },
-        downloadLogo (imgUrl) { },
-        uploadSuccess (response, file, fileList) {
-            /*
-            let that = this;
-            console.log(":", response);
-            this.$message("上传成功~");
-            this.$prompt("请输入logo名称", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消"
-            })
-              .then(({ value }) => {
-                that
-                  .req({
-                    url: "addLogo",
-                    data: {
-                      name: value,
-                      imgUrl: response.data,
-                      createDate: new Date().getTime()
-                    },
-                    method: "POST"
-                  })
-                  .then(
-                    res => {
-                      console.log("res :", res);
-                      that.getLogoList();
-                    },
-                    err => {
-                      console.log("err :", err);
-                    }
-                  );
-              })
-              .catch(() => {
-                this.$message({
-                  type: "info",
-                  message: "取消上传"
-                });
-              });
-              */
-        },
-        getTime (timestamp) {
-            let that = this;
-            timestamp = parseInt(timestamp);
-            var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            let Y = date.getFullYear() + "-";
-            let M =
-                (date.getMonth() + 1 < 10
-                    ? "0" + (date.getMonth() + 1)
-                    : date.getMonth() + 1) + "-";
-            let D = that.change(date.getDate()) + " ";
-            let h = that.change(date.getHours()) + ":";
-            let m = that.change(date.getMinutes()) + ":";
-            let s = that.change(date.getSeconds());
-            return Y + M + D + h + m + s;
-        },
-        change (t) {
-            if (t < 10) {
-                return "0" + t;
-            } else {
-                return t;
-            }
-        },
-        // 下载文件
-        downloadFile (name, href) {
-            console.log("name :", name);
-            console.log("href :", href);
-            let a = document.createElement("a"), //创建a标签
-                e = document.createEvent("MouseEvents"); //创建鼠标事件对象
-            e.initEvent("click", false, false); //初始化事件对象
-            a.href = href; //设置下载地址
-            a.download = name; //设置下载文件名
-            a.dispatchEvent(e); //给指定的元素，执行事件click事件
-        },
-        pageChange (page) {
-            console.log("page :", page);
-            this.getLogoList(page);
-        },
-        goSearch () {
-            /*
-            let that = this;
-            if (that.keyword.length < 1) {
-              that.getLogoList();
-              return 0;
-            }
-            this.req({
-              url: "searchLogo?keyword=" + that.keyword,
-              data: {},
-              method: "GET"
-            }).then(
-              res => {
-                console.log("res :", res);
-                if (res.data.length < 1) {
-                  that.$message("查询无果~");
-                  return 0;
-                } else {
-                  that.$message("查询成功~");
-                }
-                for (let i = 0; i < res.data.length; i++) {
-                  res.data[i].createDate = that.getTime(res.data[i].createDate);
-                }
-                that.tableData = res.data;
-              },
-              err => {
-                console.log("err :", err);
-              }
-            );
-            */
+        bookResources: [],
+        residue: 1,
+        
+      },
+      typeList: [],
+      rules: {
+        book_name: [
+          { required: true, message: "请输入图书名称", trigger: "blur" },
+        ],
+        isbn: [
+          { required: true, message: "请输入ISBN", trigger: "blur" },
+          { min: 13, max: 13, message: "ISBN错误", trigger: 'blur' }
+        ],
+        author: [
+          { required: true, message: "请输入作者名字", trigger: "blur" },
+        ],
+        publisher: [
+          { required: true, message: "请输入出版社名称", trigger: "blur" },
+        ],
+        price: [
+          { required: true, message: '价格不能为空', trigger: "blur"},
+          { type: 'number', message: '数据非法', trigger: "blur" },
+          { pattern: /^([1-9]\d?|1000)$/, message: '价格不能为负数', trigger: 'blur'}
+        ],
+        main_cover: [
+          { required: true, message: "路径不能为空", trigger: "blur" }
+        ],
+        type: [
+          { required: true, message: "请填写活动形式", trigger: "blur" }
+        ],
+        description: [
+          { required: true, message: "描述不能为空", trigger: "blur" }
+        ],
+        book_type: [
+          { required: true, message: "类型不能为空", trigger: "blur" }
+        ],
+        residue: [
+          { required: true, message: '价格不能为空', trigger: "blur"},
+          { type: 'number', message: '数据非法', trigger: "blur" },
+          { pattern: /^([1-9]\d?|99999)$/, message: '库存不能为负数', trigger: 'blur'}
+        ]
+      }
+    };
+  },
+  
+  async created() {
+    const resType = await this.$http.get("/book-server/api/v1/book/pub/selectAllType")
+    this.typeList = resType.data
+    console.log(this.typeList)
+  },
+
+  methods: {
+    submitForm(bookForm) {
+      if (this.bookForm.imgResourcesString) {
+        let res = this.bookForm.imgResourcesString.split(',')
+        
+      }
+      console.log(this.bookForm)
+      this.$refs[bookForm].validate((valid) => {
+        if (valid) {
+          //验证合法，提交数据到后台
+        } else {
+          console.log('error submit!!');
+          this.$message({
+            showClose: true,
+            message: '数据不合法，提交失败！',
+            type: 'error'
+          });
+          return false;
         }
+      });
+    },
+    
+    resetForm(bookForm) {
+      this.$refs[bookForm].resetFields();
+    },
+
+    openError() {
+      
     }
+  }
 };
 </script>
 
-<style>
-.upload {
-  width: 200px;
-  margin: 20px;
-  float: right;
-}
-.my-pic {
-  width: 48px;
-  height: 27px;
-}
-.pagination {
-  margin-top: 20px;
-  margin-right: 50px;
-  float: right;
-}
-.search {
-  width: 50%;
-  /* margin-left: 50%; */
+<style lang="scss" scoped>
+.el-card {
+  margin-bottom: 10px;
 }
 </style>

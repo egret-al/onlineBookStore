@@ -23,25 +23,41 @@ export default {
     isAxisChart: {
       type: Boolean,
       default: true
+    },
+    titleText: {
+      type: String,
+      default: ''
     }
   },
   computed: {
     options() {
       return this.isAxisChart ? this.axisOption : this.normalOption;
-    },
-    isCollapsed() {
-      return this.$store.state.tab.isCollapsed;
     }
   },
   data() {
     return {
       echart: null,
       axisOption: {
+        title: {
+          text: this.titleText,
+          left: 'left',
+          textStyle: {
+            //字体风格,'normal','italic','oblique'
+            fontStyle:'normal',
+            //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+            fontWeight:'bold',
+            //字体系列
+            fontFamily:'sans-serif',
+            //字体大小
+    　　　　 fontSize: 12
+          }
+        },
         //图例
         legend: {
           //图例文本颜色
           textStyle: {
-            color: "#333"
+            color: "#333",
+            fontSize: 9
           }
         },
         //偏移
