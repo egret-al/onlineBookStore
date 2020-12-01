@@ -104,6 +104,7 @@ class BookDetailFragment : Fragment() {
                         putParcelable(BOOK_BUNDLE_KEY, book)
                     }
                     findNavController().navigate(R.id.action_bookDetailFragment_to_unpaidOrderFragment, bundle)
+                    bookDetailViewModel.resetNetRequestStatus()
                 }
                 REQUESTING -> { detailButtonPurchase.isEnabled = true }
             }

@@ -55,6 +55,10 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
     val addSuccess = _addSuccess
     val addFailure = _addFailure
 
+    fun resetNetRequestStatus() {
+        _purchaseNetRequestSuccessful.postValue(-2)
+    }
+
     fun addToShoppingTrolley() {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
         if ("" == username) return

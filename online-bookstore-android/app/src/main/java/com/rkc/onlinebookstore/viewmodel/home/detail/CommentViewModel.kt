@@ -44,7 +44,7 @@ class CommentViewModel(application: Application) : AndroidViewModel(application)
             put("book_id", book.id)
             put("content", content)
         }
-        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/comment/insertComment", jsonObject, object : Callback {
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/comment/pri/insertComment", jsonObject, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }
@@ -60,7 +60,7 @@ class CommentViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun fetchComments() {
-        val url = "/user-server/api/v1/comment/selectCommentsByBookId/${book.id}"
+        val url = "/user-server/api/v1/comment/pri/selectCommentsByBookId/${book.id}"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
