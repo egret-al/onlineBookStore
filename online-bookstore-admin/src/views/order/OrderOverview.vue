@@ -8,7 +8,7 @@
         <e-chart-graph style="height: 260px" :titleText="titleCount" :chartData="topCountGraph">图表左</e-chart-graph>
       </el-card>
       <el-card shadow="hover">
-        <e-chart-graph style="height: 260px">图表右</e-chart-graph>
+        <e-chart-graph style="height: 260px" :titleText="titleSex" :chartData="sexData" :isAxisChart="false">图表右</e-chart-graph>
       </el-card>
     </div>
   </div>
@@ -29,8 +29,12 @@ export default {
         series: [] //{ name: '', data: [], type: ''}
       },
       topPriceGraph: { },
+      sexData: {
+        series: []
+      },
       titleCount: '半年销售量',
-      titlePrice: '半年热销额'
+      titlePrice: '半年热销额',
+      titleSex: '客户性别比例'
     };
   },
 
@@ -55,6 +59,19 @@ export default {
         series[i].type = 'bar'
       }
       this.topCountGraph = countRes.data
+    }
+
+    const sexRes = await this.$http.post('/user-server/api/v1/sex-ratio/pri/getSexRatio')
+    if (sexRes.code === 1) {
+      for (let i = 0; i < sexRes.data.length; i++) {
+        sexRes.data[i].name = sexRes.data[i].sex
+        sexRes.data[i].value = sexRes.data[i].count
+      }
+      console.log(sexRes.data)
+      this.sexData.series.push({
+        data: sexRes.data,
+        type: 'pie'
+      })
     }
   }
 };

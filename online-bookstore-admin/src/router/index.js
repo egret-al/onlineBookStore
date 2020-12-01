@@ -104,6 +104,14 @@ export const constantRoutes = [{
       }
     },
     {
+      path: 'order-list',
+      name: 'orderList',
+      component: () => import('@/views/order/OrderList.vue'),
+      meta: {
+        title: '订单列表'
+      }
+    },
+    {
       path: 'user-activity',
       name: 'userActivity',
       component: () => import('@/views/order/UserActivity.vue'),
