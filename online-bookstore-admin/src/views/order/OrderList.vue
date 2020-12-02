@@ -60,18 +60,18 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot="header" slot-scope="scope">
-        <el-input
-          v-model="search"
-          size="mini"
-          placeholder="输入商品名称搜索"/>
+        <el-input v-model="search" size="mini" placeholder="输入商品名称搜索"/>
       </template>
       <template slot-scope="scope">
-        <span style="color: orange; font-size:10px" v-if="orderList[scope.$index].order_payment_status == 0" type="warning">待支付</span>
-        <el-button v-if="orderList[scope.$index].send_status == 0 && orderList[scope.$index].order_payment_status == 1"
-         @click.native.prevent="sendBook(scope.$index)" type="text" size="small">发货</el-button>
-        <span style="color: green; font-size:10px" v-if="orderList[scope.$index].send_status == 1 && orderList[scope.$index].order_payment_status == 1" type="success">已发货</span>
-        <span style="color: blue; font-size:10px" v-if="orderList[scope.$index].send_status == 2 && orderList[scope.$index].order_payment_status == 1" type="success">已签收</span>
-        <span style="color: gray; font-size:10px" v-if="orderList[scope.$index].order_payment_status == -1" type="info">已过期</span>
+        <span style="color: orange; font-size:10px" v-if="orderList[(currentPage-1) * pageSize + scope.$index].order_payment_status == 0 &&
+          orderList[(currentPage-1) * pageSize + scope.$index].send_status == 0" type="warning">待支付</span>
+
+        <el-button v-if="orderList[(currentPage-1) * pageSize + scope.$index].send_status == 0 &&
+          orderList[(currentPage-1) * pageSize + scope.$index].order_payment_status == 1" @click.native.prevent="sendBook((currentPage-1) * pageSize + scope.$index)" type="text" size="small">发货</el-button>
+        <span style="color: green; font-size:10px" v-if="orderList[(currentPage-1) * pageSize + scope.$index].send_status == 1 && 
+          orderList[(currentPage-1) * pageSize + scope.$index].order_payment_status == 1" type="success">已发货</span>
+        <span style="color: blue; font-size:10px" v-if="orderList[(currentPage-1) * pageSize + scope.$index].send_status == 2 && orderList[(currentPage-1) * pageSize + scope.$index].order_payment_status == 1" type="success">已签收</span>
+        <span style="color: gray; font-size:10px" v-if="orderList[(currentPage-1) * pageSize + scope.$index].order_payment_status == -1" type="info">已过期</span>
       </template>
     </el-table-column>
   </el-table>
@@ -111,18 +111,30 @@
     methods: {
       handleSizeChange(size) {
         this.pageSize = size
+        console.log('handleSizeChange', size)
       },
 
       handleCurrentChange(currentPage) {
         this.currentPage = currentPage
+        console.log('handleCurrentChange', currentPage)
       },
 
       filterTag(value, row) {
         return row.order_payment_status === value;
       },
 
-      sendBook(index) {
-        console.log(this.orderList[index])
+      async sendBook(index) {
+        let order = this.orderList[index]
+        const sendRes = await this.$http.post('/order-server/api/v1/order/pri/sendBook', order)
+        if (sendRes.code === 1) {
+          this.$message({
+            message: sendRes.message,
+            type: 'success'
+          })
+          this.orderList[index].send_status = 1
+        } else {
+          this.$message.error(sendRes.message)
+        }
       },
     },
 
@@ -133,6 +145,7 @@
         this.total = this.orderList.length
       }
       this.value = this.options[0].value
+      console.log(this.orderList)
     }
   }
 </script>
