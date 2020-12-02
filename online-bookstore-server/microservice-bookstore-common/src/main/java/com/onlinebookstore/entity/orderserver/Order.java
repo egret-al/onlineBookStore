@@ -127,4 +127,15 @@ public class Order implements Serializable {
      * 地址
      */
     private String address;
+
+    /**
+     * 发货状态，0为待发货，1为已发货，2为已签收
+     */
+    @JsonProperty("send_status")
+    private Integer sendStatus;
+
+    public static void main(String[] args) {
+        String str = "0005729f-ead4-4562-8523-2c2b72";
+        System.out.println(str.replaceAll("-", "Q"));
+    }
 }

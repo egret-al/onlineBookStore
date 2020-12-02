@@ -4,10 +4,18 @@ import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.mapper.OrderMapper;
 import com.onlinebookstore.service.OrderService;
+import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
+import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
+import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
+import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,9 +26,58 @@ import java.util.List;
 @Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
-
     @Resource
     private OrderMapper orderMapper;
+    @Resource
+    private RocketMQMessageSendUtils rocketMQMessageSendUtils;
+
+    public static final int WAITING = 0;
+    public static final int SENT = 1;
+    public static final int ACKNOWLEDGE = 2;
+
+    /**
+     * 发货，本质上是修改标志位；因为没有真实的物流，
+     * 因此我们认为发货后即为到货，需要发送一个延时消息：如果用户2分钟没有签收，则进行自动签收
+     * @param order 处理的订单
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult sendBook(Order order) {
+        //发货
+        order.setSendStatus(SENT);
+        order.setDeliveryTime(new Date());
+        int row = orderMapper.modifySendStatus(order);
+        if (row > 0) {
+            //发送延时消息
+            rocketMQMessageSendUtils.sendDelayMessageAsync(RocketMQConstantPool.Topic.R_ORDER_IMPORT, OrderOperationStatusEnum.SENT.status,
+                    order, new SendCallback() {
+                        @Override
+                        public void onSuccess(SendResult sendResult) {
+                            log.info("自动签收消息发送成功！");
+                        }
+
+                        @Override
+                        public void onException(Throwable e) {
+                            e.printStackTrace();
+                            log.error("自动签收消息发送失败！");
+                        }
+                    }, 6);
+        }
+        return row > 0 ? CommonplaceResult.buildSuccessNoData("发货成功") : CommonplaceResult.buildErrorNoData("发货失败");
+    }
+
+    /**
+     * 手动签收订单
+     * @param order 被处理订单
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult acknowledge(Order order) {
+        order.setSendStatus(ACKNOWLEDGE);
+        order.setEndTime(new Date());
+        return orderMapper.tryAutomaticallyAcknowledge(order) > 0 ? CommonplaceResult.buildSuccessNoData("签收成功") :
+                CommonplaceResult.buildErrorNoData("已经被签收！");
+    }
 
     /**
      * 根据订单号和账号删除订单
@@ -150,7 +207,12 @@ public class OrderServiceImpl implements OrderService {
      * @param order 订单对象
      */
     @Override
+    @Transactional
     public CommonplaceResult updateOrder(Order order) {
+        log.info("order-server，xid：" + RootContext.getXID());
+        log.info("订单微服务准备修改订单状态为完成");
+        //模拟异常
+//        int i = 1 / 0;
         return orderMapper.updateOrder(order) > 1 ? CommonplaceResult.buildSuccess(true, "更新成功！") :
                 CommonplaceResult.buildError(false, "更新失败！");
     }

@@ -11,6 +11,20 @@ import com.onlinebookstore.entity.orderserver.Order;
 public interface OrderService {
 
     /**
+     * 发货，本质上是修改标志位
+     * @param order 处理的订单
+     * @return CommonplaceResult
+     */
+    CommonplaceResult sendBook(Order order);
+
+    /**
+     * 手动签收订单
+     * @param order order
+     * @return CommonplaceResult
+     */
+    CommonplaceResult acknowledge(Order order);
+
+    /**
      * 根据订单号和账号删除订单
      * @param serialNumber 订单号
      * @param username 账号

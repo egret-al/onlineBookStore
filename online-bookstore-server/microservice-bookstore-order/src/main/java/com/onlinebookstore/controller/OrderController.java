@@ -27,6 +27,25 @@ public class OrderController {
     private OrderService orderService;
 
     /**
+     * 发货，本质上是修改标志位
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/sendBook")
+    public CommonplaceResult sendBook(@RequestBody Order order) {
+        return orderService.sendBook(order);
+    }
+
+    /**
+     * 手动签收
+     * @param order 签收订单
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/acknowledge")
+    public CommonplaceResult acknowledge(@RequestBody Order order) {
+        return orderService.acknowledge(order);
+    }
+
+    /**
      * 根据订单号和账号删除订单
      * @param serialNumber 订单号
      * @param username 账号
@@ -89,7 +108,7 @@ public class OrderController {
     /**
      * 查询所有订单
      */
-    @GetMapping("pri/selectAll")
+    @PostMapping("pri/selectAll")
     public CommonplaceResult selectAll() {
         return orderService.selectAll();
     }
@@ -125,10 +144,6 @@ public class OrderController {
     /**
      * 更新订单状态
      * 数据格式：
-     * {
-     *     'code': 'xx',
-     *     'serial_number': 'xxx'
-     * }
      * @param pojo 包含状态码和订单号
      */
     @PostMapping("pri/updateOrderStatus")

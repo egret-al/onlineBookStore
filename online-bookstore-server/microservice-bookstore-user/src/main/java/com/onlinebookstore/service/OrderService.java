@@ -61,11 +61,6 @@ public interface OrderService {
 
     /**
      * 更新订单状态
-     * 数据格式：
-     * {
-     *     'code': 'xx',
-     *     'serial_number': 'xxx'
-     * }
      * @param pojo 包含状态码和订单号
      */
     @PostMapping("/api/v1/order/pri/updateOrderStatus")

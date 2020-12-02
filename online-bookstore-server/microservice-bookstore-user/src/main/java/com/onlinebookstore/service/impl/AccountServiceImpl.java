@@ -15,10 +15,13 @@ import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.OrderService;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
+import com.onlinebookstore.util.orderutil.IdGenerator;
 import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
 import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
 import com.onlinebookstore.util.userutil.UserConstantPool;
+import io.seata.core.context.RootContext;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -77,9 +80,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public CommonplaceResult createOrder(Order order) {
-        //TODO order初始化
-        String serialName = UuidUtils.generateUuid().substring(0, 30);
-        order.setSerialNumber(serialName);
+        order.setSerialNumber(UUID.randomUUID().toString());
         order.setCreateTime(new Date());
         order.setOrderPaymentStatus(0);
         //创建订单
@@ -216,7 +217,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @SuppressWarnings("all")
     @Transactional(rollbackFor = Exception.class)
-//    @GlobalTransaction
+//    @GlobalTransactional(name = "dealWithOrder", rollbackFor = Exception.class)
     public CommonplaceResult purchaseBook(String serialNumber) {
         //查询订单
         System.out.println(orderService.selectOrderBySerialNumber(serialNumber).getData().getClass());
@@ -245,49 +246,55 @@ public class AccountServiceImpl implements AccountService {
 
         //调用图书微服务，得到图书信息+库存信息，通过断点调试可以得知，此时得到的对象是LinkedHashMap
         Object data = bookService.selectBookAndStorageByBookId(bookId).getData();
+        //转化为Book实体类
         try {
-            //转化为Book实体类
             Book book = jsonUtil.mapToBean((Map) data, Book.class);
-            log.info(String.valueOf(book));
-            BookStorage bookStorage = book.getBookStorage();
-            if (count > bookStorage.getResidueCount()) {
-                return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
-            }
-            //得到需要支付的金额
-            int money = book.getPrice() * count;
-            int score = money / 10;
-            String orderContent = "购买了" + count + "本《" + book.getBookName() + "》";
-            order.setPaymentTime(new Date());
-
-            //2、扣除余额
-            CommonplaceResult commonplaceResult = this.modifyBalance(username, -money, useScore);
-            if ((boolean) commonplaceResult.getData()) {
-                //扣除成功，则进行下一步，扣除库存
-                Map<String, Integer> pojo = new HashMap<>();
-                pojo.put("id", bookStorage.getId());
-                pojo.put("count", count);
-                //3、扣除库存
-                CommonplaceResult storageCalledResult = bookService.subtractStorageById(pojo);
-                if ((boolean) storageCalledResult.getData()) {
-                    //TODO 修改订单状态
-                    order.setOrderPaymentStatus(1);
-                    order.setDeliveryTime(new Date());
-                    order.setEndTime(new Date());
-                    order.setObtainScore(score);
-                    order.setWholePrice(money);
-
-                    //4、修改订单状态和其它数据信息
-                    orderService.updateOrder(order);
-                    this.modifyScore(username, score);
-                    return CommonplaceResult.buildSuccessNoData("操作成功！");
-                } else {
-                    throw new RuntimeException("库存扣除失败");
+            if (!ObjectUtils.isEmpty(book)) {
+                BookStorage bookStorage = book.getBookStorage();
+                if (count > bookStorage.getResidueCount()) {
+                    return CommonplaceResult.buildErrorNoData("库存不足，购买失败！");
                 }
-            } else {
-                return CommonplaceResult.buildErrorNoData("余额不足！");
+                //得到需要支付的金额
+                int money = book.getPrice() * count;
+                int score = money / 10;
+                String orderContent = "购买了" + count + "本《" + book.getBookName() + "》";
+                order.setPaymentTime(new Date());
+                log.info("user-server，xid：" + RootContext.getXID());
+
+                //2、扣除余额
+                CommonplaceResult commonplaceResult = this.modifyBalance(username, -money, useScore);
+                if ((boolean) commonplaceResult.getData()) {
+                    //扣除成功，则进行下一步，扣除库存
+                    Map<String, Integer> pojo = new HashMap<>();
+                    pojo.put("id", bookStorage.getId());
+                    pojo.put("count", count);
+                    //3、扣除库存
+                    CommonplaceResult storageCalledResult = bookService.subtractStorageById(pojo);
+                    if (ObjectUtils.isEmpty(storageCalledResult.getData())) {
+                        log.error("返回值为空！！！");
+                        throw new RuntimeException("server occurred a error during calling subtracting storage");
+                    }
+                    if ((boolean) storageCalledResult.getData()) {
+                        //TODO 修改订单状态
+                        order.setOrderPaymentStatus(1);
+                        order.setDeliveryTime(new Date());
+                        order.setEndTime(new Date());
+                        order.setObtainScore(score);
+                        order.setWholePrice(money);
+
+                        //4、修改订单状态和其它数据信息
+                        orderService.updateOrder(order);
+                        this.modifyScore(username, score);
+                        return CommonplaceResult.buildSuccessNoData("操作成功！");
+                    } else {
+                        throw new RuntimeException("库存扣除失败");
+                    }
+                } else {
+                    return CommonplaceResult.buildErrorNoData("余额不足！");
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return CommonplaceResult.buildSuccessNoData("服务器异常！");
     }

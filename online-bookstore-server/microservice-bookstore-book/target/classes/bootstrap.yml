@@ -41,6 +41,27 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 1000ms
-    
+
+#整合seata
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      server-addr: 101.200.203.216:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 101.200.203.216:8848
+      username: nacos
+      password: nacos
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml

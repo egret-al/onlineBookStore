@@ -15,12 +15,26 @@ import java.util.List;
 public interface OrderMapper {
 
     /**
+     * 尝试自动签收
+     * @param order 待签收订单
+     * @return 是否签收成功
+     */
+    int tryAutomaticallyAcknowledge(Order order);
+
+    /**
+     * 修改发货状态
+     * @param order order
+     * @return 影响行数
+     */
+    int modifySendStatus(Order order);
+
+    /**
      * 根据订单号和账号删除订单
      * @param serialNumber 订单号
      * @param username 账号
      * @return 影响行数
      */
-    int deleteOrder(@Param("seriallNumber") String serialNumber, @Param("username") String username);
+    int deleteOrder(@Param("serialNumber") String serialNumber, @Param("username") String username);
 
     /**
      * 根据账号查询所有订单，并且按照订单创建时间倒序排列

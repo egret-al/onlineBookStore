@@ -15,6 +15,7 @@
             <name qname="@" />
             <name qname="bookstore_order" />
             <name qname="bookstore_user" />
+            <name qname="seata" />
           </node>
         </introspection-scope>
       </schema-mapping>

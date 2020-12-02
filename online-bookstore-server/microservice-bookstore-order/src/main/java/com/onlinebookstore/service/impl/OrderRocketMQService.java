@@ -2,6 +2,7 @@ package com.onlinebookstore.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.onlinebookstore.config.RocketMQConfig;
 import com.onlinebookstore.config.RocketMQProperties;
 import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.exception.SerialNumberNullException;
@@ -36,7 +37,7 @@ public class OrderRocketMQService extends AbstractRocketMQService implements Ord
     private OrderMapper orderMapper;
 
     public OrderRocketMQService() throws MQClientException {
-        super(RocketMQProperties.NAMESRV_ADDR, RocketMQConstantPool.ConsumerGroup.R_CONSUMER_ORDER_GROUP,
+        super(RocketMQConfig.namesrvAddr, RocketMQConstantPool.ConsumerGroup.R_CONSUMER_ORDER_GROUP,
                 RocketMQConstantPool.Topic.R_ORDER_IMPORT, "*");
     }
 
@@ -71,14 +72,20 @@ public class OrderRocketMQService extends AbstractRocketMQService implements Ord
                 } else {
                     log.error("订单已经完成");
                 }
+            } else if (tag.equals(OrderOperationStatusEnum.SENT.status)){
+                //进行自动签收
+                JSONObject jsonObject = (JSONObject) JSON.parse(message.getBody());
+                if (tryAutomaticallyAcknowledge(jsonObject.toJavaObject(Order.class))) {
+                    log.info("自动签收成功");
+                } else {
+                    log.error("自动签收失败，也许已经被签收");
+                }
             } else {
-                //TODO 其他操作
                 log.info("其它操作");
             }
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         } catch (Exception e) {
-            log.error("RocketMQ消费者测试报错：" + e.getMessage());
-            if (times > RocketMQProperties.RECONSUME_TIMES) {
+            if (times > RocketMQConfig.reconsumeTimes) {
                 log.error("重试次数已经达到，请工作人员进行手动处理！");
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
@@ -88,13 +95,23 @@ public class OrderRocketMQService extends AbstractRocketMQService implements Ord
     }
 
     /**
+     * 尝试自动签收
+     * @param order 被签收的订单
+     * @return 是否签收成功
+     */
+    private boolean tryAutomaticallyAcknowledge(Order order) {
+        order.setSendStatus(OrderServiceImpl.ACKNOWLEDGE);
+        order.setEndTime(new Date());
+        return orderMapper.tryAutomaticallyAcknowledge(order) > 0;
+    }
+
+    /**
      * 取消订单操作应该是延时消息，通过消息生产者在消息投递的时候指定延时时间，消费者接收
      * 到该消息就会去尝试修改“未支付”状态为“失败”状态，返回true，如果订单已经为完成，则
      * 修改失败，返回false
      * @param order 订单实体类
      */
-    public boolean tryCancelOrder(Order order) {
-        //TODO 调用Mapper尝试取消订
+    private boolean tryCancelOrder(Order order) {
         if (StringUtils.isEmpty(order.getSerialNumber())) {
             throw new SerialNumberNullException(-1, "订单号不能为空！");
         }

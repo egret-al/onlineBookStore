@@ -56,13 +56,6 @@ public class AccountController {
 
     /**
      * 创建订单，并且设置订单30分钟内未支付则自动过期
-     * 数据格式：
-     * {
-     *     'book_id': 'xx',
-     *     'username_id': 'xx',
-     *     'order_content': 'xxx',
-     *     'product_count': 'xxx'
-     * }
      * @param order 订单
      * @return 创建成功
      */

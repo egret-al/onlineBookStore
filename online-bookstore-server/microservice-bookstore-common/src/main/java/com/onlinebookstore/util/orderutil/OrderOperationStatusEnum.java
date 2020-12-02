@@ -18,7 +18,7 @@ public enum OrderOperationStatusEnum {
      * ERROR：发生错误
      */
     DELETE("delete"), INSERT("insert"), CANCEL("cancel"), MODIFY("modify"), UN_PAYMENT("unPayment"),
-    FINISH("finish"), ERROR("error");
+    FINISH("finish"), ERROR("error"), SENT("sent");
 
     public String status;
 

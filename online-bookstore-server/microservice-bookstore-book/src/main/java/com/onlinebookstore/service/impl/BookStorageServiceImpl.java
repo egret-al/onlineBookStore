@@ -4,6 +4,7 @@ import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.BookStorage;
 import com.onlinebookstore.mapper.BookStorageMapper;
 import com.onlinebookstore.service.BookStorageService;
+import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +78,9 @@ public class BookStorageServiceImpl implements BookStorageService {
      * @param count 扣除的数量
      */
     @Override
+    @Transactional
     public CommonplaceResult subtractStorageById(Integer id, Integer count) {
+        log.info("book-server，xid：" + RootContext.getXID());
         return modifyStorageCount(id, count, 1);
     }
 
