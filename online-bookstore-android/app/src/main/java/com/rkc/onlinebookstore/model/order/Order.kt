@@ -14,6 +14,10 @@ const val ORDER_EXPIRE = -1
 const val ORDER_UN_PAYMENT = 0
 const val ORDER_FINISHED = 1
 
+const val ACKNOWLEDGED = 2
+const val UN_ACKNOWLEDGE = 1
+const val WAIT_SEND = 0
+
 @Parcelize
 data class Order(
     @SerializedName("serial_number") val serialNumber: String = "",
@@ -32,5 +36,6 @@ data class Order(
     @SerializedName("book_name") val bookName: String = "",
     @SerializedName("phone") val phone: String = "",
     @SerializedName("receiver_name") val receiverName: String = "",
-    @SerializedName("address") val address: String = ""
+    @SerializedName("address") val address: String = "",
+    @SerializedName("send_status") var sendStatus: Int = -1
 ) : Parcelable

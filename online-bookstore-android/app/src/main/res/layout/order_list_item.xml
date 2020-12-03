@@ -177,5 +177,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/ackStatusTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:text="TextView"
+            android:visibility="gone"
+            android:theme="@style/labelTextView"
+            android:textColor="@color/deep_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/orderItemStatus"
+            app:layout_constraintStart_toEndOf="@+id/orderItemStatus"
+            app:layout_constraintTop_toTopOf="@+id/orderItemStatus"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

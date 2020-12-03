@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.rkc.onlinebookstore.R
-import com.rkc.onlinebookstore.model.order.ORDER_EXPIRE
-import com.rkc.onlinebookstore.model.order.ORDER_FINISHED
-import com.rkc.onlinebookstore.model.order.ORDER_UN_PAYMENT
+import com.rkc.onlinebookstore.model.order.*
 import com.rkc.onlinebookstore.viewmodel.home.order.OrderListViewModel
 import kotlinx.android.synthetic.main.order_list_item.view.*
 
@@ -26,9 +24,9 @@ class OrderListAdapter(private val orderListViewModel: OrderListViewModel) : Rec
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderListViewHolder {
         val holder = OrderListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.order_list_item, parent, false))
         holder.itemView.orderItemViewDetails.setOnClickListener {
-            val order = orderListViewModel.orderList.value?.get(holder.absoluteAdapterPosition)
             //进入详情页面
             Bundle().apply {
+                val order = orderListViewModel.orderList.value?.get(holder.absoluteAdapterPosition)
                 putParcelable(ORDER_KEY, order)
                 holder.itemView.findNavController().navigate(R.id.action_orderListFragment_to_orderDetailFragment, this)
             }
@@ -53,8 +51,26 @@ class OrderListAdapter(private val orderListViewModel: OrderListViewModel) : Rec
             when (order?.orderPaymentStatus) {
                 ORDER_FINISHED -> {
                     orderItemTotal.text = order.wholePrice.toString()
-                    orderItemStatus.text = "已完成"
+                    orderItemStatus.text = "已支付"
                     orderItemStatus.setTextColor(Color.GREEN)
+                    when (order.sendStatus) {
+                        WAIT_SEND -> {
+                            ackStatusTV.text = "待发货"
+                            ackStatusTV.visibility = View.VISIBLE
+                            ackStatusTV.setTextColor(resources.getColor(R.color.blue))
+                        }
+                        ACKNOWLEDGED -> {
+                            ackStatusTV.text = "已签收"
+                            ackStatusTV.visibility = View.VISIBLE
+                            ackStatusTV.setTextColor(resources.getColor(R.color.deep_gray))
+                        }
+                        UN_ACKNOWLEDGE -> {
+                            ackStatusTV.text = "待签收"
+                            ackStatusTV.setTextColor(resources.getColor(R.color.green))
+                            ackStatusTV.visibility = View.VISIBLE
+                            ackStatusTV.setOnClickListener { orderListViewModel.tryAcknowledge(order.serialNumber) }
+                        }
+                    }
                 }
                 ORDER_UN_PAYMENT -> {
                     orderItemTotal.text = "--"

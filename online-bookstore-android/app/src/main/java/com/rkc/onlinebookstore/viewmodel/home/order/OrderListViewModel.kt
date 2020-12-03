@@ -5,7 +5,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.rkc.onlinebookstore.model.order.ACKNOWLEDGED
 import com.rkc.onlinebookstore.model.order.Order
+import com.rkc.onlinebookstore.util.AbstractOkHttpCallback
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.KotlinType
 import com.rkc.onlinebookstore.util.OKHttpUtils
@@ -26,6 +28,37 @@ class OrderListViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val _orderDelete = MutableLiveData<Int>().apply { value = 0 }
     val orderDelete = _orderDelete
+
+    private val _ackFailure = MutableLiveData<Int>().apply { value = 0 }
+    val ackFailure = _ackFailure
+
+    private val _ackSuccessPosition = MutableLiveData<Int>().apply { value = -1 }
+    val ackSuccessPosition = _ackSuccessPosition
+
+    private fun setItemSendStatus(serialNumber: String, status: Int) {
+        _orderList.value?.forEachIndexed { index, order ->
+            run {
+                if (order.serialNumber == serialNumber) {
+                    order.sendStatus = status
+                    _ackSuccessPosition.postValue(index)
+                }
+            }
+        }
+    }
+
+    fun tryAcknowledge(serialNumber: String) {
+        val js = JSONObject().apply { put("serial_number", serialNumber) }
+        OKHttpUtils.asyncHttpPostJson("/order-server/api/v1/order/pri/acknowledge", js, object : AbstractOkHttpCallback() {
+            override fun doSuccess() {
+                //签收成功，修改本地数据状态
+                setItemSendStatus(serialNumber, ACKNOWLEDGED)
+            }
+
+            override fun doFailure() {
+                _ackFailure.postValue(_ackFailure.value?.plus(1))
+            }
+        })
+    }
 
     /**
      * 删除订单
