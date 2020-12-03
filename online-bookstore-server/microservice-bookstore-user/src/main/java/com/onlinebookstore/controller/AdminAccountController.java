@@ -5,6 +5,8 @@ import com.onlinebookstore.entity.userserver.AdminAccount;
 import com.onlinebookstore.service.AdminAccountService;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.StringEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +29,6 @@ public class AdminAccountController {
     /**
      * 登录接口
      * 数据格式：
-     * {
-     *     'username': '1234567890',
-     *     'password': 'xxxxxxx'
-     * }
      * @param loginInfo 登录信息
      * @return 是否登录成功
      */

@@ -69,3 +69,8 @@ seata:
 # 指定mapper文件位置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+# 配置加解密秘钥
+jasypt:
+  encryptor:
+    password: vh^onsYFUx^DMCKK

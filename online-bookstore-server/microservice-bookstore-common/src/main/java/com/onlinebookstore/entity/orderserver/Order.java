@@ -133,9 +133,4 @@ public class Order implements Serializable {
      */
     @JsonProperty("send_status")
     private Integer sendStatus;
-
-    public static void main(String[] args) {
-        String str = "0005729f-ead4-4562-8523-2c2b72";
-        System.out.println(str.replaceAll("-", "Q"));
-    }
 }

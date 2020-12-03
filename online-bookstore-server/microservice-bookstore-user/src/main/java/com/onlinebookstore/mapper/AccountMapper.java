@@ -15,6 +15,13 @@ import java.util.List;
 public interface AccountMapper {
 
     /**
+     * 根据账号得到密文
+     * @param username 账号
+     * @return 密码的密文
+     */
+    String getPasswordByUsername(String username);
+
+    /**
      * 添加账户
      * @param account 账户实体类
      * @return 影响行数

@@ -15,6 +15,13 @@ import java.util.List;
 public interface AdminAccountMapper {
 
     /**
+     * 得到加密的密文
+     * @param username username
+     * @return 密文
+     */
+    String getPasswordByUsername(String username);
+
+    /**
      * 根据账号密码查询管理员账号
      * @param username 账号
      * @param password 密码

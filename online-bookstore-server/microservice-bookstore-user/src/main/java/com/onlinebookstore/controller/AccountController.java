@@ -111,11 +111,6 @@ public class AccountController {
 
     /**
      * 登录接口
-     * 数据格式：
-     * {
-     *     'username': '1234567890',
-     *     'password': 'xxxxxxx'
-     * }
      * @param loginInfo 登录信息
      * @return 是否登录成功
      */

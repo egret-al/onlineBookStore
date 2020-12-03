@@ -12,6 +12,13 @@
     <artifactId>microservice-bookstore-user</artifactId>
 
     <dependencies>
+        <!--jasypt加解密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>microservice-bookstore-common</artifactId>

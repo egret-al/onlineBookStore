@@ -38,6 +38,12 @@
         username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
     </sql>
 
+    <select id="getPasswordByUsername" resultType="java.lang.String">
+        select password
+        from bookstore_user.sys_account
+        where username = #{username};
+    </select>
+
     <insert id="addAccount" keyColumn="username" keyProperty="username">
         insert into sys_account(<include refid="baseAccountInfo"/>)
         values(#{username}, #{password}, 0, #{createTime}, 0);

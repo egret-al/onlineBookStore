@@ -1,6 +1,5 @@
 package com.onlinebookstore.service.impl;
 
-import com.alibaba.nacos.common.util.UuidUtils;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.Book;
 import com.onlinebookstore.entity.bookserver.BookStorage;
@@ -15,16 +14,16 @@ import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.OrderService;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
-import com.onlinebookstore.util.orderutil.IdGenerator;
 import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
 import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.jasypt.encryption.StringEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -59,6 +58,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     private RocketMQMessageSendUtils rocketMQMessageSendUtils;
+
+    @Autowired
+    private StringEncryptor encryptor;
 
     /**
      * 充值余额
@@ -111,6 +113,8 @@ public class AccountServiceImpl implements AccountService {
     public CommonplaceResult addAccount(Account account, User user) {
         //如果查询是空，说明该账号没有被注册，可以进行注册操作，否则返回
         if (ObjectUtils.isEmpty(accountMapper.selectOneByUsername(account.getUsername()))) {
+            //加密
+            account.setPassword(encryptor.encrypt(account.getPassword()));
             //账号注册
             accountMapper.addAccount(account);
             //用户信息注册
@@ -128,19 +132,27 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public CommonplaceResult selectAccountByUsernameAndPassword(String username, String password) {
-        Account account = accountMapper.selectAccountByUsernameAndPassword(username, password);
-        if (ObjectUtils.isEmpty(account)) {
-            return CommonplaceResult.buildErrorNoData("账号或者密码错误！");
+        //得到密文
+        String ciphertext = accountMapper.getPasswordByUsername(username);
+        if (StringUtils.isEmpty(ciphertext)) return CommonplaceResult.buildErrorNoData("登录失败");
+        //解密匹配
+        if (encryptor.decrypt(ciphertext).equals(password)) {
+            password = ciphertext;
+            Account account = accountMapper.selectAccountByUsernameAndPassword(username, password);
+            if (ObjectUtils.isEmpty(account)) {
+                return CommonplaceResult.buildErrorNoData("账号或者密码错误！");
+            }
+            //登录成功，生成jwt令牌，返回到客户端
+            Map<String, Object> info = new HashMap<>(5);
+            //基于工具类生成jwt token
+            String token = JwtUtil.createJWT(UUID.randomUUID().toString(), account.getUsername(), null);
+            //将token携带回去，每次发起请求都需要在请求头中携带token，便于网关进行拦截验证
+            info.put(UserConstantPool.TOKEN, token);
+            //登录成功，将封装好的账户+用户对象返回，避免前端再次请求获取用户信息数据
+            info.put(UserConstantPool.ACCOUNT, account);
+            return CommonplaceResult.buildSuccess(info, "登录成功！");
         }
-        //登录成功，生成jwt令牌，返回到客户端
-        Map<String, Object> info = new HashMap<>(5);
-        //基于工具类生成jwt token
-        String token = JwtUtil.createJWT(UUID.randomUUID().toString(), account.getUsername(), null);
-        //将token携带回去，每次发起请求都需要在请求头中携带token，便于网关进行拦截验证
-        info.put(UserConstantPool.TOKEN, token);
-        //登录成功，将封装好的账户+用户对象返回，避免前端再次请求获取用户信息数据
-        info.put(UserConstantPool.ACCOUNT, account);
-        return CommonplaceResult.buildSuccess(info, "登录成功！");
+        return CommonplaceResult.buildErrorNoData("账号或者密码错误！");
     }
 
     /**

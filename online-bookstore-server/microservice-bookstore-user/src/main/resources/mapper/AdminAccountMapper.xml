@@ -10,6 +10,12 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <select id="getPasswordByUsername" resultType="java.lang.String">
+        select password
+        from sys_admin
+        where username = #{username};
+    </select>
+
     <select id="selectAdminByUsernameAndPassword" resultMap="BaseAdminAccount">
         select id, username, password, create_time
         from sys_admin
