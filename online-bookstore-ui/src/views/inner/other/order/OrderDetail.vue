@@ -34,7 +34,8 @@
             <cube-button @click="payment" class="to-pay" v-if="this.order.order_payment_status == 0">去支付</cube-button>
           </div>
           <div v-if="this.order.order_payment_status == 1">
-            <li>发货时间：{{ this.order.delivery_time }}</li>
+            <li v-if="this.order.send_status == 1 || this.order.send_status == 2">发货时间：{{ this.order.delivery_time }}</li>
+            <li v-if="this.order.send_status == 2">签收时间：{{ this.order.end_time }}</li>
             <li>可获积分：{{ this.order.obtain_score }}</li>
             <li>支付时间：{{ this.order.payment_time }}</li>
             <li>

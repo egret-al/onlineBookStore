@@ -8,12 +8,15 @@
         <p>订单内容：{{ item.order_content }}</p>
         <p>创建时间：{{ item.create_time }}</p>
         <p>订单状态：
-          <span v-if="item.order_payment_status == 1" class="finish">已完成</span>
+          <span v-if="item.order_payment_status == 1" class="finish">已支付</span>
           <span v-if="item.order_payment_status == 0" class="unpaid">未支付</span>
           <span v-if="item.order_payment_status == -1" class="expire">已过期</span>
+          <span v-if="item.send_status == 0" class="ack">待发货</span>
+          <span v-if="item.send_status == 1" @click="acknowledge(item.serial_number)" class="ack">签收</span>
+          <span v-if="item.send_status == 2" class="a-ack">已签收</span>
           </p>
         <div class="operation">
-          <cube-button class="detail" @click="toOrderDetail(item.serial_number)">查看详情</cube-button>
+          <cube-button class="detail" @click="toOrderDetail(item.serial_number)">详情</cube-button>
           <cube-button class="delete" @click="deleteOrder(item.serial_number)">删除</cube-button>
         </div>
       </li>
@@ -22,7 +25,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "vuex"
+
 export default {
   components: {},
   data() {
@@ -31,6 +35,30 @@ export default {
     };
   },
   methods: {
+    async acknowledge(serialNumber) {
+      const res = await this.$http.post('/order-server/api/v1/order/pri/acknowledge', { serial_number: serialNumber })
+      if (res.code === 1) {
+        const toast = this.$createToast({
+          txt: "签收成功！",
+          type: "correct",
+          time: 1000,
+        })
+        toast.show()
+        this.orderList.forEach(v => {
+          if (v.serial_number == serialNumber) {
+            v.send_status = 2
+          }
+        })
+      } else {
+        const toast = this.$createToast({
+          txt: res.message,
+          type: "error",
+          time: 1000,
+        })
+        toast.show()
+      }
+    },
+
     toOrderDetail(serial) {
       console.log(serial);
       this.$router.push({
@@ -112,6 +140,12 @@ export default {
       color gray
     .unpaid
       color red
+    .ack, .a-ack
+      margin-left 20px
+    .a-ack
+      color red
+    .ack
+      color blue
     p
       text-align left
       padding-left 20px
@@ -120,10 +154,10 @@ export default {
       display flex
       flex-wrap wrap
       button
-        font-size 14px
+        font-size 10px
         text-align center
-        width 25%
-        height 33px
+        width 20%
+        height 17px
         line-height 0
         margin-left 20px
       .detail
