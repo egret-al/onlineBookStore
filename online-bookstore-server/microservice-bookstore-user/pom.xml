@@ -12,6 +12,13 @@
     <artifactId>microservice-bookstore-user</artifactId>
 
     <dependencies>
+        <!--阿里云短信sdk-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+
         <!--jasypt加解密-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author rkc
@@ -29,6 +30,17 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    /**
+     * 忘记密码
+     * @param account 账号
+     * @return CommonplaceResult
+     */
+    @PostMapping("pub/forgotPassword")
+    public CommonplaceResult forgotPassword(@RequestBody Account account) {
+        if (StringUtils.isEmpty(account.getUsername())) return CommonplaceResult.buildErrorNoData("非法操作！");
+        return accountService.forgotPassword(account);
+    }
 
     /**
      * 余额充值接口
@@ -142,10 +154,6 @@ public class AccountController {
     /**
      * 增加用户积分的接口
      * 数据格式：
-     * {
-     *     'username': '1234567890',
-     *     'modifyScoreCount': 10
-     * }
      * @param modifyScorePojo 里面包含了账号和将要改变的积分
      * @return json数据信息
      */
@@ -158,12 +166,6 @@ public class AccountController {
 
     /**
      * 操作余额接口
-     * 数据格式：
-     * {
-     *     'username': 'xxx',
-     *     'count': 'xxx',
-     *     'use_score': true
-     * }
      * @param operateInfo 前端传递的信息
      */
     @Deprecated

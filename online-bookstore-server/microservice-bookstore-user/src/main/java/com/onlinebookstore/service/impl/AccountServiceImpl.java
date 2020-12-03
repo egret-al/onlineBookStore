@@ -1,5 +1,6 @@
 package com.onlinebookstore.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.Book;
 import com.onlinebookstore.entity.bookserver.BookStorage;
@@ -12,6 +13,7 @@ import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
 import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.OrderService;
+import com.onlinebookstore.util.AliyunSmsUtil;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
 import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
@@ -31,6 +33,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author rkc
@@ -61,6 +64,26 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private StringEncryptor encryptor;
+    private Map<String, String> verifyCodeMap = new ConcurrentHashMap<>();
+
+    /**
+     * 忘记密码，通过手机短信找回
+     * @param account 账号
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult forgotPassword(Account account) {
+        Account accountUser = accountMapper.getAccountContainUserByUsername(account.getUsername());
+        if (ObjectUtils.isEmpty(accountUser)) return CommonplaceResult.buildErrorNoData("没有该用户！");
+        //发送短信验证码
+        String code = AliyunSmsUtil.getCode();
+        JSONObject jsonObject = AliyunSmsUtil.sendSms(account.getUser().getPhone(), code);
+        if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
+            verifyCodeMap.put(account.getUsername(), code);
+            return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
+        }
+        return CommonplaceResult.buildError(jsonObject, "发送失败！");
+    }
 
     /**
      * 充值余额

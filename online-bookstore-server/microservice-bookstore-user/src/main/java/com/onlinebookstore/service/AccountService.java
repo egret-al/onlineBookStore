@@ -85,4 +85,11 @@ public interface AccountService {
      * @param serialNumber 订单号
      */
     CommonplaceResult purchaseBook(String serialNumber);
+
+    /**
+     * 忘记密码
+     * @param account 账号
+     * @return CommonplaceResult
+     */
+    CommonplaceResult forgotPassword(Account account);
 }
