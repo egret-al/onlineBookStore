@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.7'
     implementation 'com.youth.banner:banner:1.4.10'
 
     implementation 'io.supercharge:shimmerlayout:2.1.0'

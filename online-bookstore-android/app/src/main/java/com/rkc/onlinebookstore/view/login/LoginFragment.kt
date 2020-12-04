@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.view.home.MainHomeActivity
 import com.rkc.onlinebookstore.viewmodel.login.*
@@ -29,6 +30,7 @@ class LoginFragment : Fragment() {
             loginViewModel.login(editTextUsername.text.toString(), editTextPassword.text.toString())
         }
         btnRegister.setOnClickListener { NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_registerFragment) }
+        forgotPassword.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment) }
 
         loginViewModel.loginStatus.observe(viewLifecycleOwner, {
             //观察登录状态，以在view层的视图做出不同的响应

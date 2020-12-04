@@ -133,6 +133,12 @@
     <string name="collect_time">收藏时间：</string>
     <string name="no_trolley">购物车为空！！！</string>
     <string name="no_book_message">暂无该类商品！</string>
+    <string name="account2">账号：</string>
+    <string name="new_password2">新密码：</string>
+    <string name="sms_code">短信验证码：</string>
+    <string name="confirm_password2">确认密码：</string>
+    <string name="send">发送</string>
+    <string name="reset_password">重置密码</string>
 
     <string-array name="alternative_count">
         <item>6</item>
