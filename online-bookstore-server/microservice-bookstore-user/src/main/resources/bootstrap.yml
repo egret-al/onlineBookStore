@@ -37,6 +37,19 @@ spring:
     port: 25
     protocol: smtp
     default-encoding: utf-8
+  #redis配置
+  redis:
+    database: 0
+    #    host: 132.232.28.130
+    host: 101.200.203.216
+    port: 6379
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 1000ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 1000ms
 
   # 数据源配置
   datasource:

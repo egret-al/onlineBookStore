@@ -15,6 +15,14 @@ import java.util.List;
 public interface AccountMapper {
 
     /**
+     * 修改密码
+     * @param username 账号
+     * @param password 新密码
+     * @return 影响行数
+     */
+    int modifyPassword(@Param("username") String username, @Param("password") String password);
+
+    /**
      * 根据账号得到密文
      * @param username 账号
      * @return 密码的密文

@@ -16,6 +16,7 @@ import com.onlinebookstore.service.OrderService;
 import com.onlinebookstore.util.AliyunSmsUtil;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
+import com.onlinebookstore.util.RedisUtils;
 import com.onlinebookstore.util.orderutil.OrderOperationStatusEnum;
 import com.onlinebookstore.util.rocketmq.RocketMQConstantPool;
 import com.onlinebookstore.util.rocketmq.RocketMQMessageSendUtils;
@@ -64,7 +65,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private StringEncryptor encryptor;
-    private Map<String, String> verifyCodeMap = new ConcurrentHashMap<>();
+
+    @Autowired
+    private RedisUtils redisUtils;
+    //黑名单
+    private static final String blacklist = "blacklist";
+    //已经发送的验证码
+    private static final String sentCode = "sentCode";
 
     /**
      * 忘记密码，通过手机短信找回
@@ -72,17 +79,46 @@ public class AccountServiceImpl implements AccountService {
      * @return CommonplaceResult
      */
     @Override
-    public CommonplaceResult forgotPassword(Account account) {
+    public CommonplaceResult forgotPassword(Account account, String phone) {
         Account accountUser = accountMapper.getAccountContainUserByUsername(account.getUsername());
         if (ObjectUtils.isEmpty(accountUser)) return CommonplaceResult.buildErrorNoData("没有该用户！");
-        //发送短信验证码
-        String code = AliyunSmsUtil.getCode();
-        JSONObject jsonObject = AliyunSmsUtil.sendSms(account.getUser().getPhone(), code);
-        if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
-            verifyCodeMap.put(account.getUsername(), code);
-            return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
+        if (!accountUser.getUser().getPhone().equals(phone)) return CommonplaceResult.buildErrorNoData("手机号码错误！");
+        //查询redis，是否是黑名单，不是黑名单则继续发送验证码
+        if (ObjectUtils.isEmpty(redisUtils.get(blacklist + account.getUsername()))) {
+            //发送短信验证码
+            String code = AliyunSmsUtil.getCode();
+            JSONObject jsonObject = AliyunSmsUtil.sendSms(accountUser.getUser().getPhone(), code);
+            if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
+                //存入redis，并设置3分钟后值自动过期
+                redisUtils.set(sentCode + account.getUsername(), code, 180);
+                //加入黑名单，2分钟内不能再次发送
+                redisUtils.set(blacklist + account.getUsername(), true, 120);
+                return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
+            }
+            return CommonplaceResult.buildError(jsonObject, "发送失败！");
         }
-        return CommonplaceResult.buildError(jsonObject, "发送失败！");
+        return CommonplaceResult.buildErrorNoData("您发送次数过多，请稍后再试！");
+    }
+
+    /**
+     * 重置密码
+     * @param account 账号
+     * @param code 验证码
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult resetPassword(Account account, String code) {
+        String correctCode = String.valueOf(redisUtils.get(sentCode + account.getUsername()));
+        if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期！");
+        if (code.equals(correctCode)) {
+            account.setPassword(encryptor.encrypt(account.getPassword()));
+            //删除redis中用户的验证码
+            redisUtils.del(sentCode + account.getUsername());
+            //验证码正确，调用dao层进行修改密码
+            return accountMapper.modifyPassword(account.getUsername(), account.getPassword()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                    : CommonplaceResult.buildErrorNoData("修改失败");
+        }
+        return CommonplaceResult.buildErrorNoData("验证码输入错误！");
     }
 
     /**

@@ -32,14 +32,25 @@ public class AccountController {
     private AccountService accountService;
 
     /**
+     * 重置密码
+     * @param account 账号
+     * @return CommonplaceResult
+     */
+    @PostMapping("pub/resetPassword")
+    public CommonplaceResult resetPassword(@JsonObject("account") Account account, @JsonObject("code") String code) {
+        if (StringUtils.isEmpty(account.getUsername()) || StringUtils.isEmpty(account.getPassword())) return CommonplaceResult.buildErrorNoData("错误！");
+        return accountService.resetPassword(account, code);
+    }
+
+    /**
      * 忘记密码
      * @param account 账号
      * @return CommonplaceResult
      */
     @PostMapping("pub/forgotPassword")
-    public CommonplaceResult forgotPassword(@RequestBody Account account) {
+    public CommonplaceResult forgotPassword(@JsonObject("account") Account account, @JsonObject("phone") String phone) {
         if (StringUtils.isEmpty(account.getUsername())) return CommonplaceResult.buildErrorNoData("非法操作！");
-        return accountService.forgotPassword(account);
+        return accountService.forgotPassword(account, phone);
     }
 
     /**

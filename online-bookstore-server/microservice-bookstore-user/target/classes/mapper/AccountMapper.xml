@@ -92,6 +92,12 @@
         where username = #{username};
     </update>
 
+    <update id="modifyPassword">
+        update sys_account
+        set password = #{password}
+        where username = #{username};
+    </update>
+
     <update id="subtractScoreAndBalance">
         update sys_account
         set balance = balance + #{count}, score = score - #{score}

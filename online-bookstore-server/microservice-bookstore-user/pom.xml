@@ -12,6 +12,12 @@
     <artifactId>microservice-bookstore-user</artifactId>
 
     <dependencies>
+        <!--整合redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!--阿里云短信sdk-->
         <dependency>
             <groupId>com.aliyun</groupId>

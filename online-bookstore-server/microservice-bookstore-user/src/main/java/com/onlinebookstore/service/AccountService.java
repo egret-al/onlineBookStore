@@ -91,5 +91,13 @@ public interface AccountService {
      * @param account 账号
      * @return CommonplaceResult
      */
-    CommonplaceResult forgotPassword(Account account);
+    CommonplaceResult forgotPassword(Account account, String phone);
+
+    /**
+     * 重置密码
+     * @param account 账号
+     * @param code 验证码
+     * @return CommonplaceResult
+     */
+    CommonplaceResult resetPassword(Account account, String code);
 }
