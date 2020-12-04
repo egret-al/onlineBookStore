@@ -15,6 +15,11 @@ const routes = [{
     component: Registry
   },
   {
+    path: '/forgot',
+    name: 'forgot',
+    component: () => import('../views/outer/ForgotPassword.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/outer/Login.vue')

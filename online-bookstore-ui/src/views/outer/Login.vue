@@ -10,7 +10,9 @@
         <!--密码-->
         <cube-form-item :field="fields[1]"></cube-form-item>
       </cube-form-group>
-
+      <router-link :to="{path: '/forgot'}">
+        <p class="forgot">忘记密码</p>
+      </router-link>
       <cube-form-group>
         <cube-button type="submit">登录</cube-button>
       </cube-form-group>
@@ -119,7 +121,10 @@ export default {
     position fixed
     z-index 999
   .loginInfo
-    padding 80% 5% 0
+    padding 70% 5% 0
+    .forgot
+      margin-top 30px
+      font-size 12px
   .cube-btn
     background-color #489fe2
     margin-top 20px
