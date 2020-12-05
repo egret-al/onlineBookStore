@@ -48,7 +48,7 @@ public interface BookService {
     CommonplaceResult selectBookByIds(List<Integer> ids);
 
     /**
-     * 添加图书和资源
+     * 添加图书
      * @param book book
      * @return CommonplaceResult
      */

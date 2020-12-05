@@ -8,8 +8,8 @@
     </sql>
 
     <insert id="addBookStorage">
-        insert into sys_book_storage(last_add_time, residue_count)
-        values (#{lastAddTime}, #{residueCount});
+        insert into sys_book_storage(b_id, last_add_time, residue_count)
+        values (#{bookId}, #{lastAddTime}, #{residueCount});
     </insert>
 
     <select id="selectStorageByBookId" resultType="com.onlinebookstore.entity.bookserver.BookStorage">

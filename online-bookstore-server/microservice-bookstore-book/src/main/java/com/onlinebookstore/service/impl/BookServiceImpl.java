@@ -153,13 +153,16 @@ public class BookServiceImpl implements BookService {
             log.info(String.valueOf(book));
             //添加图书
             bookMapper.addBook(book);
-            for (BookResource bookResource : book.getBookResources()) {
-                bookResource.setBookId(book.getId());
-                bookResource.setCreateTime(new Date());
+            if (!ObjectUtils.isEmpty(book.getBookResources())) {
+                for (BookResource bookResource : book.getBookResources()) {
+                    bookResource.setBookId(book.getId());
+                    bookResource.setCreateTime(new Date());
+                }
+                //添加资源
+                bookResourceMapper.addBookResources(book.getBookResources());
             }
-            //添加资源
-            bookResourceMapper.addBookResources(book.getBookResources());
             //添加库存
+            book.getBookStorage().setBookId(book.getId());
             book.getBookStorage().setLastAddTime(new Date());
             bookStorageMapper.addBookStorage(book.getBookStorage());
             return CommonplaceResult.buildSuccessNoData("添加成功！");

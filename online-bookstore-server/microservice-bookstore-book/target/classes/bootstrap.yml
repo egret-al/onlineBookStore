@@ -41,6 +41,26 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 1000ms
+  #文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+#文件上传到nginx
+linux:
+  username: root
+  password: y#C:~7v%h8G6
+  #ip地址
+  ip: 112.126.78.225
+  #nginx端口
+  port: 80
+  #虚拟机端口号
+  id: 22
+  #上传根目录
+  uploadPath: /home/ftpadmin/images
+  #文件上传访问路径
+  downPath: /images/
 
 #整合seata
 seata:

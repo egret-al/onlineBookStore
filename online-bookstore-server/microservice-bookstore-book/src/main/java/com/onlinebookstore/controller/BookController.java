@@ -11,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,13 +61,13 @@ public class BookController {
     }
 
     /**
-     * 添加图书和资源（图片）
+     * 添加图书
      * @param book book
      * @return CommonplaceResult
      */
-    @PostMapping("pri/addBookAndResource")
+    @PostMapping("pri/addBook")
     public CommonplaceResult addCompleteBook(@RequestBody Book book) {
-        if (ObjectUtils.isEmpty(book) || ObjectUtils.isEmpty(book.getBookResources()) || ObjectUtils.isEmpty(book.getBookStorage())) {
+        if (ObjectUtils.isEmpty(book) || ObjectUtils.isEmpty(book.getBookStorage())) {
             return CommonplaceResult.buildErrorNoData("数据不全！添加失败");
         }
         log.info(book.toString());
