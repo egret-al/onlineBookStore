@@ -279,12 +279,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public CommonplaceResult selectAllBookInfoByBookId(Integer bookId) {
         Object o = redisUtils.get(BookConstantPool.SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookId);
-        if (ObjectUtils.isEmpty(o)) {
-            Book book = bookMapper.selectAllBookInfoByBookId(bookId);
-            if (!ObjectUtils.isEmpty(book)) {
-                redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookId, o, BookConstantPool.CACHE_TIME[1]);
-                return CommonplaceResult.buildSuccessNoMessage(book);
-            }
+        if (!ObjectUtils.isEmpty(o)) return CommonplaceResult.buildSuccessNoMessage(o);
+        Book book = bookMapper.selectAllBookInfoByBookId(bookId);
+        if (!ObjectUtils.isEmpty(book)) {
+            redisUtils.set(BookConstantPool.SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookId, book, BookConstantPool.CACHE_TIME[1]);
+            return CommonplaceResult.buildSuccessNoMessage(book);
         }
         return CommonplaceResult.buildErrorNoData("没有该数据！");
     }

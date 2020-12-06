@@ -7,6 +7,12 @@
         id, b_id, last_add_time, residue_count
     </sql>
 
+    <update id="updateBookStorage" parameterType="com.onlinebookstore.entity.bookserver.BookStorage">
+        update sys_book_storage
+        set residue_count = #{residueCount}, last_add_time = #{lastAddTime}
+        where id = #{id};
+    </update>
+
     <insert id="addBookStorage">
         insert into sys_book_storage(b_id, last_add_time, residue_count)
         values (#{bookId}, #{lastAddTime}, #{residueCount});

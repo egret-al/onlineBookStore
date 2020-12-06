@@ -15,6 +15,13 @@ import java.util.List;
 public interface BookStorageMapper {
 
     /**
+     * 更新库存信息
+     * @param bookStorage BookStorage
+     * @return 影响行数
+     */
+    int updateBookStorage(BookStorage bookStorage);
+
+    /**
      * 新增库存信息
      * @param bookStorage 库存
      * @return 影响行数

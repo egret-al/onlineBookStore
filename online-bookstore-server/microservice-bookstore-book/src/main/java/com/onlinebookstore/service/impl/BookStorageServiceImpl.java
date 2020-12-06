@@ -47,6 +47,16 @@ public class BookStorageServiceImpl implements BookStorageService {
     }
 
     /**
+     * 跟新库存信息
+     * @param bookStorage BookStorage
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult updateBookStorage(BookStorage bookStorage) {
+        return bookStorageMapper.updateBookStorage(bookStorage) > 0 ? CommonplaceResult.buildSuccessNoData("操作成功！") : CommonplaceResult.buildErrorNoData("操作失败！");
+    }
+
+    /**
      * 根据库存id增加库存数量
      * @param id 库存id
      * @param count 增加的数量

@@ -51,6 +51,16 @@ public class BookController {
     private BookTypeService bookTypeService;
 
     /**
+     * 更新图书信息
+     * @param book 图书
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/updateBook")
+    public CommonplaceResult updateBook(@RequestBody Book book) {
+        return bookService.updateBook(book);
+    }
+
+    /**
      * 根据id列表查询Book集合
      * @param ids id列表
      * @return Book集合
@@ -359,12 +369,20 @@ public class BookController {
     }
 
     /**
+     * 修改库存信息
+     * @param bookStorage bookStorage
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/updateBookStorage")
+    public CommonplaceResult updateBookStorage(@RequestBody BookStorage bookStorage) {
+        bookStorage.setLastAddTime(new Date());
+        log.info(bookStorage.toString());
+        return bookStorageService.updateBookStorage(bookStorage);
+    }
+
+    /**
      * 根据id增加库存
-     * 数据格式：
-     * {
-     *     'id': 'xx',
-     *     'count': 'xxx'
-     * }
+     * @deprecated
      * @param pojo 包含id和count键值
      */
     @PostMapping("pri/addStorageById")

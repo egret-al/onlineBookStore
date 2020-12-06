@@ -25,6 +25,13 @@ public interface BookStorageService {
     CommonplaceResult selectStorageById(Integer id);
 
     /**
+     * 修改库存信息
+     * @param bookStorage BookStorage
+     * @return CommonplaceResult
+     */
+    CommonplaceResult updateBookStorage(BookStorage bookStorage);
+
+    /**
      * 根据库存id增加库存数量
      * @param id 库存id
      * @param count 增加的数量
@@ -52,6 +59,7 @@ public interface BookStorageService {
      * @param bookStorage 新的库存信息
      * @return CommonplaceResult
      */
+    @Deprecated
     CommonplaceResult updateStorage(BookStorage bookStorage);
 
     /**

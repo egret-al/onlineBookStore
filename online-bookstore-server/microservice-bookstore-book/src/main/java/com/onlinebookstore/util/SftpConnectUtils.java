@@ -126,8 +126,9 @@ public class SftpConnectUtils {
         try {
             sftp.cd(directory);
         } catch (SftpException e) {
-            log.warn("directory is not exist");
+            log.warn("directory is not exist. prepare for making directory");
             sftp.mkdir(directory);
+            log.info("directory is created successfully");
             sftp.cd(directory);
         }
         sftp.put(is, sftpFileName);
