@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <!--轮播图-->
-    <book-banner :bannerItems="bannerItems"></book-banner>
+    <!-- <book-banner :bannerItems="bannerItems"></book-banner> -->
     <!--图书列表-->
     <book-list-item :bookList="bookList"></book-list-item>
   </div>

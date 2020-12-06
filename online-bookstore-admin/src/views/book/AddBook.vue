@@ -55,7 +55,7 @@
           </el-col>
         </el-row>
         <el-form-item style="margin-top: 20px" label="内容描述" prop="description">
-          <el-input type="textarea" v-model="bookForm.description"></el-input>
+          <el-input :autosize="{ minRows: 1, maxRows: 20}" type="textarea" v-model="bookForm.description"></el-input>
         </el-form-item>
       </el-card>
       <el-card class="box-card">

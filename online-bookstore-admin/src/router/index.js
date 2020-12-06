@@ -46,7 +46,7 @@ export const constantRoutes = [{
     redirect: '/home/upload',
     meta: {
       title: '图书',
-      icon: 'plane'
+      icon: 'nested'
     },
     children: [{
         path: 'books',
@@ -70,19 +70,11 @@ export const constantRoutes = [{
         component: () => import('@/views/book/BookDetail'),
       },
       {
-        path: 'generate',
-        name: 'generate',
-        component: () => import('@/views/book/generate'),
+        path: 'library',
+        name: 'library',
+        component: () => import('@/views/book/Library'),
         meta: {
-          title: '生成素材',
-        }
-      },
-      {
-        path: 'check',
-        name: 'check',
-        component: () => import('@/views/book/check'),
-        meta: {
-          title: '查看素材',
+          title: '图书馆'
         }
       },
     ]
@@ -93,7 +85,7 @@ export const constantRoutes = [{
     redirect: '/home/upload',
     meta: {
       title: '订单',
-      icon: 'plane'
+      icon: 'form'
     },
     children: [{
       path: 'overview',

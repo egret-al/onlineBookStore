@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-  <el-table max-height="600" style="width: 100%" :data="orderList.slice((currentPage-1)*pageSize,currentPage*pageSize).filter(data => !search || data.book_name.includes(search))">
+  <el-table v-loading="loading" max-height="600" style="width: 100%" :data="orderList.slice((currentPage-1)*pageSize,currentPage*pageSize).filter(data => !search || data.book_name.includes(search))">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -46,11 +46,11 @@
         </el-form>
       </template>
     </el-table-column>
-    <el-table-column label="订单号" prop="serial_number"></el-table-column>
-    <el-table-column label="商品名称" prop="book_name"></el-table-column>
-    <el-table-column label="收货地址" prop="address"></el-table-column>
-    <el-table-column label="时间" prop="create_time" sortable></el-table-column>
-    <el-table-column :filters="[{ text: '已支付', value: 1 }, { text: '待支付', value: 0 }, { text: '已过期', value: -1 }]"
+    <el-table-column align="center" label="订单号" prop="serial_number"></el-table-column>
+    <el-table-column align="center" label="商品名称" prop="book_name"></el-table-column>
+    <el-table-column align="center" label="收货地址" prop="address"></el-table-column>
+    <el-table-column align="center" label="时间" prop="create_time" sortable></el-table-column>
+    <el-table-column align="center" :filters="[{ text: '已支付', value: 1 }, { text: '待支付', value: 0 }, { text: '已过期', value: -1 }]"
       label="支付状态" prop="order_payment_status" filter-placement="bottom-end" :filter-method="filterTag">
       <template slot-scope="scope">
         <el-tag v-if="scope.row.order_payment_status === 1" type="success" disable-transitions>已支付</el-tag>
@@ -104,19 +104,18 @@
         search: '',
         currentPage: 1,
         total: 100,
-        pageSize: 10
+        pageSize: 10,
+        loading: true
       }
     },
     
     methods: {
       handleSizeChange(size) {
         this.pageSize = size
-        console.log('handleSizeChange', size)
       },
 
       handleCurrentChange(currentPage) {
         this.currentPage = currentPage
-        console.log('handleCurrentChange', currentPage)
       },
 
       filterTag(value, row) {
@@ -145,7 +144,7 @@
         this.total = this.orderList.length
       }
       this.value = this.options[0].value
-      console.log(this.orderList)
+      this.loading = false
     }
   }
 </script>
