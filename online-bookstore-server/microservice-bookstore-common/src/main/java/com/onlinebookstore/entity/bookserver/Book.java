@@ -88,4 +88,9 @@ public class Book implements Serializable {
      * 图书库存信息
      */
     private BookStorage bookStorage;
+
+    /**
+     * 图书类型
+     */
+    private BookType bookType;
 }

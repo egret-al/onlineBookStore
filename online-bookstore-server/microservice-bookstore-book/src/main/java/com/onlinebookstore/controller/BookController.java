@@ -277,6 +277,15 @@ public class BookController {
     }
 
     /**
+     * 得到所有图书+类型+库存
+     * @return CommonplaceResult
+     */
+    @GetMapping("pri/selectBookAndType")
+    public CommonplaceResult selectBookAndType() {
+        return bookService.selectBookAndType();
+    }
+
+    /**
      * 得到所有图书的信息，包括图书信息和库存信息
      */
     @GetMapping("pub/selectAllBookAndStorage")
@@ -376,7 +385,6 @@ public class BookController {
     @PostMapping("pri/updateBookStorage")
     public CommonplaceResult updateBookStorage(@RequestBody BookStorage bookStorage) {
         bookStorage.setLastAddTime(new Date());
-        log.info(bookStorage.toString());
         return bookStorageService.updateBookStorage(bookStorage);
     }
 

@@ -94,8 +94,18 @@ public class BookResourceServiceImpl implements BookResourceService {
     @Override
     public CommonplaceResult updateResource(BookResource bookResource) {
         bookResource.setCreateTime(new Date());
-        return bookResourceMapper.updateResource(bookResource) > 0 ? CommonplaceResult.buildSuccessNoData("更新成功") :
-                CommonplaceResult.buildErrorNoData("更新失败");
+        //删
+        int row = bookResourceMapper.updateResource(bookResource);
+        if (row > 0) {
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //删
+            return CommonplaceResult.buildSuccessNoData("更新成功");
+        }
+        return CommonplaceResult.buildErrorNoData("更新失败");
     }
 
     /**

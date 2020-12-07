@@ -17,6 +17,32 @@
         <result column="description" property="description" jdbcType="LONGVARCHAR"/>
     </resultMap>
 
+    <!--Book+BookStorage+BookType-->
+    <resultMap id="BookAndTypeStorage" type="com.onlinebookstore.entity.bookserver.Book">
+        <id column="sb_id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="t_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="main_cover" property="mainCover" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        <association property="bookStorage" column="b_id" javaType="com.onlinebookstore.entity.bookserver.BookStorage">
+            <id column="sbs_id" property="id" jdbcType="INTEGER"/>
+            <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+            <result column="last_add_time" property="lastAddTime" jdbcType="TIMESTAMP"/>
+            <result column="residue_count" property="residueCount" jdbcType="INTEGER"/>
+        </association>
+        <association property="bookType" column="t_id" javaType="com.onlinebookstore.entity.bookserver.BookType">
+            <id column="sbt_id" property="id" jdbcType="INTEGER"/>
+            <result column="type" property="type" jdbcType="VARCHAR"/>
+            <result column="supplement" property="supplement" jdbcType="VARCHAR"/>
+            <result column="img" property="img" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
     <!--Book+BookResource的集合映射信息-->
     <resultMap id="BookContainBookResource" type="com.onlinebookstore.entity.bookserver.Book">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -170,6 +196,15 @@
         left join sys_book_resource sbr on sb.id = sbr.b_id
         where book_name like concat('%', #{str}, '%')
         order by sb.create_time desc;
+    </select>
+
+    <select id="selectBookAndType" resultMap="BookAndTypeStorage">
+        select sb.id sb_id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description,
+               sbt.id sbt_id, type, supplement, img,
+               sbs.id sbs_id, b_id, last_add_time, residue_count
+        from sys_book sb
+        straight_join sys_book_type sbt on sbt.id = sb.t_id
+        straight_join sys_book_storage sbs on sb.id = sbs.b_id;
     </select>
 
     <select id="selectAllBookWithResourceByType" resultMap="BookContainBookResource">

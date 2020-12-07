@@ -17,41 +17,49 @@ public class BookConstantPool {
 
     public static final String TIMEZONE = "GMT+8";
 
-    public static final String SELECT_ALL_BOOK_ALONE = "selectAllBookAlone";
+    public static final String BOOK = "book-server:book";
 
-    public static final String SELECT_ALL_BOOK_INFO = "selectAllBookInfo";
+    public static final String BOOK_TYPE = "book-server:bookType";
 
-    public static final String SELECT_ALL_BOOK_INFO_LIKE = "selectAllBookInfoLike";
+    public static final String BOOK_STORAGE = "book-server:bookStorage";
 
-    public static final String SELECT_ALL_BOOK_INFO_TYPE = "selectAllBookInfoType";
+    public static final String BOOK_RESOURCE = "book-server:bookResource";
 
-    public static final String SELECT_ALL_BOOK_ALONE_BY_ID = "selectAllBookAloneById";
+    public static final String SELECT_ALL_BOOK_ALONE = "book-server:selectAllBookAlone";
 
-    public static final String SELECT_ALL_BOOK_WITH_RESOURCE = "selectAllBookWithResource";
+    public static final String SELECT_ALL_BOOK_INFO = "book-server:selectAllBookInfo";
 
-    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_TYPE = "selectAllBookWithResourceByType";
+    public static final String SELECT_ALL_BOOK_INFO_LIKE = "book-server:selectAllBookInfoLike";
 
-    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_LIKE = "selectAllBookWithResourceLike";
+    public static final String SELECT_ALL_BOOK_INFO_TYPE = "book-server:selectAllBookInfoType";
 
-    public static final String SELECT_ALL_BOOK_INFO_BY_BOOK_ID = "selectAllBookInfoByBookId";
+    public static final String SELECT_ALL_BOOK_ALONE_BY_ID = "book-server:selectAllBookAloneById";
 
-    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_BOOK_ID = "selectAllBookWithResourceByBookId";
+    public static final String SELECT_ALL_BOOK_WITH_RESOURCE = "book-server:selectAllBookWithResource";
 
-    public static final String SELECT_ALL_RESOURCE_ALONE = "selectAllResourceAlone";
+    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_TYPE = "book-server:selectAllBookWithResourceByType";
 
-    public static final String SELECT_ALL_BOOK_WITH_STORAGE_BY_BOOK_ID = "selectAllBookWithStorageByBookId";
+    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_LIKE = "book-server:selectAllBookWithResourceLike";
 
-    public static final String SELECT_ALL_RESOURCE_ALONE_BY_BOOK_ID = "selectAllResourceAloneByBookId";
+    public static final String SELECT_ALL_BOOK_INFO_BY_BOOK_ID = "book-server:selectAllBookInfoByBookId";
 
-    public static final String SELECT_RESOURCE_BY_ID = "selectResourceById";
+    public static final String SELECT_ALL_BOOK_WITH_RESOURCE_BY_BOOK_ID = "book-server:selectAllBookWithResourceByBookId";
 
-    public static final String SELECT_ALL = "BookBannerServiceImpl.selectAll";
+    public static final String SELECT_ALL_RESOURCE_ALONE = "book-server:selectAllResourceAlone";
 
-    public static final String SELECT_COUNT = "BookBannerServiceImpl.selectCount";
+    public static final String SELECT_ALL_BOOK_WITH_STORAGE_BY_BOOK_ID = "book-server:selectAllBookWithStorageByBookId";
 
-    public static final String SELECT_ALL_TYPE = "BookTypeServiceImpl.selectAllType";
+    public static final String SELECT_ALL_RESOURCE_ALONE_BY_BOOK_ID = "book-server:selectAllResourceAloneByBookId";
 
-    public static final String SELECT_ALL_TYPE_WITH_BOOK = "BookTypeServiceImpl.selectAllTypeWithBook";
+    public static final String SELECT_RESOURCE_BY_ID = "book-server:selectResourceById";
 
-    public static final String SELECT_TYPE_BY_ID = "BookTypeServiceImpl.selectTypeById";
+    public static final String SELECT_ALL = "book-server:BookBannerServiceImpl.selectAll";
+
+    public static final String SELECT_COUNT = "book-server:BookBannerServiceImpl.selectCount";
+
+    public static final String SELECT_ALL_TYPE = "book-server:BookTypeServiceImpl.selectAllType";
+
+    public static final String SELECT_ALL_TYPE_WITH_BOOK = "book-server:BookTypeServiceImpl.selectAllTypeWithBook";
+
+    public static final String SELECT_TYPE_BY_ID = "book-server:BookTypeServiceImpl.selectTypeById";
 }

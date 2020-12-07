@@ -13,6 +13,12 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * 查询全部图书+库存+类型
+     * @return CommonplaceResult
+     */
+    CommonplaceResult selectBookAndType();
+
+    /**
      * 根据类型查询图书
      * @param typeId 类型id
      * @return CommonplaceResult

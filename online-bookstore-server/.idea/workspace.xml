@@ -25,21 +25,25 @@
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookStorageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookStorageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookStorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/mapper/BookMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookResourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookResourceServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookStorageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookStorageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/SftpConnectUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/util/SftpConnectUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookStorageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/src/main/resources/mapper/BookStorageMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/controller/BookController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookStorageMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookStorageMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookStorageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookStorageService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/mapper/BookMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/BookService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookBannerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookBannerServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookResourceServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookResourceServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookStorageServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookStorageServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/util/SftpConnectUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/util/SftpConnectUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookTypeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/com/onlinebookstore/service/impl/BookTypeServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookStorageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-book/target/classes/mapper/BookStorageMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/entity/bookserver/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/util/bookutil/BookConstantPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/src/main/java/com/onlinebookstore/util/bookutil/BookConstantPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/Book.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/entity/bookserver/Book.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/util/bookutil/BookConstantPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-common/target/classes/com/onlinebookstore/util/bookutil/BookConstantPool.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +127,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.34367815" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -403,7 +407,8 @@
       <workItem from="1606983750766" duration="9706000" />
       <workItem from="1607041073354" duration="18173000" />
       <workItem from="1607130955866" duration="23924000" />
-      <workItem from="1607215806072" duration="19071000" />
+      <workItem from="1607215806072" duration="19743000" />
+      <workItem from="1607306544884" duration="20336000" />
     </task>
     <servers />
   </component>
@@ -445,17 +450,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookStorageServiceImpl.java</url>
-          <line>69</line>
+          <line>85</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java</url>
-          <line>156</line>
+          <line>164</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/microservice-bookstore-book/src/main/java/com/onlinebookstore/service/impl/BookServiceImpl.java</url>
-          <line>280</line>
+          <line>288</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <breakpoint type="java-exception">
