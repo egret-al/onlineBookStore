@@ -100,7 +100,7 @@ export default {
       const res = await this.$http.post('/book-server/api/v1/book/pri/updateBook', this.book)
       if (res.code === 1) {
         this.$message({
-          message: res.message,
+          message: `${res.message}修改将会在稍后生效`,
           type: 'success'
         })
         return true
@@ -132,6 +132,10 @@ export default {
 
     async modifyStorage() {
       console.log(this.newStorage)
+      if (this.newStorage < this.book.bookStorage.residue_count) {
+        this.$message.error('不能手动减少库存！')
+        return
+      }
       this.dialogStorageVisible = false
       let oldValue = this.book.bookStorage.residue_count
       this.book.bookStorage.residue_count = this.newStorage
@@ -139,7 +143,7 @@ export default {
       console.log(storageRes)
       if (storageRes.code === 1) {
          this.$message({
-          message: storageRes.message,
+          message: `${storageRes.message}修改将会在稍后生效`,
           type: 'success'
         })
         this.book.bookStorage.last_add_time = this.dateFormat("YYYY-mm-dd HH:MM:SS", new Date())

@@ -41,6 +41,7 @@
       <el-table-column align="center" label="作者" prop="author"></el-table-column>
       <el-table-column align="center" label="出版社" prop="publisher"></el-table-column>
       <el-table-column align="center" sortable label="上架时间" prop="create_time"></el-table-column>
+      <el-table-column :filters="typeFilters" :filter-method="filterHandler" align="center" label="类型" prop="bookType.type"></el-table-column>
       <el-table-column align="center" sortable label="价格" prop="price"></el-table-column>
     </el-table>
     <div class="block">
@@ -58,6 +59,7 @@ export default {
   data() {
     return {
       books: [],
+      typeFilters: [],
       loading: true,
       currentPage: 1,
       total: 100,
@@ -66,6 +68,10 @@ export default {
   },
 
   methods: {
+    filterHandler(value, row, column) {
+      return value === row.bookType.id
+    },
+
     handleSizeChange(size) {
       this.pageSize = size
     },
@@ -76,10 +82,16 @@ export default {
   },
   
   async created() {
-    const bookRes = await this.$http.get('/book-server/api/v1/book/pub/selectAllBookAndStorage')
+    const bookRes = await this.$http.get('/book-server/api/v1/book/pri/selectBookAndType')
     if (bookRes.code === 1) {
       this.books = bookRes.data
       this.total = this.books.length
+    }
+    const typeRes = await this.$http.get('/book-server/api/v1/book/pub/selectAllType')
+    if (typeRes.code === 1) {
+      typeRes.data.forEach(v => {
+        this.typeFilters.push({text: v.type, value: v.id})
+      })
     }
     this.loading = false
   }
