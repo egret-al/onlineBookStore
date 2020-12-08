@@ -139,6 +139,7 @@
     <string name="confirm_password2">确认密码：</string>
     <string name="send">发送</string>
     <string name="reset_password">重置密码</string>
+    <string name="phone_modified">更换号码</string>
 
     <string-array name="alternative_count">
         <item>6</item>

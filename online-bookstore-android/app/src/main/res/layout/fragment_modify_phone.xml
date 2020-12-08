@@ -12,30 +12,93 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/my_phone"
+        android:text="@string/phone_modified"
         android:theme="@style/labelTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView79" />
 
     <EditText
         android:id="@+id/phoneET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:ems="20"
-        android:textSize="12sp"
+        android:ems="11"
         android:inputType="phone"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView55"
         app:layout_constraintStart_toEndOf="@+id/textView55"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView55" />
 
     <Button
         android:id="@+id/savePhone"
-        android:layout_width="wrap_content"
-        android:layout_height="40sp"
-        android:layout_marginTop="24dp"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/blue_border"
         android:text="@string/save"
+        android:textColor="@color/blue"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneET" />
+
+    <TextView
+        android:id="@+id/textView77"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/my_phone"
+        android:theme="@style/labelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/oldPasswordET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/phone_example"
+        android:theme="@style/labelTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/textView77"
+        app:layout_constraintStart_toEndOf="@+id/textView77"
+        app:layout_constraintTop_toTopOf="@+id/textView77" />
+
+    <Button
+        android:id="@+id/sendCodeBtn"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/verifyCodeET"
+        app:layout_constraintStart_toEndOf="@+id/verifyCodeET"
+        app:layout_constraintTop_toTopOf="@+id/verifyCodeET" />
+
+    <TextView
+        android:id="@+id/textView79"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="验证码"
+        android:theme="@style/labelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView77" />
+
+    <EditText
+        android:id="@+id/verifyCodeET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:ems="11"
+        android:inputType="phone"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView79"
+        app:layout_constraintStart_toEndOf="@+id/textView79"
+        app:layout_constraintTop_toTopOf="@+id/textView79"
+        app:layout_constraintVertical_bias="0.714" />
 </androidx.constraintlayout.widget.ConstraintLayout>

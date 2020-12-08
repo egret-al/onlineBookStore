@@ -18,6 +18,7 @@ class OKHttpUtils {
         private const val serverAddress = "http://100.66.30.183:9527"
 //        private const val serverAddress = "http://10.127.105.16:9527"
 //        private const val serverAddress = "http://10.127.106.16:9527"
+//        private const val serverAddress = "http://192.168.43.41:9527"
         private val okHttpClientBuilder = OkHttpClient().newBuilder().addInterceptor(SignInterceptor())
         private val jsonType = "application/json;charset=utf-8".toMediaTypeOrNull()
 

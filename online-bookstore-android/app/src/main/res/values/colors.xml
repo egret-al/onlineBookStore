@@ -12,4 +12,9 @@
     <color name="red">#FF0000</color>
     <color name="deep_gray">#8F8F8F</color>
     <color name="green">#00FF21</color>
+
+    <color name="left_background_selected">#F8F8F8</color>
+    <color name="left_background_normal">#6ADAD4D4</color>
+    <color name="left_font_selected">#E93B3D</color>
+    <color name="left_font_normal">#FF000000</color>
 </resources>

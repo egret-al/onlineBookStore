@@ -1,5 +1,6 @@
 package com.rkc.onlinebookstore.adapter.classify
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -42,13 +43,16 @@ class ClassifyLeftAdapter(private var rightRecyclerView: RecyclerView) : ListAda
         return holder
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ClassifyLeftViewHolder, position: Int) {
         val bookType = getItem(position) ?: return
         holder.itemView.classifyTextViewTypeName.text = bookType.type
         if (currentPosition in 0 until itemCount && currentPosition == position) {
-            holder.itemView.classifyTextViewTypeName.setTextColor(Color.BLUE)
+            holder.itemView.classifyTextViewTypeName.setTextColor(holder.itemView.resources.getColor(R.color.left_font_selected))
+            holder.itemView.classifyLeftLayout.setBackgroundColor(holder.itemView.resources.getColor(R.color.left_background_selected))
         } else {
-            holder.itemView.classifyTextViewTypeName.setTextColor(Color.BLACK)
+            holder.itemView.classifyLeftLayout.setBackgroundColor(holder.itemView.resources.getColor(R.color.left_background_normal))
+            holder.itemView.classifyTextViewTypeName.setTextColor(holder.itemView.resources.getColor(R.color.left_font_normal))
         }
     }
 

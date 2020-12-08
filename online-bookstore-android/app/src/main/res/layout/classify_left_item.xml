@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/classifyLeftLayout"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/shallow_gray"
+    android:background="@color/left_background_normal"
     android:gravity="center"
     android:layout_marginStart="10dp"
     android:layout_height="wrap_content">
@@ -11,7 +12,9 @@
         android:layout_margin="5dp"
         android:id="@+id/classifyTextViewTypeName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/left_font_normal"
         android:text="@string/classify_left_example"/>
 </LinearLayout>

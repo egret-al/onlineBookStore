@@ -68,21 +68,27 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="76dp"
         android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/blue_background_border"
         android:text="@string/login"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
         android:layout_marginStart="120dp"
         android:text="@string/register"
+        android:background="@drawable/blue_background_border"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnLogin"
         app:layout_constraintTop_toTopOf="@+id/btnLogin"
         app:layout_constraintVertical_bias="0.0" />

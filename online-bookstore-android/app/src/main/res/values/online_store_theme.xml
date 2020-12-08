@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    蓝底白字-->
+    <style name="blueButtonFontWhite">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="backgroundColor">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!--    红底白字-->
+    <style name="redButtonFontWhite">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="backgroundColor">@color/red</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
