@@ -11,7 +11,7 @@
           <span v-if="item.order_payment_status == 1" class="finish">已支付</span>
           <span v-if="item.order_payment_status == 0" class="unpaid">未支付</span>
           <span v-if="item.order_payment_status == -1" class="expire">已过期</span>
-          <span v-if="item.send_status == 0" class="ack">待发货</span>
+          <span v-if="item.send_status == 0 && item.order_payment_status == 1" class="ack">待发货</span>
           <span v-if="item.send_status == 1" @click="acknowledge(item.serial_number)" class="ack">签收</span>
           <span v-if="item.send_status == 2" class="a-ack">已签收</span>
           </p>
