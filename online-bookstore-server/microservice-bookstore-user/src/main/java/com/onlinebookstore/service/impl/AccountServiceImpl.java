@@ -34,7 +34,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author rkc
@@ -69,9 +68,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private RedisUtils redisUtils;
     //黑名单
-    private static final String blacklist = "blacklist";
+    private static final String forgotPasswordBlacklist = "forgotPassword:blacklist";
     //已经发送的验证码
-    private static final String sentCode = "sentCode";
+    private static final String forgotPasswordSentCode = "forgotPassword:sentCode";
 
     /**
      * 忘记密码，通过手机短信找回
@@ -84,15 +83,15 @@ public class AccountServiceImpl implements AccountService {
         if (ObjectUtils.isEmpty(accountUser)) return CommonplaceResult.buildErrorNoData("没有该用户！");
         if (!accountUser.getUser().getPhone().equals(phone)) return CommonplaceResult.buildErrorNoData("手机号码错误！");
         //查询redis，是否是黑名单，不是黑名单则继续发送验证码
-        if (ObjectUtils.isEmpty(redisUtils.get(blacklist + account.getUsername()))) {
+        if (ObjectUtils.isEmpty(redisUtils.get(forgotPasswordBlacklist + account.getUsername()))) {
             //发送短信验证码
             String code = AliyunSmsUtil.getCode();
             JSONObject jsonObject = AliyunSmsUtil.sendSms(accountUser.getUser().getPhone(), code);
             if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
                 //存入redis，并设置3分钟后值自动过期
-                redisUtils.set(sentCode + account.getUsername(), code, 180);
+                redisUtils.set(forgotPasswordSentCode + account.getUsername(), code, 180);
                 //加入黑名单，2分钟内不能再次发送
-                redisUtils.set(blacklist + account.getUsername(), true, 120);
+                redisUtils.set(forgotPasswordBlacklist + account.getUsername(), true, 120);
                 return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
             }
             return CommonplaceResult.buildError(jsonObject, "发送失败！");
@@ -108,12 +107,12 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public CommonplaceResult resetPassword(Account account, String code) {
-        String correctCode = String.valueOf(redisUtils.get(sentCode + account.getUsername()));
-        if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期！");
+        String correctCode = String.valueOf(redisUtils.get(forgotPasswordSentCode + account.getUsername()));
+        if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期或不存在！");
         if (code.equals(correctCode)) {
             account.setPassword(encryptor.encrypt(account.getPassword()));
             //删除redis中用户的验证码
-            redisUtils.del(sentCode + account.getUsername());
+            redisUtils.del(forgotPasswordSentCode + account.getUsername());
             //验证码正确，调用dao层进行修改密码
             return accountMapper.modifyPassword(account.getUsername(), account.getPassword()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
                     : CommonplaceResult.buildErrorNoData("修改失败");

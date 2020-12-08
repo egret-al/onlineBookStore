@@ -1,11 +1,15 @@
 package com.onlinebookstore.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.UserService;
+import com.onlinebookstore.util.AliyunSmsUtil;
+import com.onlinebookstore.util.RedisUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,16 +24,51 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+    private static final String resetPhoneBlacklist = "resetPhone:blacklist";
+    private static final String resetPhoneSentCode = "resetPhone:sentCode";
+
+    @Resource
+    private RedisUtils redisUtils;
 
     /**
-     * 修改手机
+     * 发送验证码
      * @param user 用户
      * @return CommonplaceResult
      */
     @Override
-    public CommonplaceResult modifyPhone(User user) {
-        return userMapper.modifyPhone(user.getPhone(), user.getAccountUsername()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
-                : CommonplaceResult.buildErrorNoData("修改失败");
+    public CommonplaceResult modifyPhoneSendCode(User user) {
+        String phone = user.getPhone();
+        if (ObjectUtils.isEmpty(redisUtils.get(resetPhoneBlacklist + user.getId()))) {
+            String code = AliyunSmsUtil.getCode();
+            JSONObject jsonObject = AliyunSmsUtil.sendSms(phone, code);
+            if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
+                //验证码存入redis，设置3分钟时间
+                redisUtils.set(resetPhoneSentCode + user.getId(), code, 180);
+                //加入黑名单，2分钟内不能再次发送
+                redisUtils.set(resetPhoneBlacklist + user.getId(), true, 120);
+                return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
+            }
+            return CommonplaceResult.buildError(jsonObject, "发送失败！");
+        }
+        return CommonplaceResult.buildErrorNoData("发送次数过多，发送失败！");
+    }
+
+    /**
+     * 修改手机
+     * @param user 用户
+     * @param code 验证码
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult modifyPhone(User user, String code) {
+        String correctCode = String.valueOf(redisUtils.get(resetPhoneSentCode + user.getId()));
+        if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期或不存在！");
+        if (code.equals(correctCode)) {
+            redisUtils.del(resetPhoneSentCode + user.getId());
+            return userMapper.modifyPhone(user.getPhone(), user.getAccountUsername()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
+                    : CommonplaceResult.buildErrorNoData("修改失败");
+        }
+        return CommonplaceResult.buildErrorNoData("验证码输入错误！");
     }
 
     /**

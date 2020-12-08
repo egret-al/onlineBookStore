@@ -37,10 +37,10 @@ spring:
     jedis:
       pool:
         max-active: 200
-        max-wait: 1000ms
+        max-wait: 2000ms
         max-idle: 8
         min-idle: 0
-    timeout: 1000ms
+    timeout: 5000ms
   #文件上传配置
   servlet:
     multipart:

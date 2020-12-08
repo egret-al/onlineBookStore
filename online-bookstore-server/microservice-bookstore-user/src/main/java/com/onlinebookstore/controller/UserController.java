@@ -1,5 +1,6 @@
 package com.onlinebookstore.controller;
 
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.User;
@@ -26,14 +27,28 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 修改手机
+     * 发送修改手机号码的验证码
      * @param user user
      * @return CommonplaceResult
      */
-    @PostMapping("pri/modifyPhone")
-    public CommonplaceResult modifyPhone(@RequestBody User user) {
+    @PostMapping("pri/modifyPhoneSendCode")
+    public CommonplaceResult modifyPhoneSendCode(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getPhone())) return CommonplaceResult.buildErrorNoData("数据不全");
-        return userService.modifyPhone(user);
+        if (user.getId() == 0) return CommonplaceResult.buildErrorNoData("非法请求！");
+        return userService.modifyPhoneSendCode(user);
+    }
+
+    /**
+     * 修改手机
+     * @param user user
+     * @param code 验证码
+     * @return CommonplaceResult
+     */
+    @PostMapping("pri/modifyPhone")
+    public CommonplaceResult modifyPhone(@JsonObject("user") User user, @JsonObject("code") String code) {
+        if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getPhone())) return CommonplaceResult.buildErrorNoData("数据不全");
+        if (user.getId() == 0) return CommonplaceResult.buildErrorNoData("非法请求！");
+        return userService.modifyPhone(user, code);
     }
 
     /**

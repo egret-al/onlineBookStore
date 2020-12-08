@@ -11,11 +11,19 @@ import com.onlinebookstore.entity.userserver.User;
 public interface UserService {
 
     /**
-     * 修改手机
+     * 发送验证码
      * @param user 用户
      * @return CommonplaceResult
      */
-    CommonplaceResult modifyPhone(User user);
+    CommonplaceResult modifyPhoneSendCode(User user);
+
+    /**
+     * 修改手机
+     * @param user 用户
+     * @param code 验证码
+     * @return CommonplaceResult
+     */
+    CommonplaceResult modifyPhone(User user, String code);
 
     /**
      * 修改昵称
