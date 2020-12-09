@@ -29,14 +29,14 @@ export default {
       user: {},
       mineArray: [
         {
-          label: "我的信息",
-          icon: "cubeic-person",
-          path: "/infomation",
+          label: '我的信息',
+          icon: 'cubeic-person',
+          path: '/infomation',
         },
         {
-          label: "我的订单",
-          icon: "cubeic-square-right",
-          path: "/order",
+          label: '我的订单',
+          icon: 'cubeic-square-right',
+          path: '/order',
         },
         {
           label: '收货地址',
@@ -44,20 +44,23 @@ export default {
           path: '/address'
         },
         {
-          label: "退出",
-          type: "exit",
-          icon: "cubeic-close",
+          label: '退出',
+          type: 'exit',
+          icon: 'cubeic-close',
         },
       ],
     };
   },
   methods: {
     itemClick(item) {
-      if (item.type === "exit") {
+      if (item.type === 'exit') {
         //退出操作，清除token，跳转登录
-        this.$store.commit("setToken", "");
-        localStorage.removeItem("token");
-        this.$router.push({ path: "/login" });
+        this.$store.commit('setToken', '');
+        this.$store.commit('clearCollectCount')
+        localStorage.removeItem('token');
+        localStorage.removeItem('collectCount')
+        localStorage.removeItem('username')
+        this.$router.push({ path: '/login' });
       }
     },
   },

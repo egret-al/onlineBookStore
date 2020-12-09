@@ -40,15 +40,17 @@ export default {
         'id': this.shoppingTrolley.id
       })
       if (res.code === 1) {
+        let c = localStorage.getItem('collectCount')
+        localStorage.setItem('collectCount', c - '0' - this.shoppingTrolley.collect_count)
+        this.$store.commit('subCollectCount', this.shoppingTrolley.collect_count)
         //删除成功，通知刷新
         this.$emit('refreshCart')
       } else {
-        const toast = this.$createToast({
+        this.$createToast({
           txt: res.message,
           type: 'error',
           time: 1500,
-        })
-        toast.show()
+        }).show()
       }
     }
   },

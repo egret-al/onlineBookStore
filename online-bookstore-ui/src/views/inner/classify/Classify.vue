@@ -28,8 +28,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   components: {},
+
   data() {
     return {
       ball: {
@@ -40,6 +43,13 @@ export default {
       typeList: [ ],
     }
   },
+
+  computed: {
+    ...mapState({
+      username: (state) => state.username,
+    }),
+  },
+
   methods: {
     //点击左侧分类
     selectItem(id) {
@@ -54,12 +64,29 @@ export default {
     },
 
     //添加商品到购物车
-    addToCart(e, book) {
-      this.$store.commit('addCart', book)
-      //显示小球
-      this.ball.show = true
-      //获取点击的元素
-      this.ball.el = e.target
+    async addToCart(e, book) {
+      console.log(book)
+      //添加book到购物车，并且vuex的collectCount加1
+      const res = await this.$http.post('/user-server/api/v1/shopping/pri/insertShoppingTrolley', {
+        'book_id': book.id,
+        'account_username': this.username,
+        'collect_count': 1
+      })
+      if (res.code === 1) {
+        let c = localStorage.getItem('collectCount')
+        localStorage.setItem('collectCount', c - '0' + 1)
+        this.$store.commit('addCollectCount', 1)
+        //显示小球
+        this.ball.show = true
+        //获取点击的元素
+        this.ball.el = e.target
+      } else {
+        this.$createToast({
+          txt: res.message,
+          type: 'error',
+          time: 1000
+        }).show()
+      }
     },
 
     //--------------------------动画效果------------------------

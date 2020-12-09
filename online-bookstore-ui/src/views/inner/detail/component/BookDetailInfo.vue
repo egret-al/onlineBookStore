@@ -145,9 +145,12 @@ export default {
             time: 1000
           })
           toast.show()
+          this.$store.commit('addCollectCount', this.number)
+          let c = localStorage.getItem('collectCount') - '0'
+          localStorage.setItem('collectCount', c + this.number)
       } else {
         const toast = this.$createToast({
-            txt: '不能重复添加！',
+            txt: res.message,
             type: 'error',
             time: 1000
           })
