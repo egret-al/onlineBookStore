@@ -38,14 +38,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public CommonplaceResult modifyPhoneSendCode(User user) {
         String phone = user.getPhone();
-        if (ObjectUtils.isEmpty(redisUtils.get(resetPhoneBlacklist + user.getId()))) {
+        if (ObjectUtils.isEmpty(redisUtils.get(resetPhoneBlacklist + user.getAccountUsername()))) {
             String code = AliyunSmsUtil.getCode();
             JSONObject jsonObject = AliyunSmsUtil.sendSms(phone, code);
             if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
                 //验证码存入redis，设置3分钟时间
-                redisUtils.set(resetPhoneSentCode + user.getId(), code, 180);
+                redisUtils.set(resetPhoneSentCode + user.getAccountUsername(), code, 180);
                 //加入黑名单，2分钟内不能再次发送
-                redisUtils.set(resetPhoneBlacklist + user.getId(), true, 120);
+                redisUtils.set(resetPhoneBlacklist + user.getAccountUsername(), true, 120);
                 return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
             }
             return CommonplaceResult.buildError(jsonObject, "发送失败！");
@@ -61,10 +61,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public CommonplaceResult modifyPhone(User user, String code) {
-        String correctCode = String.valueOf(redisUtils.get(resetPhoneSentCode + user.getId()));
+        String correctCode = String.valueOf(redisUtils.get(resetPhoneSentCode + user.getAccountUsername()));
         if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期或不存在！");
         if (code.equals(correctCode)) {
-            redisUtils.del(resetPhoneSentCode + user.getId());
+            redisUtils.del(resetPhoneSentCode + user.getAccountUsername());
             return userMapper.modifyPhone(user.getPhone(), user.getAccountUsername()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
                     : CommonplaceResult.buildErrorNoData("修改失败");
         }
@@ -91,17 +91,6 @@ public class UserServiceImpl implements UserService {
     public CommonplaceResult modifySex(User user) {
         return userMapper.modifySex(user.getAccountUsername(), user.getSex()) > 1 ? CommonplaceResult.buildSuccessNoData("修改成功")
                 : CommonplaceResult.buildErrorNoData("修改失败");
-    }
-
-    /**
-     * 添加用户，通常在创建账户时在同一个事务中进行操作
-     * @param user 用户信息类
-     * @return 影响行数
-     */
-    @Override
-    public CommonplaceResult addUser(User user) {
-        return userMapper.addUser(user) > 0 ? CommonplaceResult.buildSuccessNoData("添加成功") :
-                CommonplaceResult.buildErrorNoData("发生异常");
     }
 
     /**

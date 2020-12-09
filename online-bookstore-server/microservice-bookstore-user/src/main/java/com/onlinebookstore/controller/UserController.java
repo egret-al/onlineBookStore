@@ -34,7 +34,6 @@ public class UserController {
     @PostMapping("pri/modifyPhoneSendCode")
     public CommonplaceResult modifyPhoneSendCode(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getPhone())) return CommonplaceResult.buildErrorNoData("数据不全");
-        if (user.getId() == 0) return CommonplaceResult.buildErrorNoData("非法请求！");
         return userService.modifyPhoneSendCode(user);
     }
 
@@ -47,7 +46,6 @@ public class UserController {
     @PostMapping("pri/modifyPhone")
     public CommonplaceResult modifyPhone(@JsonObject("user") User user, @JsonObject("code") String code) {
         if (StringUtils.isEmpty(user.getAccountUsername()) || StringUtils.isEmpty(user.getPhone())) return CommonplaceResult.buildErrorNoData("数据不全");
-        if (user.getId() == 0) return CommonplaceResult.buildErrorNoData("非法请求！");
         return userService.modifyPhone(user, code);
     }
 
@@ -104,23 +102,5 @@ public class UserController {
             return CommonplaceResult.buildErrorNoData("非法数据！");
         }
         return userService.selectUserByUsername(username);
-    }
-
-    /**
-     * 添加用户
-     * 数据格式
-     * {
-     *     'account_username': 'xxx',
-     *     'nick': 'xxx',
-     *     'birthday': 'xxxx',
-     *     'sex': 'xx',
-     *     'phone': 'xxxxxxxxxx'
-     * }
-     * @param user 用户信息
-     * @return json
-     */
-    @PostMapping("pub/addUser")
-    public CommonplaceResult addUser(@RequestBody User user) {
-        return userService.addUser(user);
     }
 }

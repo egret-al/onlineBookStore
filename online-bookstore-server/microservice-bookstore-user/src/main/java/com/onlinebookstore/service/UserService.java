@@ -40,13 +40,6 @@ public interface UserService {
     CommonplaceResult modifySex(User user);
 
     /**
-     * 添加用户，通常在创建账户时在同一个事务中进行操作
-     * @param user 用户信息类
-     * @return CommonplaceResult
-     */
-    CommonplaceResult addUser(User user);
-
-    /**
      * 根据登录账号查询用户信息
      * @param accountUsername 登录账号
      * @return 用户信息类

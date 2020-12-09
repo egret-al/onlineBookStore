@@ -179,7 +179,7 @@ public class AccountServiceImpl implements AccountService {
             userMapper.addUser(user);
             return CommonplaceResult.buildSuccessNoData("注册成功！");
         }
-        return CommonplaceResult.buildErrorNoData("注册失败！禁止重复注册");
+        return CommonplaceResult.buildErrorNoData("该账号已被注册！");
     }
 
     /**

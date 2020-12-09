@@ -22,8 +22,8 @@ import java.util.Random;
 @Slf4j
 public class AliyunSmsUtil {
 
-    public static final String accessKey = "xxx";
-    public static final String accessSecret = "xxx";
+    public static final String accessKey = "LTAI4G1KTq7TfoYDkRmfpGSm";
+    public static final String accessSecret = "tvHhNtGwBBDnkCeN9P9mw64xfu4B5L";
 
     public static final int SEND_SUCCESS = 1;
     public static final int SEND_FAILURE = -1;
@@ -49,7 +49,7 @@ public class AliyunSmsUtil {
         //短信签名名称
         request.putQueryParameter("SignName", "在线书城");
         //短信模板ID
-        request.putQueryParameter("TemplateCode", "xxx");
+        request.putQueryParameter("TemplateCode", "SMS_206420625");
         JSONObject param = new JSONObject();
         param.put("code", code);
         //短信模板变量对应的实际值，JSON格式
