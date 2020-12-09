@@ -122,6 +122,9 @@ export default {
             path: '/payment',
             query: { serialNumber: serialNumber }
           })
+        } else {
+          //跳转到添加收货地址
+          this.$router.push({ path: '/address-add' })
         }
       } else {
         this.number = 0
