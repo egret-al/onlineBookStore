@@ -148,8 +148,10 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/blue_background_border"
+        android:textColor="@color/white"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
         android:layout_marginTop="32dp"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"

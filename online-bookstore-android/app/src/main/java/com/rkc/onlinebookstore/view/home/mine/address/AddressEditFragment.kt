@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.address.ADDRESS_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.user.Address
+import com.rkc.onlinebookstore.util.VerifyUtils
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.AddressEditViewModel
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.ERROR
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.SUCCESS
@@ -95,6 +96,7 @@ class AddressEditFragment : Fragment() {
 
     private fun validData(address: Address): Boolean {
         if (address.address.length == 1 || address.phone.length != 11 || address.receiverName.isEmpty()) return false
+        if (!VerifyUtils.isPhone(address.phone)) return false
         return true
     }
 

@@ -14,7 +14,6 @@ import java.io.IOException
  * @version 1.0 只能实现没有data返回数据的回调
  */
 abstract class AbstractOkHttpCallback : Callback {
-    private var message = ""
     override fun onFailure(call: Call, e: IOException) {
         Log.d("error", e.toString())
     }
@@ -26,7 +25,6 @@ abstract class AbstractOkHttpCallback : Callback {
         } else if (res.getInt("code") == 0) {
             doFailure()
         }
-        message = res.getString("message")
     }
 
     /**
@@ -38,8 +36,4 @@ abstract class AbstractOkHttpCallback : Callback {
      * 请求失败的回调
      */
     open fun doFailure() { }
-
-    fun getMessage(): String {
-        return message
-    }
 }

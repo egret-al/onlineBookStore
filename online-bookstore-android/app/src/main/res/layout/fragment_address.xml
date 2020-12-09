@@ -9,14 +9,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/addressesRV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        android:layout_height="680dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/addButton"
         android:layout_width="0dp"
+        android:background="@drawable/blue_background_border"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:text="@string/add_address"
         app:layout_constraintBottom_toBottomOf="parent"

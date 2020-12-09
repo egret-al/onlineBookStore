@@ -140,6 +140,11 @@
     <string name="send">发送</string>
     <string name="reset_password">重置密码</string>
     <string name="phone_modified">更换号码</string>
+    <string name="nickname">昵称：</string>
+    <string name="sex2">性别：</string>
+    <string name="verify_code">验证码：</string>
+    <string name="my_birthday">我的生日：</string>
+    <string name="opt">选择</string>
 
     <string-array name="alternative_count">
         <item>6</item>

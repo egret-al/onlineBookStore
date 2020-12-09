@@ -54,7 +54,7 @@ class UnpaidOrderFragment : Fragment() {
                     //订单完成，导航到首页
                     findNavController().navigate(R.id.action_unpaidOrderFragment_to_nav_home)
                 }
-                ORDER_FINISH_FAILURE -> { Toast.makeText(requireContext(), "网络异常！请稍后再试", Toast.LENGTH_SHORT).show() }
+                ORDER_FINISH_FAILURE -> { Toast.makeText(requireContext(), unpaidOrderViewModel.orderFinishMessage.value, Toast.LENGTH_SHORT).show() }
             }
         })
     }

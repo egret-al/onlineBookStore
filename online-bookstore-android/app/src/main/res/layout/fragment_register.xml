@@ -11,26 +11,219 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <Button
         android:id="@+id/btnSubmitRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="168dp"
+        android:background="@drawable/red_background_border"
         android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnToLogin"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="104dp"
+        android:background="@drawable/blue_background_border"
+        android:text="@string/go_to_login"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="@+id/btnSubmitRegister"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="@+id/btnSubmitRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubmitRegister" />
+
+    <TextView
+        android:id="@+id/textView78"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:text="@string/go_to_login"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSubmitRegister"
-        app:layout_constraintStart_toEndOf="@+id/btnSubmitRegister"
-        app:layout_constraintTop_toTopOf="@+id/btnSubmitRegister"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/account"
+        android:theme="@style/labelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/password"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView78"
+        app:layout_constraintStart_toStartOf="@+id/textView78"
+        app:layout_constraintTop_toBottomOf="@+id/textView78" />
+
+    <EditText
+        android:id="@+id/usernameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:ems="10"
+        android:hint="10位账号"
+        android:textSize="14sp"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/textView78"
+        app:layout_constraintStart_toEndOf="@+id/textView78"
+        app:layout_constraintTop_toTopOf="@+id/textView78" />
+
+    <EditText
+        android:id="@+id/nicknameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView81"
+        app:layout_constraintEnd_toEndOf="@+id/confirmPasswordET"
+        app:layout_constraintStart_toStartOf="@+id/confirmPasswordET"
+        app:layout_constraintTop_toTopOf="@+id/textView81" />
+
+    <RadioGroup
+        android:id="@+id/sexRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView82"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameET"
+        app:layout_constraintStart_toStartOf="@+id/nicknameET"
+        app:layout_constraintTop_toTopOf="@+id/textView82">
+
+        <RadioButton
+            android:id="@+id/maleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male" />
+
+        <RadioButton
+            android:id="@+id/femaleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/female" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/phoneET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="11"
+        android:inputType="phone"
+        android:hint="11位手机号码"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView83"
+        app:layout_constraintStart_toStartOf="@+id/nicknameET"
+        app:layout_constraintTop_toTopOf="@+id/textView83" />
+
+    <TextView
+        android:id="@+id/textView83"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/phone2"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView82"
+        app:layout_constraintStart_toStartOf="@+id/textView82"
+        app:layout_constraintTop_toBottomOf="@+id/textView82" />
+
+    <TextView
+        android:id="@+id/textView82"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/sex2"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView81"
+        app:layout_constraintStart_toStartOf="@+id/textView81"
+        app:layout_constraintTop_toBottomOf="@+id/textView81" />
+
+    <TextView
+        android:id="@+id/textView81"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/nickname"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView85"
+        app:layout_constraintStart_toStartOf="@+id/textView85"
+        app:layout_constraintTop_toBottomOf="@+id/textView85" />
+
+    <EditText
+        android:id="@+id/passwordET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="6到10位密码"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView80"
+        app:layout_constraintEnd_toEndOf="@+id/usernameET"
+        app:layout_constraintStart_toStartOf="@+id/usernameET"
+        app:layout_constraintTop_toTopOf="@+id/textView80" />
+
+    <TextView
+        android:id="@+id/textView85"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/confirm_password2"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView80"
+        app:layout_constraintStart_toStartOf="@+id/textView80"
+        app:layout_constraintTop_toBottomOf="@+id/textView80" />
+
+    <EditText
+        android:id="@+id/confirmPasswordET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="6到10位密码"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView85"
+        app:layout_constraintEnd_toEndOf="@+id/passwordET"
+        app:layout_constraintStart_toEndOf="@+id/textView85"
+        app:layout_constraintStart_toStartOf="@+id/passwordET"
+        app:layout_constraintTop_toTopOf="@+id/textView85" />
+
+    <TextView
+        android:id="@+id/textView86"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/my_birthday"
+        android:theme="@style/labelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView83"
+        app:layout_constraintStart_toStartOf="@+id/textView83"
+        app:layout_constraintTop_toBottomOf="@+id/textView83" />
+
+    <TextView
+        android:id="@+id/birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView86"
+        app:layout_constraintStart_toEndOf="@+id/textView86"
+        app:layout_constraintTop_toTopOf="@+id/textView86" />
+
+    <Button
+        android:id="@+id/btnDatePickerDialog"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="144dp"
+        android:text="@string/opt"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/birthday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/birthday"
+        app:layout_constraintVertical_bias="0.523" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

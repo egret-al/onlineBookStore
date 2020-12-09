@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.user.Account
+import com.rkc.onlinebookstore.util.VerifyUtils
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.ModifyPhoneViewModel
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
 import kotlinx.android.synthetic.main.fragment_modify_phone.*
@@ -83,6 +84,10 @@ class ModifyPhoneFragment : Fragment() {
                 if (phone.isEmpty() || code.isEmpty()) {
                     Toast.makeText(requireContext(), "请输入手机号码和验证码！", Toast.LENGTH_SHORT).show()
                 } else {
+                    if (!VerifyUtils.isPhone(phone)) {
+                        Toast.makeText(requireContext(), "错误的手机号码！", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
                     val user = account.user.apply { this.phone = phone }
                     modifyPhoneViewModel.savePhone(user, code)
                 }

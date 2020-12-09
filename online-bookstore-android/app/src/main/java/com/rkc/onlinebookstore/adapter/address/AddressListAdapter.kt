@@ -55,7 +55,7 @@ class AddressListAdapter(private var defaultId: Int, private var addressViewMode
     override fun onBindViewHolder(holder: AddressListViewHolder, position: Int) {
         val address = getItem(position) ?: return
         with(holder.itemView) {
-            nickname.text = address.receiverName
+            nicknameET.text = address.receiverName
             phone.text = address.phone
             addressInfo.text = address.address
             if (defaultId == address.id) {

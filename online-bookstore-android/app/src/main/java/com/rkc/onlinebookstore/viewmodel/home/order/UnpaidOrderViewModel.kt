@@ -32,6 +32,7 @@ class UnpaidOrderViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _orderFinishStatus = MutableLiveData<Int>().apply { value = ORDER_FINISH_STATUS }
     val orderFinishStatus: LiveData<Int> = _orderFinishStatus
+    val orderFinishMessage = MutableLiveData<String>()
 
     /**
      * 取消订单
@@ -70,9 +71,11 @@ class UnpaidOrderViewModel(application: Application) : AndroidViewModel(applicat
                 val jsonObject = JSONObject(response.body?.string())
                 if (jsonObject.getInt("code") == 1) {
                     //购买成功
+                    orderFinishMessage.postValue(jsonObject.getString("message"))
                     _orderFinishStatus.postValue(ORDER_FINISH_SUCCESSFULLY)
                 } else {
                     //购买失败
+                    orderFinishMessage.postValue(jsonObject.getString("message"))
                     _orderFinishStatus.postValue(ORDER_FINISH_FAILURE)
                     Log.e("error", jsonObject.toString())
                 }

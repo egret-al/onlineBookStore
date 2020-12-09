@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
@@ -39,6 +38,6 @@ class MineFragment : Fragment() {
             .into(imgHeader)
         val sharedPreferences = requireActivity().application.getSharedPreferences(USER, Context.MODE_PRIVATE)
         account.text = sharedPreferences.getString(USERNAME, "")
-        nickname.text = sharedPreferences.getString(NICKNAME, "")
+        nicknameET.text = sharedPreferences.getString(NICKNAME, "")
     }
 }

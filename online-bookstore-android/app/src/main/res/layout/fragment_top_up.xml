@@ -94,7 +94,7 @@
         <Spinner
             android:theme="@style/labelTextView"
             android:id="@+id/alternativeSpinner"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
