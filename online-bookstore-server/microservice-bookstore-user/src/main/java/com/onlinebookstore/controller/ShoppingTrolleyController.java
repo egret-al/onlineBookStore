@@ -1,5 +1,6 @@
 package com.onlinebookstore.controller;
 
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.ShoppingTrolley;
@@ -25,6 +26,16 @@ import java.util.Date;
 public class ShoppingTrolleyController {
     @Resource
     private ShoppingTrolleyService shoppingTrolleyService;
+
+    /**
+     * 根据账号查询购物车图书数量
+     * @param username 账号
+     * @return 数量和
+     */
+    @PostMapping("getBookCountByUsername")
+    public CommonplaceResult getBookCountByUsername(@JsonObject("username") String username) {
+        return shoppingTrolleyService.getBookCountByUsername(username);
+    }
 
     /**
      * 根据账号查询购物车的物品，不同于selectProductByAccount的是，该接口的service层会调用book微服务，

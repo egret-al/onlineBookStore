@@ -11,6 +11,13 @@ import com.onlinebookstore.entity.userserver.ShoppingTrolley;
 public interface ShoppingTrolleyService {
 
     /**
+     * 根据账号查询购物车数量总和
+     * @param username 账号
+     * @return 商品总和
+     */
+    CommonplaceResult getBookCountByUsername(String username);
+
+    /**
      * 根据账号查询购物车的物品，不同于selectProductByAccount的是，该接口的service层会调用book微服务，
      * 会将查询到的book填充到属性中并返回
      * @param username 账号

@@ -37,6 +37,20 @@
         </association>
     </resultMap>
 
+    <resultMap id="ShoppingTrolleySimpleMap" type="com.onlinebookstore.entity.userserver.ShoppingTrolley">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+        <result column="a_id" property="accountUsername" jdbcType="VARCHAR"/>
+        <result column="collect_count" property="collectCount" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getBookCountByUsername" resultType="java.lang.Integer">
+        select ifnull(sum(collect_count), 0)
+        from sys_shopping_trolley
+        where a_id = #{username};
+    </select>
+
     <select id="selectProductByAccount" resultMap="CompleteShoppingTrolleyMap">
         select sst.id sst_id, b_id, sst.a_id sst_a_id, collect_count, sst.create_time sst_create_time,
                username, password, score, sa.create_time sa_create_time, balance,
@@ -45,6 +59,12 @@
         left join sys_account sa on sa.username = sst.a_id
         left join sys_user su on su.a_id = sa.username
         where sst.a_id = #{username};
+    </select>
+
+    <select id="getTrolleyByBookId" resultMap="ShoppingTrolleySimpleMap">
+        select id, b_id, a_id, collect_count, create_time
+        from sys_shopping_trolley
+        where b_id = #{bookId} and a_id = #{username};
     </select>
 
     <select id="getTrolleyById" resultMap="CompleteShoppingTrolleyMap">

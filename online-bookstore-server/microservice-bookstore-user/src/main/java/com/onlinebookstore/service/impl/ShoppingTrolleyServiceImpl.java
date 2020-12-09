@@ -30,6 +30,16 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
     @Resource
     private JsonUtil jsonUtil;
 
+    /**
+     * 得到购物车商品的数量
+     * @param username 账号
+     * @return 数量
+     */
+    @Override
+    public CommonplaceResult getBookCountByUsername(String username) {
+        return CommonplaceResult.buildSuccessNoMessage(shoppingTrolleyMapper.getBookCountByUsername(username));
+    }
+
     @Override
     @SuppressWarnings("all")
     public CommonplaceResult selectCompleteProductByAccount(String username) {
@@ -104,9 +114,17 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
             return CommonplaceResult.buildErrorNoData("非法请求！");
         }
         try {
-            shoppingTrolleyMapper.insertShoppingTrolley(shoppingTrolley);
-        } catch (SQLIntegrityConstraintViolationException e) {
-            return CommonplaceResult.buildErrorNoData("不能重复添加！");
+            //查询是否已经添加
+            ShoppingTrolley shoppingTrolley1 = shoppingTrolleyMapper.getTrolleyByBookId(shoppingTrolley.getBookId(), shoppingTrolley.getAccountUsername());
+            if (ObjectUtils.isEmpty(shoppingTrolley1)) {
+                //直接插入
+                shoppingTrolleyMapper.insertShoppingTrolley(shoppingTrolley);
+            } else {
+                //更新操作
+                shoppingTrolleyMapper.modifyCollectCount(shoppingTrolley1.getId(), shoppingTrolley.getCollectCount());
+            }
+        } catch (Exception e) {
+            return CommonplaceResult.buildErrorNoData("请稍后再试！");
         }
         return CommonplaceResult.buildSuccessNoData("添加成功！");
     }
