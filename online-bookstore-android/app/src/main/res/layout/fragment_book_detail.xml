@@ -10,7 +10,6 @@
         android:id="@+id/shimmerLayoutMainCover"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -322,14 +321,14 @@
 
             <Button
                 android:id="@+id/detailButtonPurchase"
-                android:textSize="12sp"
                 android:layout_width="75dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/blue_background_border"
-                android:textColor="@color/white"
                 android:text="@string/immediately_purchase"
+                android:textColor="@color/white"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
@@ -346,31 +345,6 @@
                 app:layout_constraintStart_toEndOf="@+id/detailButtonPurchase"
                 app:layout_constraintTop_toTopOf="@+id/detailButtonPurchase" />
 
-            <Button
-                android:id="@+id/detailButtonIntroduce"
-                android:textSize="12sp"
-                android:layout_width="75dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/introduce"
-                android:background="@drawable/blue_border"
-                android:textColor="@color/blue"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detailButtonPurchase" />
-
-            <Button
-                android:id="@+id/detailButtonComment"
-                android:textSize="12sp"
-                android:layout_width="75dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="16dp"
-                android:text="@string/comment"
-                android:background="@drawable/red_border"
-                android:textColor="@color/red"
-                app:layout_constraintBottom_toBottomOf="@+id/detailButtonIntroduce"
-                app:layout_constraintStart_toEndOf="@+id/detailButtonIntroduce"
-                app:layout_constraintTop_toTopOf="@+id/detailButtonIntroduce" />
 
             <Switch
                 android:id="@+id/detailSwitchUseScore"

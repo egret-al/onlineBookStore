@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.user.Account
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.ADD_FAILURE
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.ADD_SUCCESS
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.REQUEST_STATUS
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.TopUpViewModel
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_top_up.*
 
 class TopUpFragment : Fragment() {
@@ -24,6 +26,8 @@ class TopUpFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "充值余额"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         topUpViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(TopUpViewModel::class.java)
         val account = arguments?.getParcelable<Account>(ACCOUNT_BUNDLE_KEY)!!
         accountToppedUpTV.text = account.username

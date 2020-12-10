@@ -48,8 +48,8 @@ class HomeBookItemAdapter(private val from: Int) : ListAdapter<Book, HomeBookIte
             Bundle().apply {
                 putParcelable(BOOK_BUNDLE_KEY, book)
                 when (from) {
-                    NAV_HOME -> holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment, this)
-                    BOOK_TYPE -> holder.itemView.findNavController().navigate(R.id.action_bookTypeHomeFragment_to_bookDetailFragment, this)
+                    NAV_HOME -> holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookFragment, this)
+                    BOOK_TYPE -> holder.itemView.findNavController().navigate(R.id.action_bookTypeHomeFragment_to_bookFragment, this)
                 }
             }
         }

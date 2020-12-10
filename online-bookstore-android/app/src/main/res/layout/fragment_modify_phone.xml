@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".view.home.mine.info.ModifyPhoneFragment">
 
+    <include
+        android:id="@+id/include7"
+        layout="@layout/common_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/textView55"
         android:layout_width="wrap_content"
@@ -48,11 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/my_phone"
         android:theme="@style/labelTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include7" />
 
     <TextView
         android:id="@+id/oldPasswordET"

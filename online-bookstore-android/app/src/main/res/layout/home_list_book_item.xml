@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:background="@color/white"
+    android:layout_margin="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bookItemConstraintLayout"
@@ -16,10 +17,12 @@
             android:id="@+id/textViewBookPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:text="TextView"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:textColor="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewBookName"
@@ -30,18 +33,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="TextView"
-            android:textSize="16sp"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shimmerGalleryLayout"
-            app:layout_constraintVertical_bias="0.236" />
+            app:layout_constraintVertical_bias="0.205" />
 
         <io.supercharge.shimmerlayout.ShimmerLayout
             android:id="@+id/shimmerGalleryLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp">
 
             <ImageView

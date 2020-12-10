@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +20,13 @@ import com.bumptech.glide.request.target.Target
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.book.Book
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.detail.*
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_book_detail.*
+import java.text.SimpleDateFormat
 
-class BookDetailFragment : Fragment() {
+class BookDetailFragment(private val book: Book) : Fragment() {
     private lateinit var bookDetailViewModel: BookDetailViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,8 +42,6 @@ class BookDetailFragment : Fragment() {
             setShimmerAngle(0)
             startShimmerAnimation()
         }
-        //从bundle中获取数据
-        val book = arguments?.getParcelable<Book>(BOOK_BUNDLE_KEY)
         bookDetailViewModel.setBook(book)
         //购买数量
         bookDetailViewModel.sellingCountLiveData.observe(viewLifecycleOwner, {
@@ -61,22 +63,8 @@ class BookDetailFragment : Fragment() {
             //发起下单请求
             bookDetailViewModel.immediatelyPurchase(bookDetailViewModel.book.value)
         }
-        //图文介绍
-        detailButtonIntroduce.setOnClickListener {
-            Bundle().apply {
-                putParcelable(BOOK_BUNDLE_KEY, bookDetailViewModel.book.value)
-                findNavController().navigate(R.id.action_bookDetailFragment_to_introductionFragment, this)
-            }
-        }
         //加入购物车
         detailButtonAddToCart.setOnClickListener { bookDetailViewModel.addToShoppingTrolley() }
-        //查看评论
-        detailButtonComment.setOnClickListener {
-            Bundle().apply {
-                putParcelable(BOOK_BUNDLE_KEY, bookDetailViewModel.book.value)
-                findNavController().navigate(R.id.action_bookDetailFragment_to_commentFragment, this)
-            }
-        }
 
         detailButtonAdd.setOnClickListener { bookDetailViewModel.book.value?.bookStorage?.residueCount?.let { it1 -> bookDetailViewModel.addCount(it1) } }
         detailButtonSub.setOnClickListener { bookDetailViewModel.subCount() }
@@ -103,7 +91,7 @@ class BookDetailFragment : Fragment() {
                         putParcelable(ORDER_CREATED_KEY, it)
                         putParcelable(BOOK_BUNDLE_KEY, book)
                     }
-                    findNavController().navigate(R.id.action_bookDetailFragment_to_unpaidOrderFragment, bundle)
+                    findNavController().navigate(R.id.action_bookFragment_to_unpaidOrderFragment, bundle)
                     bookDetailViewModel.resetNetRequestStatus()
                 }
                 REQUESTING -> { detailButtonPurchase.isEnabled = true }
@@ -112,7 +100,7 @@ class BookDetailFragment : Fragment() {
         //观察是否存在默认收货地址
         bookDetailViewModel.hasDefaultAddress.observe(viewLifecycleOwner, {
             if (!it) {
-                findNavController().navigate(R.id.action_bookDetailFragment_to_addressFragment)
+                findNavController().navigate(R.id.action_bookFragment_to_addressFragment)
                 //恢复初始属性，避免无法返回
                 bookDetailViewModel.hasDefaultAddress.value = true
             }
@@ -122,7 +110,7 @@ class BookDetailFragment : Fragment() {
         bookDetailViewModel.addFailure.observe(viewLifecycleOwner, { if (it != 0) Toast.makeText(requireContext(), "不能重复添加！", Toast.LENGTH_SHORT).show() })
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun load(book: Book?) {
         //加载图片
         Glide.with(this).load(book?.mainCover)
@@ -148,6 +136,6 @@ class BookDetailFragment : Fragment() {
         detailTextViewAuthor.text = book?.author
         detailTextViewISBN.text = book?.isbn
         detailTextViewPublisher.text = book?.publisher
-        detailTextViewPublishTime.text = book?.createTime.toString()
+        detailTextViewPublishTime.text = SimpleDateFormat(DATE_FORMAT).format(book!!.createTime)
     }
 }

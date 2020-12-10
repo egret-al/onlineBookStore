@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rkc.onlinebookstore.model.book.Book
+import com.rkc.onlinebookstore.model.book.BookStorage
 import com.rkc.onlinebookstore.model.order.Order
 import com.rkc.onlinebookstore.model.user.Address
 import com.rkc.onlinebookstore.util.AbstractOkHttpCallback
@@ -80,19 +81,19 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
 
     fun setBook(book: Book?) {
         //因为book中的bookStorage是该页面必须的属性，因此如果没有该属性。需要访问后端查询数据并填充
-        if (book?.bookStorage != null && book.bookResources != null) {
+        if (book?.bookStorage != null) {
             _book.postValue(book)
             return
         }
-        fillInBook(book)
+        getBookStorage(book)
     }
 
     /**
      * 查询bookStorage和bookResource填充到book
      */
-    private fun fillInBook(book: Book?) {
+    private fun getBookStorage(book: Book?) {
         if (book == null) return
-        OKHttpUtils.asyncHttpGet("/book-server/api/v1/book/pub/selectBookContainAllInfoById/${book.id}", object : Callback {
+        OKHttpUtils.asyncHttpGet("/book-server/api/v1/book/pub/selectStorageByBookId/${book.id}", object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }
@@ -100,7 +101,8 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
             override fun onResponse(call: Call, response: Response) {
                 val jsonObject = JSONObject(response.body?.string())
                 if (jsonObject.getInt("code") == 1) {
-                   _book.postValue(GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").toString(), Book::class.java))
+                    book.bookStorage = GsonUtils.getGson().fromJson(jsonObject.getJSONObject("data").toString(), BookStorage::class.java)
+                   _book.postValue(book)
                 }
             }
         })

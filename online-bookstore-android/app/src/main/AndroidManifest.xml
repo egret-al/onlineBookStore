@@ -11,14 +11,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OnlineBookstore"
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar.Bridge"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".view.home.detail.BookActivity"></activity>
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".view.home.MainHomeActivity"
-            android:label="@string/title_activity_main_home"/>
-        <activity android:name=".view.login.MainActivity">
+            android:label="@string/title_activity_main_home"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.login.MainActivity"
+            android:theme="@style/Theme.OnlineBookstore">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

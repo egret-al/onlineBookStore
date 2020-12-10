@@ -15,14 +15,14 @@ import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.adapter.order.ORDER_KEY
 import com.rkc.onlinebookstore.model.book.Book
-import com.rkc.onlinebookstore.model.order.ORDER_EXPIRE
-import com.rkc.onlinebookstore.model.order.ORDER_FINISHED
-import com.rkc.onlinebookstore.model.order.ORDER_UN_PAYMENT
-import com.rkc.onlinebookstore.model.order.Order
+import com.rkc.onlinebookstore.model.order.*
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.detail.ORDER_CREATED_KEY
 import com.rkc.onlinebookstore.viewmodel.home.order.OrderDetailViewModel
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_order_detail.*
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class OrderDetailFragment : Fragment() {
@@ -34,6 +34,8 @@ class OrderDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "我的订单"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         orderDetailViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(OrderDetailViewModel::class.java)
         arguments?.getParcelable<Order>(ORDER_KEY)?.let { orderDetailViewModel.setOrderLiveData(it) }
         orderDetailViewModel.fetchBook()
@@ -42,7 +44,7 @@ class OrderDetailFragment : Fragment() {
         })
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun load(order: Order, book: Book) {
         //加载book信息
         Glide.with(this).load(book.mainCover)
@@ -50,21 +52,25 @@ class OrderDetailFragment : Fragment() {
             .into(orderImageViewMainCover)
         orderTextViewBookName.text = book.bookName
         orderTextViewAuthor.text = book.author
-        orderTextViewPublishTime.text = book.createTime.toString()
+        orderTextViewPublishTime.text = SimpleDateFormat(DATE_FORMAT).format(book.createTime)
         orderTextViewISBN.text = book.isbn
         orderTextViewPublisher.text = book.publisher
         orderTextViewPrice.text = book.price.toString()
         //加载order信息
         orderTextViewSerial.text = order.serialNumber
-        orderTextViewCreateTime.text = order.createTime.toString()
+        orderTextViewCreateTime.text = SimpleDateFormat(DATE_FORMAT).format(order.createTime)
         orderTextViewProductCount.text = "${order.productCount}本"
         when (order.orderPaymentStatus) {
             ORDER_FINISHED -> {
                 orderTextViewStatus.text = "已完成"
                 orderTextViewStatus.setTextColor(Color.GREEN)
-                orderTextViewSendTime.text = order.deliveryTime.toString()
+                if (order.sendStatus == UN_ACKNOWLEDGE || order.sendStatus == ACKNOWLEDGED) {
+                    orderTextViewSendTime.text = SimpleDateFormat(DATE_FORMAT).format(order.deliveryTime)
+                } else {
+                    orderTextViewSendTime.text = "--"
+                }
                 orderTextViewScore.text = order.obtainScore.toString()
-                orderTextViewPaymentTime.text = order.paymentTime.toString()
+                orderTextViewPaymentTime.text = SimpleDateFormat(DATE_FORMAT).format(order.paymentTime)
                 orderTextViewWhole.text = order.wholePrice.toString()
             }
             ORDER_EXPIRE -> {
@@ -96,7 +102,7 @@ class OrderDetailFragment : Fragment() {
                     add(Calendar.MINUTE, 5)
                 }
                 remindTV.visibility = View.VISIBLE
-                remindTV.text = "订单过期时间：" + DateFormat.getDateTimeInstance().format(calendar.time)
+                remindTV.text = "订单过期时间：" + SimpleDateFormat(DATE_FORMAT).format(calendar.time)
             }
         }
         if (order.useScore == 1) {

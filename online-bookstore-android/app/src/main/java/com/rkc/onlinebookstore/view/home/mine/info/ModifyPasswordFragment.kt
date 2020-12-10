@@ -16,6 +16,7 @@ import com.rkc.onlinebookstore.viewmodel.home.mine.info.PASSWORD_SUCCESS
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.REQUEST_ERROR
 import com.rkc.onlinebookstore.viewmodel.login.USER
 import com.rkc.onlinebookstore.viewmodel.login.USERNAME
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_modify_password.*
 
 class ModifyPasswordFragment : Fragment() {
@@ -27,6 +28,8 @@ class ModifyPasswordFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "修改密码"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         modifyPasswordViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(ModifyPasswordViewModel::class.java)
         val username = requireActivity().getSharedPreferences(USER, Context.MODE_PRIVATE).getString(USERNAME, "")!!
         accountTV.text = username

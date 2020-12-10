@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.address.ADDRESS_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.user.Address
@@ -14,6 +15,7 @@ import com.rkc.onlinebookstore.util.VerifyUtils
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.AddressEditViewModel
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.ERROR
 import com.rkc.onlinebookstore.viewmodel.home.mine.address.SUCCESS
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_address_edit.*
 
 const val OPERATION_EDIT = 1
@@ -29,6 +31,8 @@ class AddressEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "编辑收货地址"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         addressEditViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(
             AddressEditViewModel::class.java)
         //编辑模式

@@ -16,7 +16,7 @@ import com.rkc.onlinebookstore.model.user.Comment
 import com.rkc.onlinebookstore.viewmodel.home.detail.CommentViewModel
 import kotlinx.android.synthetic.main.fragment_comment.*
 
-class CommentFragment : Fragment() {
+class CommentFragment(private val book: Book) : Fragment() {
     private lateinit var commentViewModel: CommentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,7 +26,8 @@ class CommentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         commentViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(CommentViewModel::class.java)
-        commentViewModel.book = arguments?.getParcelable(BOOK_BUNDLE_KEY)!!
+//        commentViewModel.book = arguments?.getParcelable(BOOK_BUNDLE_KEY)!!
+        commentViewModel.book = book
 
         commentListRV.layoutManager = LinearLayoutManager(requireContext())
         commentViewModel.commentLiveData.observe(viewLifecycleOwner, { refresh(it) })

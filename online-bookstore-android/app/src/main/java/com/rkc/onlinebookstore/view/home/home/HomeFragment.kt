@@ -1,12 +1,15 @@
 package com.rkc.onlinebookstore.view.home.home
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -20,6 +23,10 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import com.youth.banner.loader.ImageLoader
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+
+const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
@@ -31,6 +38,7 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val homeBookItemAdapter = HomeBookItemAdapter(NAV_HOME)
@@ -70,7 +78,7 @@ class HomeFragment : Fragment() {
             val urlList = arrayListOf<String>()
             for (banner in it) {
                 urlList.add(banner.resourceUrl)
-                titleList.add(banner.modifyTime.toString())
+                titleList.add(SimpleDateFormat(DATE_FORMAT).format(banner.modifyTime))
             }
             with(bookBanner) {
                 //设置轮播的动画效果

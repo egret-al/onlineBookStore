@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".view.home.order.UnpaidOrderFragment">
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
+    <include
+        android:id="@+id/include11"
+        layout="@layout/common_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        app:cardElevation="40sp"
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="30dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardElevation="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include11">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="12sp"
                 android:text="@string/example_book_name"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toTopOf="@+id/textView4" />
@@ -285,9 +285,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
         android:text="@string/receiver2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
     <TextView
         android:id="@+id/receiverTV"
@@ -296,8 +297,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/receiver_name_example"
         app:layout_constraintBottom_toBottomOf="@+id/textView65"
-        app:layout_constraintStart_toEndOf="@+id/textView65"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintStart_toEndOf="@+id/textView65" />
 
     <TextView
         android:id="@+id/textView69"

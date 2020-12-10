@@ -25,7 +25,7 @@ class ClassifyRightChildAdapter(private var bookList: List<Book>) : RecyclerView
             Bundle().apply {
                 putParcelable(BOOK_BUNDLE_KEY, book)
                 //跳转到详情页
-                holder.itemView.findNavController().navigate(R.id.action_nav_classify_to_bookDetailFragment, this)
+                holder.itemView.findNavController().navigate(R.id.action_nav_classify_to_bookFragment, this)
             }
         }
         return holder

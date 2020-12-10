@@ -1,5 +1,6 @@
 package com.rkc.onlinebookstore.adapter.shopping
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,10 @@ import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.user.ShoppingTrolley
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.shopping.ShoppingTrolleyViewModel
 import kotlinx.android.synthetic.main.shopping_trolley_item.view.*
+import java.text.SimpleDateFormat
 
 /**
  * @author rkc
@@ -40,7 +43,7 @@ class ShoppingTrolleysAdapter(private val shoppingTrolleyViewModel: ShoppingTrol
             val book = getItem(holder.absoluteAdapterPosition).book
             Bundle().apply {
                 putParcelable(BOOK_BUNDLE_KEY, book)
-                holder.itemView.findNavController().navigate(R.id.action_nav_shopping_to_bookDetailFragment, this)
+                holder.itemView.findNavController().navigate(R.id.action_nav_shopping_to_bookFragment, this)
             }
         }
         //删除
@@ -48,6 +51,7 @@ class ShoppingTrolleysAdapter(private val shoppingTrolleyViewModel: ShoppingTrol
         return holder
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ShoppingTrolleysViewHolder, position: Int) {
         val shoppingTrolley = getItem(position) ?: return
         Glide.with(holder.itemView).load(shoppingTrolley.book.mainCover)
@@ -56,7 +60,7 @@ class ShoppingTrolleysAdapter(private val shoppingTrolleyViewModel: ShoppingTrol
         with(holder.itemView) {
             bookNameTV.text = shoppingTrolley.book.bookName
             collectCountTV.text = shoppingTrolley.collectCount.toString()
-            collectTimeTV.text = shoppingTrolley.createTime.toString()
+            collectTimeTV.text = SimpleDateFormat(DATE_FORMAT).format(shoppingTrolley.createTime)
         }
     }
 }

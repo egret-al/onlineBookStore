@@ -15,6 +15,7 @@ import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.user.Account
 import com.rkc.onlinebookstore.util.VerifyUtils
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.ModifyPhoneViewModel
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
 import kotlinx.android.synthetic.main.fragment_modify_phone.*
 import kotlinx.android.synthetic.main.fragment_modify_phone.sendCodeBtn
@@ -29,6 +30,8 @@ class ModifyPhoneFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "修改手机号码"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         modifyPhoneViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(ModifyPhoneViewModel::class.java)
         val account = arguments?.getParcelable<Account>(ACCOUNT_BUNDLE_KEY)!!
         oldPasswordET.text = account.user.phone

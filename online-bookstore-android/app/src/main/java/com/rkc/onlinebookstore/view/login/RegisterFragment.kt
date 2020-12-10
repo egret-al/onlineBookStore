@@ -34,7 +34,7 @@ class RegisterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         registerViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(RegisterViewModel::class.java)
-        btnToLogin.setOnClickListener { NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment) }
+        btnToLogin.setOnClickListener { NavHostFragment.findNavController(this).navigateUp() }
 
         btnDatePickerDialog.setOnClickListener {
             val calendar = Calendar.getInstance()

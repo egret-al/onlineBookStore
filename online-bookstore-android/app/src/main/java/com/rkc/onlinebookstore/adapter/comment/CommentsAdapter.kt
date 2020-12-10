@@ -1,5 +1,6 @@
 package com.rkc.onlinebookstore.adapter.comment
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.user.Comment
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import kotlinx.android.synthetic.main.comment_item.view.*
+import java.text.SimpleDateFormat
 
 /**
  * @author rkc
@@ -31,11 +34,12 @@ class CommentsAdapter : ListAdapter<Comment, CommentsViewHolder>(DiffCallBack) {
         return CommentsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_item, parent, false))
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: CommentsViewHolder, position: Int) {
         val comment = getItem(position) ?: return
         with(holder.itemView) {
             usernameTV.text = comment.account.user.nickname
-            publishTimeTV.text = comment.createTime.toString()
+            publishTimeTV.text = SimpleDateFormat(DATE_FORMAT).format(comment.createTime)
             commentContentTV.text = comment.content
         }
     }

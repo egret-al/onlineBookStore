@@ -15,6 +15,7 @@ import com.rkc.onlinebookstore.model.user.Account
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.ModifyNicknameViewModel
 import com.rkc.onlinebookstore.viewmodel.login.NICKNAME
 import com.rkc.onlinebookstore.viewmodel.login.USER
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_modify_nickname.*
 
 class ModifyNicknameFragment : Fragment() {
@@ -26,6 +27,8 @@ class ModifyNicknameFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "修改昵称"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         modifyNicknameViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(ModifyNicknameViewModel::class.java)
         val account = arguments?.getParcelable<Account>(ACCOUNT_BUNDLE_KEY)!!
         nicknameET.setText(account.user.nickname)

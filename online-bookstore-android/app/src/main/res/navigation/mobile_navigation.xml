@@ -11,15 +11,16 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_home_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
             android:id="@+id/action_nav_home_to_bookTypeHomeFragment"
             app:destination="@id/bookTypeHomeFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_bookFragment"
+            app:destination="@id/bookFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -31,64 +32,31 @@
             android:id="@+id/action_nav_mine_to_orderListFragment"
             app:destination="@id/orderListFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_nav_mine_to_addressFragment"
             app:destination="@id/addressFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_nav_mine_to_mineInfoFragment"
             app:destination="@id/mineInfoFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
-    <fragment
-        android:id="@+id/bookDetailFragment"
-        android:name="com.rkc.onlinebookstore.view.home.detail.BookDetailFragment"
-        android:label="图书详情"
-        tools:layout="@layout/fragment_book_detail" >
-        <action
-            android:id="@+id/action_bookDetailFragment_to_introductionFragment"
-            app:destination="@id/introductionFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_bookDetailFragment_to_commentFragment"
-            app:destination="@id/commentFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_bookDetailFragment_to_unpaidOrderFragment"
-            app:destination="@id/unpaidOrderFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_bookDetailFragment_to_addressFragment"
-            app:destination="@id/addressFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/introductionFragment"
-        android:name="com.rkc.onlinebookstore.view.home.detail.IntroductionFragment"
-        android:label="图文介绍"
-        tools:layout="@layout/fragment_introduction" />
-    <fragment
-        android:id="@+id/commentFragment"
-        android:name="com.rkc.onlinebookstore.view.home.detail.CommentFragment"
-        android:label="评论"
-        tools:layout="@layout/fragment_comment" />
     <fragment
         android:id="@+id/nav_classify"
         android:name="com.rkc.onlinebookstore.view.home.classify.ClassifyFragment"
         android:label="@string/classify"
         tools:layout="@layout/fragment_classify" >
         <action
-            android:id="@+id/action_nav_classify_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"
+            android:id="@+id/action_nav_classify_to_bookFragment"
+            app:destination="@id/bookFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/unpaidOrderFragment"
@@ -98,7 +66,8 @@
         <action
             android:id="@+id/action_unpaidOrderFragment_to_nav_home"
             app:destination="@id/nav_home"
-            app:enterAnim="@anim/fragment_fade_enter" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/orderListFragment"
@@ -109,7 +78,8 @@
             android:id="@+id/action_orderListFragment_to_orderDetailFragment"
             app:destination="@id/orderDetailFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
@@ -120,7 +90,8 @@
             android:id="@+id/action_orderDetailFragment_to_unpaidOrderFragment"
             app:destination="@id/unpaidOrderFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
@@ -131,7 +102,8 @@
             android:id="@+id/action_addressFragment_to_addressEditFragment"
             app:destination="@id/addressEditFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addressEditFragment"
@@ -140,7 +112,9 @@
         tools:layout="@layout/fragment_address_edit" >
         <action
             android:id="@+id/action_addressEditFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
+            app:destination="@id/addressFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/mineInfoFragment"
@@ -151,22 +125,26 @@
             android:id="@+id/action_mineInfoFragment_to_modifyNicknameFragment"
             app:destination="@id/modifyNicknameFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_mineInfoFragment_to_modifyPhoneFragment"
             app:destination="@id/modifyPhoneFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_mineInfoFragment_to_modifyPasswordFragment"
             app:destination="@id/modifyPasswordFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_mineInfoFragment_to_topUpFragment"
             app:destination="@id/topUpFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/modifyNicknameFragment"
@@ -194,10 +172,10 @@
         android:label="购物车"
         tools:layout="@layout/fragment_shopping_trolley" >
         <action
-            android:id="@+id/action_nav_shopping_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"
+            android:id="@+id/action_nav_shopping_to_bookFragment"
+            app:destination="@id/bookFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/bookTypeHomeFragment"
@@ -205,10 +183,26 @@
         android:label="类型"
         tools:layout="@layout/fragment_book_type_home" >
         <action
-            android:id="@+id/action_bookTypeHomeFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"
+            android:id="@+id/action_bookTypeHomeFragment_to_bookFragment"
+            app:destination="@id/bookFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookFragment"
+        android:name="com.rkc.onlinebookstore.view.home.detail.BookFragment"
+        android:label="fragment_book"
+        tools:layout="@layout/fragment_book" >
+        <action
+            android:id="@+id/action_bookFragment_to_unpaidOrderFragment"
+            app:destination="@id/unpaidOrderFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_bookFragment_to_addressFragment"
+            app:destination="@id/addressFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
 </navigation>

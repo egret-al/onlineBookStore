@@ -31,7 +31,6 @@ class LoginFragment : Fragment() {
         }
         btnRegister.setOnClickListener { NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_registerFragment) }
         forgotPassword.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment) }
-
         loginViewModel.loginStatus.observe(viewLifecycleOwner, {
             //观察登录状态，以在view层的视图做出不同的响应
             when(it) {

@@ -7,7 +7,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import kotlin.math.sign
 
-/**
+/**\
  * @author rkc
  * @date 2020/11/9 22:30
  * @version 1.0
@@ -15,8 +15,8 @@ import kotlin.math.sign
 class OKHttpUtils {
 
     companion object {
-//        private const val serverAddress = "http://100.66.30.183:9527"
-        private const val serverAddress = "http://10.127.105.16:9527"
+        private const val serverAddress = "http://100.66.30.183:9527"
+//        private const val serverAddress = "http://10.127.105.16:9527"
 //        private const val serverAddress = "http://10.127.106.16:9527"
 //        private const val serverAddress = "http://192.168.43.41:9527"
         private val okHttpClientBuilder = OkHttpClient().newBuilder().addInterceptor(SignInterceptor())

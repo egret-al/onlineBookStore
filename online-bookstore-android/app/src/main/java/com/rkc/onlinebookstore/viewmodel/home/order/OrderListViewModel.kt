@@ -92,6 +92,7 @@ class OrderListViewModel(application: Application) : AndroidViewModel(applicatio
 
             override fun onResponse(call: Call, response: Response) {
                 val jsonObject = JSONObject(response.body?.string())
+                Log.d("tag", jsonObject.toString())
                 if (jsonObject.getInt("code") == 1) {
                     _orderList.postValue(GsonUtils.getGson().fromJson(jsonObject.getJSONArray("data").toString(), KotlinType.getType(List::class.java, Order::class.java)))
                 } else {

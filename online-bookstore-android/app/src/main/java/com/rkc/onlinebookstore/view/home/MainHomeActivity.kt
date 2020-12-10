@@ -2,11 +2,14 @@ package com.rkc.onlinebookstore.view.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,8 +28,14 @@ import com.rkc.onlinebookstore.view.login.MainActivity
 class MainHomeActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    @SuppressLint("UseCompatLoadingForColorStateLists")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //透明状态栏
+//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        //透明导航栏
+//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        setStatusBarFullTransparent()
         setContentView(R.layout.activity_main_home)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -43,9 +52,11 @@ class MainHomeActivity : AppCompatActivity() {
             }
         }
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_classify, R.id.nav_mine, R.id.nav_shopping))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        //设置底部导航栏字体选中和没选中的颜色
+        navView.itemTextColor = resources.getColorStateList(R.color.bottom_selector)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,5 +78,20 @@ class MainHomeActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    private fun setStatusBarFullTransparent() {
+        //21 -> 5.0
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.apply {
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                statusBarColor = Color.TRANSPARENT
+            }
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 }

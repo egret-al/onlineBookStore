@@ -1,5 +1,6 @@
 package com.rkc.onlinebookstore.adapter.order
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.order.*
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.order.OrderListViewModel
 import kotlinx.android.synthetic.main.order_list_item.view.*
+import java.text.SimpleDateFormat
 
 /**
  * @author rkc
@@ -40,15 +43,16 @@ class OrderListAdapter(private val orderListViewModel: OrderListViewModel) : Rec
         return holder
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: OrderListViewHolder, position: Int) {
-        val order = orderListViewModel.orderList.value?.get(position)
+        val order = orderListViewModel.orderList.value!![position]
         with(holder.itemView) {
-            orderItemSerial.text = order?.serialNumber
-            orderItemProductCount.text = order?.productCount.toString()
-            orderItemContent.text = order?.orderContent
-            orderItemCreateTime.text = order?.createTime.toString()
+            orderItemSerial.text = order.serialNumber
+            orderItemProductCount.text = order.productCount.toString()
+            orderItemContent.text = order.orderContent
+            orderItemCreateTime.text = SimpleDateFormat(DATE_FORMAT).format(order.createTime)
 
-            when (order?.orderPaymentStatus) {
+            when (order.orderPaymentStatus) {
                 ORDER_FINISHED -> {
                     orderItemTotal.text = order.wholePrice.toString()
                     orderItemStatus.text = "已支付"

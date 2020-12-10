@@ -17,9 +17,12 @@ import com.rkc.onlinebookstore.model.order.ORDER_EXPIRE
 import com.rkc.onlinebookstore.model.order.ORDER_FINISHED
 import com.rkc.onlinebookstore.model.order.ORDER_UN_PAYMENT
 import com.rkc.onlinebookstore.model.order.Order
+import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.detail.ORDER_CREATED_KEY
 import com.rkc.onlinebookstore.viewmodel.home.order.*
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_unpaid_order.*
+import java.text.SimpleDateFormat
 
 class UnpaidOrderFragment : Fragment() {
     private lateinit var unpaidOrderViewModel: UnpaidOrderViewModel
@@ -30,11 +33,13 @@ class UnpaidOrderFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "待支付"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         unpaidOrderViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(UnpaidOrderViewModel::class.java)
         //获取order和book
         val order = arguments?.getParcelable<Order>(ORDER_CREATED_KEY)
         val book = arguments?.getParcelable<Book>(BOOK_BUNDLE_KEY)
-        initDemonstration(order, book)
+        initDemonstration(order!!, book!!)
 
         unpaidOrderViewModel.orderCancelStatus.observe(viewLifecycleOwner, {
             when (it) {
@@ -59,27 +64,27 @@ class UnpaidOrderFragment : Fragment() {
         })
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun initDemonstration(order: Order?, book: Book?) {
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
+    private fun initDemonstration(order: Order, book: Book) {
         //初始化显示
-        unpaidTextViewBookName.text = book?.bookName
-        unpaidTextViewAuthor.text = book?.author
-        unpaidTextViewISBN.text = book?.isbn
-        unpaidTextViewPublishTime.text = book?.createTime.toString()
-        unpaidTextViewPublisher.text = book?.publisher
-        unpaidTextViewPrice.text = "￥${book?.price}"
+        unpaidTextViewBookName.text = book.bookName
+        unpaidTextViewAuthor.text = book.author
+        unpaidTextViewISBN.text = book.isbn
+        unpaidTextViewPublishTime.text = SimpleDateFormat(DATE_FORMAT).format(book.createTime)
+        unpaidTextViewPublisher.text = book.publisher
+        unpaidTextViewPrice.text = "￥${book.price}"
         //加载图片
-        Glide.with(this).load(book?.mainCover)
+        Glide.with(this).load(book.mainCover)
             .placeholder(R.drawable.book_placeholder)
             .into(unpaidImageViewMainCover)
 
-        receiverTV.text = order?.receiverName
-        receivingAddress.text = order?.address
-        contactPhoneTV.text = order?.phone
-        unpaidTextViewSerialNumber.text = order?.serialNumber
-        unpaidTextViewOrderCreateTime.text = order?.createTime.toString()
-        unpaidTextViewProductCount.text = "${order?.productCount}本"
-        when (order?.orderPaymentStatus) {
+        receiverTV.text = order.receiverName
+        receivingAddress.text = order.address
+        contactPhoneTV.text = order.phone
+        unpaidTextViewSerialNumber.text = order.serialNumber
+        unpaidTextViewOrderCreateTime.text = SimpleDateFormat(DATE_FORMAT).format(order.createTime)
+        unpaidTextViewProductCount.text = "${order.productCount}本"
+        when (order.orderPaymentStatus) {
             ORDER_EXPIRE -> {
                 unpaidTextViewStatus.setTextColor(resources.getColor(R.color.deep_gray))
                 unpaidTextViewStatus.text = "已过期"

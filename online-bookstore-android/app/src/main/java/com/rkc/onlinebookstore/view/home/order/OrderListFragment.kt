@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.adapter.order.OrderListAdapter
 import com.rkc.onlinebookstore.viewmodel.home.order.OrderListViewModel
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_order_list.*
 
 class OrderListFragment : Fragment() {
@@ -24,6 +26,8 @@ class OrderListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "订单列表"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         orderListViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(OrderListViewModel::class.java)
         orderListAdapter = OrderListAdapter(orderListViewModel)
 

@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.home.mine.info.ModifyNicknameFragment">
 
+    <include
+        android:id="@+id/include5"
+        layout="@layout/common_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView52"
         android:layout_width="wrap_content"
@@ -15,18 +22,19 @@
         android:text="@string/my_nickname"
         android:theme="@style/labelTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include5" />
 
     <EditText
         android:id="@+id/nicknameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="20"
-        android:textSize="12sp"
         android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/textView52"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include5" />
 
     <Button
         android:id="@+id/saveNickname"

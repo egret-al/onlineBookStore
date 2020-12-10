@@ -13,6 +13,7 @@ import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.FEMALE
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.MALE
 import com.rkc.onlinebookstore.viewmodel.home.mine.info.MineInfoViewModel
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_mine.imgHeader
 import kotlinx.android.synthetic.main.fragment_mine_info.*
 
@@ -28,6 +29,8 @@ class MineInfoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        titleTV.text = "我的信息"
+        backIV.setOnClickListener { findNavController().navigateUp() }
         mineInfoViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(
             MineInfoViewModel::class.java)
         load()

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".view.home.detail.BookFragment">
+    <include
+        layout="@layout/common_title"/>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabTextColor="@color/black"
+        app:tabSelectedTextColor="@color/selected"
+        app:tabIndicatorColor="@color/selected"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        android:id="@+id/tabLayout"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+   
+</LinearLayout>
