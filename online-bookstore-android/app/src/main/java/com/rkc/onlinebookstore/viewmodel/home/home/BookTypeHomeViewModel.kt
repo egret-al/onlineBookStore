@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.paging.toLiveData
+import com.rkc.onlinebookstore.datasource.home.home.BookTypeDataSourceFactory
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.util.GsonUtils
 import com.rkc.onlinebookstore.util.KotlinType
@@ -20,7 +23,10 @@ import java.io.IOException
  * @date 2020/11/28 9:06
  * @version 1.0
  */
-class BookTypeHomeViewModel(application: Application) : AndroidViewModel(application) {
+class BookTypeHomeViewModel(typeId: Int) : ViewModel() {
+    val bookPagedList = BookTypeDataSourceFactory(typeId).toLiveData(1)
+
+
     private val _bookListLiveData = MutableLiveData<List<Book>>().apply { value = mutableListOf() }
     val bookListLiveData: LiveData<List<Book>> = _bookListLiveData
 

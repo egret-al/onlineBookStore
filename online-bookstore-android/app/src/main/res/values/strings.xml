@@ -145,6 +145,8 @@
     <string name="verify_code">验证码：</string>
     <string name="my_birthday">我的生日：</string>
     <string name="opt">选择</string>
+    <string name="search">搜索</string>
+    <string name="my_shopping_trolley">我的购物车</string>
 
     <string-array name="alternative_count">
         <item>6</item>

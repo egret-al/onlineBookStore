@@ -51,7 +51,7 @@ class MainHomeActivity : AppCompatActivity() {
                 }
             }
         }
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_classify, R.id.nav_mine, R.id.nav_shopping))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_classify, R.id.nav_mine, R.id.nav_shopping, R.id.nav_search))
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
@@ -74,7 +74,7 @@ class MainHomeActivity : AppCompatActivity() {
     }
 
     private fun isMainFragment(id: Int): Boolean {
-        if (id == R.id.nav_home || id == R.id.nav_classify || id == R.id.nav_mine || id == R.id.nav_shopping) {
+        if (id == R.id.nav_home || id == R.id.nav_classify || id == R.id.nav_mine || id == R.id.nav_shopping || id == R.id.nav_search) {
             return true
         }
         return false

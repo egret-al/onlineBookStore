@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rkc.onlinebookstore.R
@@ -16,7 +17,6 @@ import com.rkc.onlinebookstore.viewmodel.home.home.BookTypeHomeViewModel
 import kotlinx.android.synthetic.main.fragment_book_type_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.bookListRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.swipeRefreshLayout
 
 class BookTypeHomeFragment : Fragment() {
     private lateinit var bookTypeHomeViewModel: BookTypeHomeViewModel
@@ -28,16 +28,30 @@ class BookTypeHomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val bookTypeId = arguments?.getInt(BOOK_TYPE_ID)!!
-        bookTypeHomeViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(BookTypeHomeViewModel::class.java)
+        //自定义viewModel构造函数
+        bookTypeHomeViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(BookTypeHomeViewModel::class.java)) {
+                    return BookTypeHomeViewModel(bookTypeId) as T
+                }
+                throw IllegalArgumentException(" unKnown ViewModel class ")
+            }
+        })[BookTypeHomeViewModel::class.java]
+
+
         val homeBookItemAdapter = HomeBookItemAdapter(BOOK_TYPE)
         bookListRecyclerView.apply {
             adapter = homeBookItemAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-        bookTypeHomeViewModel.bookListLiveData.observe(viewLifecycleOwner, {
+        bookTypeHomeViewModel.bookPagedList.observe(viewLifecycleOwner, {
             homeBookItemAdapter.submitList(it)
-            swipeRefreshLayout.isRefreshing = false
         })
+
+//        bookTypeHomeViewModel.bookListLiveData.observe(viewLifecycleOwner, {
+//            homeBookItemAdapter.submitList(it)
+//            swipeRefreshLayout.isRefreshing = false
+//        })
         bookTypeHomeViewModel.noData.observe(viewLifecycleOwner, {
             if (it > 0) {
                 //没有数据

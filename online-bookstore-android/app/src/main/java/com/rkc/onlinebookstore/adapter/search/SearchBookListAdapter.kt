@@ -1,4 +1,4 @@
-package com.rkc.onlinebookstore.adapter.home
+package com.rkc.onlinebookstore.adapter.search
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
@@ -17,6 +17,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.rkc.onlinebookstore.R
+import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
+import com.rkc.onlinebookstore.adapter.home.HomeBookItemViewHolder
 import com.rkc.onlinebookstore.model.book.Book
 import kotlinx.android.synthetic.main.home_list_book_item.view.*
 
@@ -25,11 +27,7 @@ import kotlinx.android.synthetic.main.home_list_book_item.view.*
  * @date 2020/11/11 17:36
  * @version 1.0
  */
-const val BOOK_BUNDLE_KEY = "book"
-const val NAV_HOME = 1
-const val BOOK_TYPE = 2
-
-class HomeBookItemAdapter(private val from: Int) : PagedListAdapter<Book, HomeBookItemViewHolder>(DiffCallBack) {
+class SearchBookListAdapter : ListAdapter<Book, HomeBookItemViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<Book>() {
         override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
@@ -42,16 +40,11 @@ class HomeBookItemAdapter(private val from: Int) : PagedListAdapter<Book, HomeBo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBookItemViewHolder {
         val holder = HomeBookItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_list_book_item, parent, false))
-        //创建ViewHolder时添加点击事件
         holder.itemView.setOnClickListener {
-            //该book包含了bookResources，因此直接将数据存到bundle中，到详情页获取即可，不用再次请求后台服务器
             val book = getItem(holder.absoluteAdapterPosition)
             Bundle().apply {
                 putParcelable(BOOK_BUNDLE_KEY, book)
-                when (from) {
-                    NAV_HOME -> holder.itemView.findNavController().navigate(R.id.action_nav_home_to_bookFragment, this)
-                    BOOK_TYPE -> holder.itemView.findNavController().navigate(R.id.action_bookTypeHomeFragment_to_bookFragment, this)
-                }
+                holder.itemView.findNavController().navigate(R.id.action_searchFragment_to_bookFragment, this)
             }
         }
         return holder
@@ -69,7 +62,6 @@ class HomeBookItemAdapter(private val from: Int) : PagedListAdapter<Book, HomeBo
             textViewBookName.text = bookItem.bookName
             textViewBookPrice.text = bookItem.price.toString() + "￥"
         }
-        //加载图片
         Glide.with(holder.itemView).load(bookItem.mainCover)
             .placeholder(R.drawable.book_placeholder)
             .listener(object : RequestListener<Drawable> {
@@ -83,5 +75,3 @@ class HomeBookItemAdapter(private val from: Int) : PagedListAdapter<Book, HomeBo
             .into(holder.itemView.imageViewBookMainCover)
     }
 }
-
-class HomeBookItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
