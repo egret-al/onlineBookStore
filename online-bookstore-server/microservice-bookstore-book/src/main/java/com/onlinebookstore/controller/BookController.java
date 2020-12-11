@@ -248,6 +248,17 @@ public class BookController {
     }
 
     /**
+     * 根据类型查询图书的接口（分页）
+     * @param id 类型id
+     * @return CommonplaceResult
+     */
+    @GetMapping("pub/selectAllInfoByTypePage/{typeId}/{currentPage}/{pageSize}")
+    public CommonplaceResult selectAllInfoByTypePage(@PathVariable("typeId") int id, @PathVariable("currentPage") int currentPage
+            , @PathVariable("pageSize") int pageSize) {
+        return bookService.selectAllBookInfoByTypePage(id, currentPage, pageSize);
+    }
+
+    /**
      * 根据类型查询图书的接口
      * @param id 类型id
      * @return CommonplaceResult
@@ -255,6 +266,16 @@ public class BookController {
     @GetMapping("pub/selectAllInfoByType/{typeId}")
     public CommonplaceResult selectAllInfoByType(@PathVariable("typeId") int id) {
         return bookService.selectAllBookInfoByType(id);
+    }
+
+    /**
+     * 得到所有图书的所有信息，包括库存和资源信息
+     * @param currentPage 当前页
+     * @param pageSize 每页大小
+     */
+    @GetMapping("pub/selectAllInfoPage/{currentPage}/{pageSize}")
+    public CommonplaceResult selectAllInfoPage(@PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize) {
+        return bookService.selectAllBookInfoPage(currentPage, pageSize);
     }
 
     /**

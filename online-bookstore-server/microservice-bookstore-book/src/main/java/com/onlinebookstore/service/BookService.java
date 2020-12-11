@@ -26,6 +26,13 @@ public interface BookService {
     CommonplaceResult selectAllBookWithResourceByType(int typeId);
 
     /**
+     * 根据类型查询（分页）
+     * @param typeId 类型id
+     * @return CommonplaceResult
+     */
+    CommonplaceResult selectAllBookInfoByTypePage(int typeId, int currentPage, int pageSize);
+
+    /**
      * 根据类型查询
      * @param typeId 类型id
      * @return CommonplaceResult
@@ -65,6 +72,8 @@ public interface BookService {
      * @return 图书信息
      */
     CommonplaceResult selectAllBookAlone();
+
+    CommonplaceResult selectAllBookInfoPage(int currentPage, int pageSize);
 
     /**
      * 查询所有图书信息

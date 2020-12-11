@@ -85,3 +85,15 @@ seata:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 分页插件配置
+pagehelper:
+  helper-dialect: mysql     # 自动检测当前的数据库链接，自动选择合适的分页方式 也即说明方言为mysql
+  reasonable: true          # 对页码小于0的时候有帮助
+  page-size-zero: true      # 当页码为0的时会查找所有记录
+  support-methods-arguments: true
+  params: count=countSql
+  offset-as-page-num: true  # 将offset作为pagenum 即实现了自动翻页
+

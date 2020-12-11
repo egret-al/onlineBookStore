@@ -98,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CommonplaceResult selectOrderByUsername(String username) {
         List<Order> orders = orderMapper.selectOrderByUsername(username);
+        log.info(orders.toString());
         if (orders.size() == 0) {
             return CommonplaceResult.buildErrorNoData("没有订单哦！");
         }

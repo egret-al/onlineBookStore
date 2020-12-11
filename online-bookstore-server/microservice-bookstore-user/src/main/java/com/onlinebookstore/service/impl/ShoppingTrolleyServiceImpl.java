@@ -113,8 +113,7 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
         if (ObjectUtils.isEmpty(shoppingTrolley)) {
             return CommonplaceResult.buildErrorNoData("非法请求！");
         }
-        try {
-            //查询是否已经添加
+        try {            //查询是否已经添加
             ShoppingTrolley shoppingTrolley1 = shoppingTrolleyMapper.getTrolleyByBookId(shoppingTrolley.getBookId(), shoppingTrolley.getAccountUsername());
             if (ObjectUtils.isEmpty(shoppingTrolley1)) {
                 //直接插入

@@ -120,32 +120,9 @@
         </collection>
     </resultMap>
 
-    <!--只包含Book字段-->
-    <sql id="baseBookInfo">
-        id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description
-    </sql>
-
-    <!--Book字段+资源字段-->
-    <sql id="bookCollectionBookResource">
-        sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, description,
-        sbr.id as rid, b_id, resource_url, symbol, supplement, sbr.create_time
-    </sql>
-
-    <!--Book字段+资源字段+库存字段-->
-    <sql id="bookCollectionBookResourceWithBookStorage">
-        sb.id, book_name, isbn, author, publisher, price, sb.create_time,
-        sbr.id as rid, main_cover, description, sbr.b_id, resource_url, symbol, supplement, sbr.create_time, t_id,
-        sbs.id as sid, sbs.b_id, last_add_time, residue_count
-    </sql>
-
-    <!--Book字段+库存字段-->
-    <sql id="bookAssociationBookStorage">
-        sb.id, book_name, isbn, author, publisher, price, create_time, t_id,
-        sbs.id as sid, main_cover, description, b_id, last_add_time, residue_count
-    </sql>
-
     <select id="selectBookByIds" resultMap="BookAssociationBookStorage">
-        select <include refid="bookAssociationBookStorage"/>
+        select  sb.id, book_name, isbn, author, publisher, price, create_time, t_id,
+                sbs.id as sid, main_cover, description, b_id, last_add_time, residue_count
         from sys_book sb
         left join sys_book_storage sbs on sb.id = sbs.b_id
         where sb.id in
@@ -160,38 +137,41 @@
     </insert>
 
     <select id="selectAllBookAlone" resultMap="BaseBookMapper">
-        select <include refid="baseBookInfo"/>
+        select id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description
         from sys_book;
     </select>
 
     <select id="selectAllBookInfoByType" resultMap="BookContainBookResourceWithStorage">
-        select <include refid="bookCollectionBookResourceWithBookStorage"/>
-        from sys_book_storage sbs
-            left join sys_book sb on sbs.b_id = sb.id
-            left join sys_book_resource sbr on sb.id = sbr.b_id
+        select sb.id, sb.book_name, sb.isbn, sb.author, sb.publisher, sb.price, sb.create_time, sb.t_id, sb.main_cover, sb.description,
+               sbs.id sid, sbs.b_id, sbs.last_add_time, sbs.residue_count
+        from sys_book sb
+                 left join sys_book_storage sbs on sb.id = sbs.b_id
         where sb.t_id = #{typeId}
-        order by sb.create_time desc;
+        order by sb.create_time desc
     </select>
 
     <select id="selectAllBookInfoLike" resultMap="BookContainBookResourceWithStorage">
-        select <include refid="bookCollectionBookResourceWithBookStorage"/>
-        from sys_book_storage sbs
-        left join sys_book sb on sbs.b_id = sb.id
-        left join sys_book_resource sbr on sb.id = sbr.b_id
+        select sb.id, sb.book_name, sb.isbn, sb.author, sb.publisher, sb.price, sb.create_time, sb.t_id, sb.main_cover, sb.description,
+               sbs.id sid, sbs.b_id, sbs.last_add_time, sbs.residue_count,
+               sbr.id rid, sbr.b_id, sbr.resource_url, sbr.symbol, sbr.supplement, sbr.create_time
+        from sys_book sb
+                 left join sys_book_storage sbs on sb.id = sbs.b_id
+                 left join sys_book_resource sbr on sb.id = sbr.b_id
         where book_name like concat('%', #{str}, '%')
-        order by sb.create_time desc;
+        order by sb.create_time desc
     </select>
 
-    <select id="selectAllBookInfo" resultMap="BookContainBookResourceWithStorage">
-        select <include refid="bookCollectionBookResourceWithBookStorage"/>
-        from sys_book_storage sbs
-        left join sys_book sb on sbs.b_id = sb.id
-        left join sys_book_resource sbr on sb.id = sbr.b_id
-        order by sb.create_time desc;
+    <select id="selectAllBookInfo" resultMap="BookAssociationBookStorage">
+        select sb.id id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description,
+               sbs.id sid, b_id, last_add_time, residue_count
+        from sys_book sb
+        straight_join sys_book_storage sbs on sb.id = sbs.b_id
+        order by sb.create_time desc
     </select>
 
     <select id="selectAllBookWithResourceLike" resultMap="BookContainBookResource">
-        select <include refid="bookCollectionBookResource"/>
+        select sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, description,
+               sbr.id as rid, b_id, resource_url, symbol, supplement, sbr.create_time
         from sys_book sb
         left join sys_book_resource sbr on sb.id = sbr.b_id
         where book_name like concat('%', #{str}, '%')
@@ -208,7 +188,8 @@
     </select>
 
     <select id="selectAllBookWithResourceByType" resultMap="BookContainBookResource">
-        select <include refid="bookCollectionBookResource"/>
+        select sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, description,
+               sbr.id as rid, b_id, resource_url, symbol, supplement, sbr.create_time
         from sys_book sb
         left join sys_book_resource sbr on sb.id = sbr.b_id
         where sb.t_id = #{typeId}
@@ -216,42 +197,48 @@
     </select>
 
     <select id="selectAllBookWithResource" resultMap="BookContainBookResource">
-        select <include refid="bookCollectionBookResource"/>
+        select sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, description,
+               sbr.id as rid, b_id, resource_url, symbol, supplement, sbr.create_time
         from sys_book sb
         left join sys_book_resource sbr on sb.id = sbr.b_id
         order by sb.create_time desc;
     </select>
 
     <select id="selectAllBookWithStorage" resultMap="BookAssociationBookStorage">
-        select <include refid="bookAssociationBookStorage"/>
+        select sb.id, book_name, isbn, author, publisher, price, create_time, t_id,
+               sbs.id as sid, main_cover, description, b_id, last_add_time, residue_count
         from sys_book sb
         left join sys_book_storage sbs on sb.id = sbs.b_id
         order by sb.create_time desc;
     </select>
 
     <select id="selectAllBookAloneById" resultMap="BaseBookMapper">
-        select <include refid="baseBookInfo"/>
+        select id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description
         from sys_book
         where id = #{bookId};
     </select>
 
     <select id="selectAllBookInfoByBookId" resultMap="BookContainBookResourceWithStorage">
-        select <include refid="bookCollectionBookResourceWithBookStorage"/>
-        from sys_book_storage sbs
-        left join sys_book sb on sbs.b_id = sb.id
-        left join sys_book_resource sbr on sb.id = sbr.b_id
-        where sb.id = #{bookId};
+        select sb.id, sb.book_name, sb.isbn, sb.author, sb.publisher, sb.price, sb.create_time, sb.t_id, sb.main_cover, sb.description,
+               sbs.id sid, sbs.b_id, sbs.last_add_time, sbs.residue_count,
+               sbr.id rid, sbr.b_id, sbr.resource_url, sbr.symbol, sbr.supplement, sbr.create_time
+        from sys_book sb
+            left join sys_book_storage sbs on sb.id = sbs.b_id
+            left join sys_book_resource sbr on sb.id = sbr.b_id
+        where sb.id = 1;
     </select>
 
     <select id="selectAllBookWithResourceByBookId" resultMap="BookContainBookResource">
-        select <include refid="bookCollectionBookResource"/>
+        select sb.id, book_name, isbn, author, publisher, price, sb.create_time, t_id, main_cover, description,
+               sbr.id as rid, b_id, resource_url, symbol, supplement, sbr.create_time
         from sys_book sb
         left join sys_book_resource sbr on sb.id = sbr.b_id
         where sb.id = #{bookId};
     </select>
 
     <select id="selectAllBookWithStorageByBookId" resultMap="BookAssociationBookStorage">
-        select <include refid="bookAssociationBookStorage"/>
+        select sb.id, book_name, isbn, author, publisher, price, create_time, t_id,
+               sbs.id as sid, main_cover, description, b_id, last_add_time, residue_count
         from sys_book sb
         left join sys_book_storage sbs on sb.id = sbs.b_id
         where sb.id = #{bookId};

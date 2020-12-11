@@ -1,5 +1,7 @@
 package com.onlinebookstore.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.Book;
 import com.onlinebookstore.entity.bookserver.BookResource;
@@ -73,6 +75,21 @@ public class BookServiceImpl implements BookService {
             return CommonplaceResult.buildSuccessNoMessage(books);
         }
         return CommonplaceResult.buildErrorNoData("数据异常！");
+    }
+
+
+    /**
+     * 根据类型查询图书（分页）
+     * @param typeId 类型id
+     * @return CommonplaceResult
+     */
+    @Override
+    public CommonplaceResult selectAllBookInfoByTypePage(int typeId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<Book> books = bookMapper.selectAllBookInfoByType(typeId);
+        PageInfo<Book> pageInfo = new PageInfo<>(books);
+        if (pageInfo.getPages() < currentPage) return CommonplaceResult.buildErrorNoData("数据查询完毕！");
+        return CommonplaceResult.buildSuccessNoMessage(pageInfo.getList());
     }
 
     /**
@@ -204,10 +221,26 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * 查询所有图书信息（缓存时间：[60 + random.nextInt(100)] s）
+     * 查询所有图书信息 分页查询
      * @return 图书信息+库存信息+资源信息
      */
     @Override
+    public CommonplaceResult selectAllBookInfoPage(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<Book> books = bookMapper.selectAllBookInfo();
+        PageInfo<Book> pageInfo = new PageInfo<>(books);
+        if (pageInfo.getPages() < currentPage) return CommonplaceResult.buildErrorNoData("数据查询完毕！");
+        return CommonplaceResult.buildSuccessNoMessage(pageInfo.getList());
+    }
+
+
+    /**
+     * 查询所有图书信息（缓存时间：[60 + random.nextInt(100)] s）
+     * @return 图书信息+库存信息+资源信息
+     * @deprecated 没有使用分页查询 BookServiceImpl#selectAllBookInfoPage代替
+     */
+    @Override
+    @Deprecated
     public CommonplaceResult selectAllBookInfo() {
         Object o = redisUtils.get(SELECT_ALL_BOOK_INFO);
         if (!ObjectUtils.isEmpty(o)) {
@@ -289,6 +322,7 @@ public class BookServiceImpl implements BookService {
         Object o = redisUtils.get(SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookId);
         if (!ObjectUtils.isEmpty(o)) return CommonplaceResult.buildSuccessNoMessage(o);
         Book book = bookMapper.selectAllBookInfoByBookId(bookId);
+        log.info(book.getBookResources().toString());
         if (!ObjectUtils.isEmpty(book)) {
             redisUtils.set(SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookId, book, BookConstantPool.CACHE_TIME[1]);
             return CommonplaceResult.buildSuccessNoMessage(book);
