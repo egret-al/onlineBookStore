@@ -23,7 +23,7 @@
         </ul>
       </cube-slide-item>
     </cube-slide>
-    <book-list :bookInfoList="bookInfoList"></book-list>
+    <book-list></book-list>
   </div>
 </template>
 
@@ -36,7 +36,6 @@ export default {
   },
   data() {
     return {
-      bookInfoList: [], //首页图书列表信息
       BannerItems: [], //轮播图数组
       classifyList: [[], []], //滚动分类数组
     }
@@ -69,12 +68,6 @@ export default {
         if (i < lists.data.length / 2) this.classifyList[0].push(lists.data[i])
         else this.classifyList[1].push(lists.data[i])
       }
-
-      //获取首页图书列表
-      const bookInfoList = await this.$http.get(
-        '/book-server/api/v1/book/pub/selectBookAndResource',
-      )
-      this.bookInfoList = bookInfoList.data
     } catch (err) {
       console.log(err)
     }

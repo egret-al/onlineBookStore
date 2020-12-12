@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="info">
+      <cube-loading class="loading" v-if="isLoading" :size="40"></cube-loading>
       <ul>
         <li>收货人：{{this.order.receiver_name}}</li>
         <li>收货地址：{{this.order.address}}</li>
@@ -34,52 +35,72 @@ export default {
 
   components: {},
   data() {
-    return {};
+    return {
+      isLoading: false
+    };
   },
   methods: {
     //取消订单
     async cancelOrder() {
-      const result = await this.$http.get(
-        `/order-server/api/v1/order/pri/cancelOrder/${this.order.serial_number}/${this.order.username_id}`
-      );
-      if (result.code === 1) {
-        const toast = this.$createToast({
-          txt: "取消成功！",
-          type: "correct",
+      try {
+        this.isLoading = true
+        const result = await this.$http.get(
+          `/order-server/api/v1/order/pri/cancelOrder/${this.order.serial_number}/${this.order.username_id}`
+        );
+        if (result.code === 1) {
+          this.$createToast({
+            txt: "取消成功！",
+            type: "correct",
+            time: 1000,
+          }).show();
+          this.$router.push({ path: "/footer/index" });
+        } else if (result.code === 0) {
+          this.$createToast({
+            txt: result.message,
+            type: "correct",
+            time: 1000,
+          }).show();
+        }
+      } catch (err) {
+        this.$createToast({
+          txt: '请求超时，请稍后再试！',
+          type: "error",
           time: 1000,
-        });
-        toast.show();
-        this.$router.push({ path: "/footer/index" });
-      } else if (result.code === 0) {
-        const toast = this.$createToast({
-          txt: result.message,
-          type: "correct",
-          time: 1000,
-        });
-        toast.show();
+        }).show();
+      } finally {
+        this.isLoading = false
       }
     },
 
     //购买
     async pay() {
-      const result = await this.$http.get(
-        `/user-server/api/v1/account/pri/purchaseBook/${this.order.serial_number}`
-      );
-      if (result.code === 1) {
-        const toast = this.$createToast({
-          txt: "购买成功！",
-          type: "correct",
+      try {
+        this.isLoading = true
+        const result = await this.$http.get(
+          `/user-server/api/v1/account/pri/purchaseBook/${this.order.serial_number}`
+        );
+        if (result.code === 1) {
+          this.$createToast({
+            txt: "购买成功！",
+            type: "correct",
+            time: 1000,
+          }).show();
+          this.$router.push({ path: "/footer/index" });
+        } else if (result.code === 0) {
+          this.$createToast({
+            txt: result.message,
+            type: "correct",
+            time: 1000,
+          }).show();
+        }
+      } catch (error) {
+        this.$createToast({
+          txt: '请求超时，请稍后再试！',
+          type: "error",
           time: 1000,
-        });
-        toast.show();
-        this.$router.push({ path: "/footer/index" });
-      } else if (result.code === 0) {
-        const toast = this.$createToast({
-          txt: result.message,
-          type: "correct",
-          time: 1000,
-        });
-        toast.show();
+        }).show();
+      } finally {
+        this.isLoading = false
       }
     },
   },
@@ -87,6 +108,9 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.loading
+  position absolute
+  margin-left 45%
 .info
   padding-top 20px
   width 100%

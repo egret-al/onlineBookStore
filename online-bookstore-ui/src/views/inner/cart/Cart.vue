@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="cart-main">
     <div v-if="this.shoppingTrolleys.length == 0" class="no-shopping">
       <span class="des">购物车为空！</span>
       <router-link :to="{path: '/footer/index'}">
@@ -9,6 +9,7 @@
     <div class="shoppingList" v-if="this.shoppingTrolleys.length != 0">
       <cart-item @refreshCart="refreshCart" v-for="item in shoppingTrolleys" :key="item.id" :shoppingTrolley="item"></cart-item>
     </div>
+    <footer class="footer"></footer>
   </div>
 </template>
 
@@ -54,8 +55,10 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.main
-  margin-top 20px
+.cart-main
+  margin-top 40px
+.footer
+  margin-bottom 40px
 .no-shopping
   padding-top 100px
   width 100%

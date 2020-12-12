@@ -1,41 +1,63 @@
 <template>
-  <div class="main">
-    <!--点击跳转到图书详情页面-->
-    <router-link class="book-link" v-for="item in bookInfoList" :key="item.id" :to="{path: '/detail', query: {id: item.id}}">
-      <div class="item-img">
-        <img :src="item.main_cover" />
-      </div>
-      <div class="item-info">
-        <div class="item-title">{{item.book_name}}</div>
-        <div class="item-price">￥{{item.price}}</div>
-      </div>
-    </router-link>
+  <div class="list-main">
+    <div class="main">
+      <!--点击跳转到图书详情页面-->
+      <router-link class="book-link" v-for="item in bookInfoList" :key="item.id" :to="{path: '/detail', query: {id: item.id}}">
+        <div class="item-img">
+          <img :src="item.main_cover" />
+        </div>
+        <div class="item-info">
+          <div class="item-title">{{item.book_name}}</div>
+          <div class="item-price">￥{{item.price}}</div>
+        </div>
+      </router-link>
+    </div>
+    <div @click="loadData">{{message}}</div>
   </div>
+  
 </template>
 
 <script>
 export default {
-  props: {
-    bookInfoList: {
-      type: Array,
-      required: true,
-    },
-  },
-  components: {},
   data() {
-    return {}
+    return {
+      bookInfoList: [],
+      message: '数据加载中...',
+      pageSize: 10,
+      currentPage: 1,
+    }
   },
-  methods: {},
-  mounted() {},
+
+  methods: {
+    async loadData() {
+      if (this.pageSize === -1 || this.currentPage === -1) return
+      const res = await this.$http.get(`/book-server/api/v1/book/pub/selectBookAndStoragePage/${this.currentPage}/${this.pageSize}`)
+      console.log(res.data)
+      if (res.code === 1) {
+        res.data.forEach(v => this.bookInfoList.push(v))
+        this.currentPage++
+        this.message = '点击加载更多...'
+      } else {
+        this.message = '没有数据了哦！！！'
+        this.pageSize = -1
+        this.currentPage = -1
+      }
+    }
+  },
+  
+  async created() {
+    this.loadData()
+  }
 }
 </script>
 <style lang='stylus' scoped>
+.list-main
+  margin-bottom 80px
 .main
   margin-top 20px
   display flex // 设置flex布局
   flex-wrap wrap // 换⾏排列
   justify-content space-between // 两端对⻬
-  padding-bottom 55px
 .book-link
   width 48%
   margin-bottom 17px

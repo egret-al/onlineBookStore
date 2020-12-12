@@ -94,17 +94,21 @@ export default {
             this.$router.replace({path: '/footer/index'})
           }
         } else {
-          this.isLoading = false
           //登录失败，提示用户信息
-          const toast = this.$createToast({
+          this.$createToast({
             txt: result.message,
             type: 'error',
             time: 1500,
-          })
-          toast.show()
+          }).show()
         }
       } catch (err) {
-        console.log(err)
+        this.$createToast({
+          txt: '请求超时，请稍后再试！',
+          type: 'error',
+          time: 1500,
+        }).show()
+      } finally {
+        this.isLoading = false
       }
     },
   },

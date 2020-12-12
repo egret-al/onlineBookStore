@@ -60,6 +60,7 @@ export default {
 </script>
 <style lang='stylus' scoped>
 .main
+  margin-bottom 10px
   width 100%
   height 150px
   box-shadow 0 4px 11px 0 rgba(43, 51, 59, 0.6)
