@@ -29,6 +29,35 @@ class AddressEditViewModel(application: Application) : AndroidViewModel(applicat
     private val _addStatus = MutableLiveData<Int>()
     val addStatus: LiveData<Int> = _addStatus
 
+    val deleteAddressSuccess = MutableLiveData<Int>().apply { value = 0 }
+    val deleteAddressFailure = MutableLiveData<Int>().apply { value = 0 }
+    val deleteMessage = MutableLiveData<String>()
+
+    fun delete(address: Address) {
+        val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/address/pri/deleteAddress", JSONObject().apply {
+            put("username", username)
+            put("addressId", address.id)
+        }, object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("error", e.toString())
+                deleteMessage.postValue("网络异常！请稍后再试")
+                deleteAddressFailure.postValue(deleteAddressFailure.value?.plus(1))
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val res = JSONObject(response.body?.string())
+                if (res.getInt("code") == 1) {
+                    deleteMessage.postValue("删除成功")
+                    deleteAddressSuccess.postValue(deleteAddressSuccess.value?.plus(1))
+                } else {
+                    deleteMessage.postValue(res.getString("message"));
+                    deleteAddressFailure.postValue(deleteAddressFailure.value?.plus(1))
+                }
+            }
+        })
+    }
+
     fun save(address: Address) {
         val jsonObject = JSONObject().apply {
             put("phone", address.phone)

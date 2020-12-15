@@ -1,15 +1,17 @@
 package com.rkc.onlinebookstore.view.home.detail
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -22,15 +24,23 @@ import com.rkc.onlinebookstore.adapter.home.BOOK_BUNDLE_KEY
 import com.rkc.onlinebookstore.model.book.Book
 import com.rkc.onlinebookstore.view.home.home.DATE_FORMAT
 import com.rkc.onlinebookstore.viewmodel.home.detail.*
-import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.fragment_book_detail.*
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 
 class BookDetailFragment(private val book: Book) : Fragment() {
     private lateinit var bookDetailViewModel: BookDetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        bookDetailViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(BookDetailViewModel::class.java)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        bookDetailViewModel = ViewModelProvider(
+            this, ViewModelProvider.AndroidViewModelFactory(
+                requireActivity().application
+            )
+        ).get(BookDetailViewModel::class.java)
         return inflater.inflate(R.layout.fragment_book_detail, container, false)
     }
 
@@ -55,7 +65,34 @@ class BookDetailFragment(private val book: Book) : Fragment() {
                 bookDetailViewModel.modifyUseScoreStatus(0)
             }
         }
-
+        //选择收货地址
+        showAddressDialog.setOnClickListener {
+            val keys = ArrayList<Int>()
+            val values = ArrayList<String>()
+            bookDetailViewModel.bindAddresses.value?.forEach { value ->
+                run {
+                    values.add(value.address)
+                    keys.add(value.id)
+                }
+            }
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("选择收货地址")
+                setSingleChoiceItems(values.toTypedArray(), -1) { dialog, which ->
+                    bookDetailViewModel.bindAddresses.value?.forEach { value ->
+                        run {
+                            if (value.id == keys[which]) {
+                                bookDetailViewModel.selectedAddress.postValue(value)
+                                Toast.makeText(requireContext(), "收件人：${value.receiverName}\n联系电话：${value.phone}\n收货地址：${value.address}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    dialog?.dismiss()
+                }
+            }.show()
+        }
+        bookDetailViewModel.selectedAddress.observe(viewLifecycleOwner, {
+            selectedAddress.text = it.address
+        })
         //立即购买
         detailButtonPurchase.setOnClickListener {
             //避免重复点击
@@ -66,7 +103,9 @@ class BookDetailFragment(private val book: Book) : Fragment() {
         //加入购物车
         detailButtonAddToCart.setOnClickListener { bookDetailViewModel.addToShoppingTrolley() }
 
-        detailButtonAdd.setOnClickListener { bookDetailViewModel.book.value?.bookStorage?.residueCount?.let { it1 -> bookDetailViewModel.addCount(it1) } }
+        detailButtonAdd.setOnClickListener { bookDetailViewModel.book.value?.bookStorage?.residueCount?.let { it1 -> bookDetailViewModel.addCount(
+            it1
+        ) } }
         detailButtonSub.setOnClickListener { bookDetailViewModel.subCount() }
 
         bookDetailViewModel.book.observe(viewLifecycleOwner, {
@@ -91,10 +130,15 @@ class BookDetailFragment(private val book: Book) : Fragment() {
                         putParcelable(ORDER_CREATED_KEY, it)
                         putParcelable(BOOK_BUNDLE_KEY, book)
                     }
-                    findNavController().navigate(R.id.action_bookFragment_to_unpaidOrderFragment, bundle)
+                    findNavController().navigate(
+                        R.id.action_bookFragment_to_unpaidOrderFragment,
+                        bundle
+                    )
                     bookDetailViewModel.resetNetRequestStatus()
                 }
-                REQUESTING -> { detailButtonPurchase.isEnabled = true }
+                REQUESTING -> {
+                    detailButtonPurchase.isEnabled = true
+                }
             }
         })
         //观察是否存在默认收货地址
@@ -106,8 +150,22 @@ class BookDetailFragment(private val book: Book) : Fragment() {
             }
         })
 
-        bookDetailViewModel.addSuccess.observe(viewLifecycleOwner, { if (it != 0) Toast.makeText(requireContext(), "添加成功！", Toast.LENGTH_SHORT).show() })
-        bookDetailViewModel.addFailure.observe(viewLifecycleOwner, { if (it != 0) Toast.makeText(requireContext(), "不能重复添加！", Toast.LENGTH_SHORT).show() })
+        bookDetailViewModel.addSuccess.observe(viewLifecycleOwner, {
+            if (it != 0) Toast.makeText(
+                requireContext(),
+                "添加成功！",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+        bookDetailViewModel.addFailure.observe(viewLifecycleOwner, {
+            if (it != 0) Toast.makeText(
+                requireContext(),
+                "不能重复添加！",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+        bookDetailViewModel.getDefaultAddress()
+        bookDetailViewModel.selectAddresses()
     }
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
@@ -116,10 +174,22 @@ class BookDetailFragment(private val book: Book) : Fragment() {
         Glide.with(this).load(book?.mainCover)
             .placeholder(R.drawable.book_placeholder)
             .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
                     return false
                 }
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
                     return false.also { shimmerLayoutMainCover?.stopShimmerAnimation() }
                 }
             })

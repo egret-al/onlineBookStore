@@ -25,7 +25,7 @@ class BookTypeDataSource(private val typeId: Int) : PageKeyedDataSource<Int, Boo
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
         Log.d("page type", "loadAfter：${params.key}")
-        val url = "/book-server/api/v1/book/pub/selectAllInfoByTypePage/$typeId/${params.key}/${pageSize}"
+        val url = "/book-server/api/v1/book/pub/selectBookAndStorageByTypePage/$typeId/${params.key}/${pageSize}"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
@@ -48,7 +48,7 @@ class BookTypeDataSource(private val typeId: Int) : PageKeyedDataSource<Int, Boo
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) { }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Book>) {
-        val url = "/book-server/api/v1/book/pub/selectAllInfoByTypePage/$typeId/$firstPage/${pageSize}"
+        val url = "/book-server/api/v1/book/pub/selectBookAndStorageByTypePage/$typeId/$firstPage/${pageSize}"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())

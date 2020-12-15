@@ -40,7 +40,11 @@ class UnpaidOrderViewModel(application: Application) : AndroidViewModel(applicat
     fun cancelOrder(serialNumber: String) {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
         if (username == "") return
-        OKHttpUtils.asyncHttpGet("/order-server/api/v1/order/pri/cancelOrder/${serialNumber}/${username}", object : Callback {
+        val js = JSONObject().apply {
+            put("serialNumber", serialNumber)
+            put("username", username)
+        }
+        OKHttpUtils.asyncHttpPostJson("/order-server/api/v1/order/pri/cancelOrder", js, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 _orderCancelStatus.postValue(ORDER_CANCEL_FAILURE)
                 Log.e("error", e.toString())
@@ -62,7 +66,7 @@ class UnpaidOrderViewModel(application: Application) : AndroidViewModel(applicat
      * 下单
      */
     fun purchase(serialNumber: String) {
-        OKHttpUtils.asyncHttpGet("/user-server/api/v1/account/pri/purchaseBook/${serialNumber}", object : Callback {
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/account/pri/purchaseBook", JSONObject().apply { put("serialNumber", serialNumber) } ,object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 _orderFinishStatus.postValue(ORDER_FINISH_FAILURE)
                 Log.e("error", e.toString())

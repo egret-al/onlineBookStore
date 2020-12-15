@@ -49,7 +49,7 @@ class IntroductionFragment(private val book: Book) : Fragment() {
         if (book.bookResources == null) {
             introductionViewModel.checkBookResource(book)
             introductionViewModel.completeBook.observe(viewLifecycleOwner, {
-                Log.d("tag", it.bookResources.toString())
+                if (it.bookResources?.size == 1 && it.bookResources!![0].id == 0) shimmerLayoutImgItem.visibility = View.GONE
                 load(it)
             })
         } else {

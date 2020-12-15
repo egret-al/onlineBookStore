@@ -1,6 +1,7 @@
 package com.rkc.onlinebookstore.view.home.mine
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.rkc.onlinebookstore.R
+import com.rkc.onlinebookstore.view.home.MainHomeActivity
+import com.rkc.onlinebookstore.view.login.MainActivity
 import com.rkc.onlinebookstore.viewmodel.login.NICKNAME
 import com.rkc.onlinebookstore.viewmodel.login.USER
 import com.rkc.onlinebookstore.viewmodel.login.USERNAME
@@ -29,7 +32,9 @@ class MineFragment : Fragment() {
         //收货地址
         receivingAddress.setOnClickListener { findNavController().navigate(R.id.action_nav_mine_to_addressFragment, null) }
         //编辑资料
-//        editInfo.setOnClickListener { findNavController().navigate(R.id.action_mineInfoFragment_to_editInfoFragment) }
+        editInfo.setOnClickListener { findNavController().navigate(R.id.action_nav_mine_to_mineInfoFragment) }
+        //退出
+        exitApp.setOnClickListener { startActivity(Intent(requireContext(), MainActivity::class.java)) }
     }
 
     private fun load() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">onlineBookstore</string>
+    <string name="app_name">在线书城</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account">账号：</string>
@@ -147,6 +147,7 @@
     <string name="opt">选择</string>
     <string name="search">搜索</string>
     <string name="my_shopping_trolley">我的购物车</string>
+    <string name="delete_the_receive_address">删除收货地址</string>
 
     <string-array name="alternative_count">
         <item>6</item>

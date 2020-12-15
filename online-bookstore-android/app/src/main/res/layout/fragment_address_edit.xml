@@ -41,7 +41,6 @@
             android:layout_marginStart="24dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/nickname_example"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView23"
             app:layout_constraintStart_toEndOf="@+id/textView23"
@@ -87,7 +86,6 @@
             android:ems="10"
             android:maxLength="11"
             android:inputType="phone"
-            android:text="@string/phone_example"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView39"
             app:layout_constraintStart_toEndOf="@+id/textView39"
@@ -145,7 +143,6 @@
             android:layout_marginStart="12dp"
             android:ems="18"
             android:inputType="textPersonName"
-            android:text="@string/address_example"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView45"
             app:layout_constraintStart_toEndOf="@+id/textView45"
@@ -155,13 +152,26 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:background="@drawable/blue_background_border"
-        android:textColor="@color/white"
-        android:layout_width="80dp"
+        android:layout_width="300dp"
         android:layout_height="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/circular_orange10"
         android:text="@string/save"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+    <TextView
+        android:id="@+id/deleteAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/delete_the_receive_address"
+        android:textColor="#F53435"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

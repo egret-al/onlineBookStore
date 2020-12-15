@@ -52,7 +52,7 @@ class MineInfoViewModel(application: Application) : AndroidViewModel(application
     fun fetchUserAndAccount() {
         val username = getApplication<Application>().getSharedPreferences(USER, Context.MODE_PRIVATE).getString(USERNAME, "")
         if (username == "") return
-        OKHttpUtils.asyncHttpGet("/user-server/api/v1/account/pub/getAccountWithUser/$username", object : Callback {
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/account/pub/getAccountWithUser", JSONObject().apply { put("username", username) }, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }

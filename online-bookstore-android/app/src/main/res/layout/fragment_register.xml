@@ -15,10 +15,10 @@
 
     <Button
         android:id="@+id/btnSubmitRegister"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="35dp"
         android:layout_marginBottom="168dp"
-        android:background="@drawable/red_background_border"
+        android:background="@drawable/orange_background_border10"
         android:text="@string/register"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -28,10 +28,10 @@
 
     <Button
         android:id="@+id/btnToLogin"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="35dp"
         android:layout_marginBottom="104dp"
-        android:background="@drawable/blue_background_border"
+        android:background="@drawable/orange_background_border10"
         android:text="@string/go_to_login"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="100dp"
         android:text="@string/account"
         android:theme="@style/labelTextView"
         app:layout_constraintStart_toStartOf="parent"

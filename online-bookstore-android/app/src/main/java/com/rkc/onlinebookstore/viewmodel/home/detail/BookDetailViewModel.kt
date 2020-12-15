@@ -12,6 +12,7 @@ import com.rkc.onlinebookstore.model.order.Order
 import com.rkc.onlinebookstore.model.user.Address
 import com.rkc.onlinebookstore.util.AbstractOkHttpCallback
 import com.rkc.onlinebookstore.util.GsonUtils
+import com.rkc.onlinebookstore.util.KotlinType
 import com.rkc.onlinebookstore.util.OKHttpUtils
 import okhttp3.Call
 import okhttp3.Callback
@@ -30,6 +31,9 @@ const val REQUESTING = 0
 const val ORDER_CREATED_KEY = "order_created"
 
 class BookDetailViewModel(application: Application) : AndroidViewModel(application) {
+    val selectedAddress = MutableLiveData<Address>()
+    val bindAddresses = MutableLiveData<ArrayList<Address>>()
+
     private var _book = MutableLiveData<Book>().apply { value = Book() }
     val book: LiveData<Book> = _book
 
@@ -124,9 +128,26 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
         _sellingCountLiveData.postValue(_sellingCountLiveData.value?.minus(1))
     }
 
-    fun immediatelyPurchase(book: Book?) {
+    fun selectAddresses() {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
-        if ("" == username || book == null) return
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/address/pri/selectByAccount", JSONObject().apply { put("username", username) },
+        object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("error", e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val res = JSONObject(response.body?.string())
+                if (res.getInt("code") == 1) {
+                    bindAddresses.postValue(GsonUtils.getGson().fromJson(res.getJSONArray("data").toString(), KotlinType.getType(List::class.java, Address::class.java)))
+                }
+            }
+        })
+    }
+
+    fun getDefaultAddress() {
+        val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
+        if ("" == username) return
         val jsonObject = JSONObject().apply {
             put("account_username", username)
         }
@@ -143,9 +164,9 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
                         //得到默认address
                         val address = GsonUtils.getGson().fromJson(addressJs.getJSONObject("data").toString(), Address::class.java)
                         hasDefaultAddress.postValue(true)
+                        //选择地址设置为默认地址
+                        selectedAddress.postValue(address)
                         Log.d("默认地址", address.toString())
-                        //请求后台服务器创建订单
-                        doImmediatelyPurchase(book, address)
                     } else {
                         hasDefaultAddress.postValue(false)
                     }
@@ -156,9 +177,13 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
     /**
      * 立即购买
      */
-    private fun doImmediatelyPurchase(book: Book?, address: Address) {
+    fun immediatelyPurchase(book: Book?) {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
         if ("" == username || book == null) return
+        if (selectedAddress.value == null) {
+            hasDefaultAddress.value = false
+            return
+        }
         val jsonObject = JSONObject().apply {
             put("book_id", book.id)
             put("username_id", username)
@@ -166,9 +191,9 @@ class BookDetailViewModel(application: Application) : AndroidViewModel(applicati
             put("product_count", _sellingCountLiveData.value)
             put("use_score", _useScore.value)
             put("book_name", book.bookName)
-            put("phone", address.phone)
-            put("receiver_name", address.receiverName)
-            put("address", address.address)
+            put("phone", selectedAddress.value!!.phone)
+            put("receiver_name", selectedAddress.value!!.receiverName)
+            put("address", selectedAddress.value!!.address)
         }
         OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/account/pri/createOrder", jsonObject, object :
             Callback{

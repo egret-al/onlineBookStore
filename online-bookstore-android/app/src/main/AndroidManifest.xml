@@ -14,14 +14,13 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar.Bridge"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".view.home.detail.BookActivity"></activity>
         <activity
             android:name=".view.home.MainHomeActivity"
             android:label="@string/title_activity_main_home"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.login.MainActivity"
-            android:theme="@style/Theme.OnlineBookstore">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

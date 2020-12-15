@@ -15,5 +15,4 @@ data class BookBanner(
     @SerializedName("id") val id: Int,
     @SerializedName("resource_url") val resourceUrl: String,
     @SerializedName("modify_time") val modifyTime: Date,
-    @SerializedName("b_id") val bookId: Int
 ) : Parcelable

@@ -34,7 +34,11 @@ class AddressViewModel(application: Application) : AndroidViewModel(application)
     fun setDefaultAddress(addressId: Int) {
         val username = getApplication<Application>().getSharedPreferences(USER, Context.MODE_PRIVATE).getString(USERNAME, "")
         if (username == "") return
-        OKHttpUtils.asyncHttpGet("/user-server/api/v1/address/pri/setDefaultAddress/${addressId}/$username", object : Callback {
+        val js = JSONObject().apply {
+            put("addressId", addressId)
+            put("username", username)
+        }
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/address/pri/setDefaultAddress", js, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }
@@ -55,7 +59,7 @@ class AddressViewModel(application: Application) : AndroidViewModel(application)
     fun fetchAddresses() {
         val username = getApplication<Application>().getSharedPreferences(USER, Context.MODE_PRIVATE).getString(USERNAME, "")
         if (username == "") return
-        OKHttpUtils.asyncHttpGet("/user-server/api/v1/address/pri/selectByAccount/$username", object : Callback {
+        OKHttpUtils.asyncHttpPostJson("/user-server/api/v1/address/pri/selectByAccount", JSONObject().apply { put("username", username) }, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }

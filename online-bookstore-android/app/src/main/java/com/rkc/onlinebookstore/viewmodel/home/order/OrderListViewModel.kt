@@ -65,7 +65,11 @@ class OrderListViewModel(application: Application) : AndroidViewModel(applicatio
      */
     fun deleteOrder(serial: String, index: Int) {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
-        OKHttpUtils.asyncHttpGet("/order-server/api/v1/order/pri/deleteOrder/$serial/$username", object : Callback {
+        val js = JSONObject().apply {
+            put("username", username)
+            put("serialNumber", serial)
+        }
+        OKHttpUtils.asyncHttpPostJson("/order-server/api/v1/order/pri/deleteOrder", js, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
             }
@@ -85,20 +89,19 @@ class OrderListViewModel(application: Application) : AndroidViewModel(applicatio
     fun fetchOrderList() {
         val username = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "")
         if (username == "") return
-        OKHttpUtils.asyncHttpGet("/order-server/api/v1/order/pri/selectOrderByUsername/$username", object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("error", e.toString())
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val jsonObject = JSONObject(response.body?.string())
-                Log.d("tag", jsonObject.toString())
-                if (jsonObject.getInt("code") == 1) {
-                    _orderList.postValue(GsonUtils.getGson().fromJson(jsonObject.getJSONArray("data").toString(), KotlinType.getType(List::class.java, Order::class.java)))
-                } else {
-                    //TODO nothing
+        OKHttpUtils.asyncHttpPostJson("/order-server/api/v1/order/pri/selectOrderByUsername", JSONObject().apply { put("username", username) },
+            object : Callback { override fun onFailure(call: Call, e: IOException) {
+                    Log.e("error", e.toString())
                 }
-            }
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObject = JSONObject(response.body?.string())
+                    Log.d("tag", jsonObject.toString())
+                    if (jsonObject.getInt("code") == 1) {
+                        _orderList.postValue(GsonUtils.getGson().fromJson(jsonObject.getJSONArray("data").toString(), KotlinType.getType(List::class.java, Order::class.java)))
+                    } else {
+                        //TODO nothing
+                    }
+                }
         })
     }
 }

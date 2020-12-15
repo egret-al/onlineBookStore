@@ -43,11 +43,12 @@ class ModifyPhoneViewModel(application: Application) : AndroidViewModel(applicat
             override fun onResponse(call: Call, response: Response) {
                 val res = JSONObject(response.body?.string())
                 if (res.getInt("code") == 1) {
+                    sendResultMessage.postValue(res.getJSONObject("data").getString("message"))
                     _sendSuccess.postValue(_sendSuccess.value?.plus(1))
                 } else {
+                    sendResultMessage.postValue(res.getJSONObject("data").getString("message"))
                     _sendFailure.postValue(_sendFailure.value?.plus(1))
                 }
-                sendResultMessage.postValue(res.getJSONObject("data").getString("message"))
             }
         })
     }
@@ -71,11 +72,12 @@ class ModifyPhoneViewModel(application: Application) : AndroidViewModel(applicat
                 val res = JSONObject(response.body?.string())
                 Log.d("tag", res.toString())
                 if (res.getInt("code") == 1) {
+                    phoneResultMessage.postValue(res.getString("message"))
                     _phoneSuccess.postValue(_phoneSuccess.value?.plus(1))
                 } else {
+                    phoneResultMessage.postValue(res.getString("message"))
                     _phoneFailure.postValue(_phoneFailure.value?.plus(1))
                 }
-                phoneResultMessage.postValue(res.getString("message"))
             }
         })
     }

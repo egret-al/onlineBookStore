@@ -1,6 +1,9 @@
 package com.rkc.onlinebookstore.view.home.mine.address
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +49,7 @@ class AddressEditFragment : Fragment() {
     }
 
     private fun loadAddMode() {
+        deleteAddress.visibility = View.GONE
         addressEditViewModel.addStatus.observe(viewLifecycleOwner, {
             when (it) {
                 ERROR -> { Toast.makeText(requireContext(), "添加失败！请稍后重试！", Toast.LENGTH_SHORT).show() }
@@ -73,6 +77,24 @@ class AddressEditFragment : Fragment() {
         receiverNameET.setText(addr.receiverName)
         phoneNumberET.setText(addr.phone)
         detailAddressET.setText(addr.address)
+        deleteAddress.visibility = View.VISIBLE
+        deleteAddress.setOnClickListener {
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("删除地址")
+                setMessage("确定要删除该地址吗？")
+                setPositiveButton("删除") { dialog, which -> addressEditViewModel.delete(addr) }
+                setNegativeButton("取消", null)
+            }.show()
+        }
+        addressEditViewModel.deleteAddressSuccess.observe(viewLifecycleOwner, {
+            if (it > 0) {
+                Toast.makeText(requireContext(), addressEditViewModel.deleteMessage.value, Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            }
+        })
+        addressEditViewModel.deleteAddressFailure.observe(viewLifecycleOwner, {
+            if (it > 0) Toast.makeText(requireContext(), addressEditViewModel.deleteMessage.value, Toast.LENGTH_SHORT).show()
+        })
         addressEditViewModel.saveStatus.observe(viewLifecycleOwner, {
             when (it) {
                 ERROR -> { Toast.makeText(requireContext(), "保存失败！请稍后重试！", Toast.LENGTH_SHORT).show() }

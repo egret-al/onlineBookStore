@@ -29,8 +29,7 @@ class AddressFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         titleTV.text = "我的收货地址"
         backIV.setOnClickListener { findNavController().navigateUp() }
-        addressViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(
-            AddressViewModel::class.java)
+        addressViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(requireActivity().application)).get(AddressViewModel::class.java)
         //初始的默认值，不一定一直是默认值
         var defaultId = requireActivity().application.getSharedPreferences(USER, Context.MODE_PRIVATE).getInt(DEFAULT_ADDRESS, -1)
         addressViewModel.addressesLiveData.observe(viewLifecycleOwner, {

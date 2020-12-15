@@ -26,7 +26,7 @@ class HomeBookDataSource : PageKeyedDataSource<Int, Book>() {
     //后一页加载
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
         Log.d("page", "loadAfter：${params.key}")
-        val url = "/book-server/api/v1/book/pub/selectAllInfoPage/${params.key}/$pageSize"
+        val url = "/book-server/api/v1/book/pub/selectBookAndStoragePage/${params.key}/$pageSize"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
@@ -53,7 +53,7 @@ class HomeBookDataSource : PageKeyedDataSource<Int, Book>() {
     //初次加载
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Book>) {
         //查询第一页，每页2条数据
-        val url = "/book-server/api/v1/book/pub/selectAllInfoPage/$firstPage/$pageSize"
+        val url = "/book-server/api/v1/book/pub/selectBookAndStoragePage/$firstPage/$pageSize"
         OKHttpUtils.asyncHttpGet(url, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("error", e.toString())
