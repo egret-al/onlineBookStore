@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "vuex"
 
 export default {
   components: {},
@@ -79,7 +79,7 @@ export default {
   },
   mounted() {},
   async created() {
-    const res = await this.$http.get(`/user-server/api/v1/account/pub/getAccountWithUser/${this.username}`)
+    const res = await this.$http.post('/user-server/api/v1/account/pub/getAccountWithUser', { username: this.username })
     if (res.code === 1) {
       this.account = res.data
       if (this.account.user.sex === '女') this.selected = '1'

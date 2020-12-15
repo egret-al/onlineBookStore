@@ -9,6 +9,7 @@
     <div class="address-detail">
       <span>详细地址：</span><cube-textarea v-model="address.address"></cube-textarea>
     </div>
+    <p class="del" @click="showDialog">删除收货地址</p>
     <div class="address-operation">
       <cube-button @click="saveAddress">保存</cube-button>
     </div>
@@ -16,6 +17,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   components: {},
   data() {
@@ -28,6 +31,13 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapState({
+      username: (state) => state.username,
+    }),
+  },
+
   methods: {
     validatePhone(phone) {
       var myreg=/^[1][3,4,5,7,8][0-9]{9}$/
@@ -53,6 +63,48 @@ export default {
           time: 1000
         })
         toast.show()
+      }
+    },
+
+    showDialog() {
+      this.$createDialog({
+        type: 'confirm',
+        icon: 'cubeic-alert',
+        title: '删除地址',
+        content: '确定要删除该地址吗？',
+        confirmBtn: {
+          text: '确定',
+          active: true,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        cancelBtn: {
+          text: '取消',
+          active: false,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        onConfirm: () => {
+          this.deleteAddress()
+        },
+      }).show()
+    },
+
+    async deleteAddress() {
+      try {
+        const res = await this.$http.post('/user-server/api/v1/address/pri/deleteAddress', {
+          username: this.username,
+          addressId: this.address.id
+        })
+        if (res.code === 1) {
+          this.showToast(1, '删除成功！')
+          this.$router.go(-1)
+        } else {
+          this.showToast(-1, res.message)
+        }
+      } catch (err) {
+        this.showToast(-1, '请求超时，请稍后再试！')
+        console.log(err)
       }
     },
 
@@ -102,15 +154,21 @@ export default {
     font-size 13px
     height 30px
   .address-operation
-    margin-top 50px
+    margin-top 20px
     display flex
     justify-content center
     .cube-btn
-      width 20%
+      width 60%
       height 40px
       font-size 12px
       line-height 0px
       background-color #fff
       color #26a2ff
       border 1px solid #26a2ff
+  .del
+    color red
+    text-align left
+    margin-top 15px 
+    padding-left 30px
+    font-size 14px
 </style>

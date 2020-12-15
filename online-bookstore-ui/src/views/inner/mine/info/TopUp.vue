@@ -57,7 +57,7 @@ export default {
   },
 
   async created() {
-    const res = await this.$http.get(`/user-server/api/v1/account/pub/getAccountWithUser/${this.username}`)
+    const res = await this.$http.post('/user-server/api/v1/account/pub/getAccountWithUser', { username: this.username })
     if (res.code === 1) {
       this.balance = res.data.balance
     }

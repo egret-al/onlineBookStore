@@ -46,7 +46,10 @@ export default {
   methods: {
     async settingDefault(id) {
       //发起请求设置默认地址
-      const res = await this.$http.get(`/user-server/api/v1/address/pri/setDefaultAddress/${id}/${this.username}`)
+      const res = await this.$http.post('/user-server/api/v1/address/pri/setDefaultAddress', {
+        addressId: id,
+        username: this.username
+      })
       if (res.code === 1) {
         //默认地址设置成功，通知父组件刷新
         this.$emit('refreshAddresses')

@@ -1,5 +1,8 @@
 <template>
   <div class="main">
+    <div class="remind-loading">
+      <cube-loading v-if="isLoading" :size="40"></cube-loading>
+    </div>
     <p class="title" style="text-align: left; padding-left: 10px; font-size: 18px">
       {{ bookData.book_name }}
     </p>
@@ -20,6 +23,9 @@
           使用积分
         </cube-switch>
       </div>
+      <div class="receiver-address">
+        <span>收货地址：{{selectedAddress.address}}</span><button class="pick-address" @click="showPicker">选择</button>
+      </div>
       <!--各种参数信息-->
       <div class="info">
         <ul>
@@ -37,7 +43,7 @@
       </div>
       <div class="introduce">
         <cube-button class="picture-word-introduce" @click="pictureAndWordIntroduce">图文介绍</cube-button>
-        <cube-button class="show-comment" style="margin-left: 5px" @click="showComment">
+        <cube-button class="show-comment" style="margin-left: 5px">
           <router-link :to="{path: '/comment', query: {id: this.bookData.id}}">
             查看评论
           </router-link>
@@ -67,7 +73,10 @@ export default {
         min: 0,
       },
       useScore: false,
-    };
+      isLoading: false,
+      addresses: [],
+      selectedAddress: {}
+    }
   },
 
   computed: {
@@ -77,6 +86,44 @@ export default {
   },
 
   methods: {
+    showPicker() {
+      if (!this.picker) {
+        let data = []
+        this.addresses.forEach(v => data.push({ text: v.address, value: v.id }))
+        console.log(data)
+        this.picker = this.$createPicker({
+          title: '选择收货地址',
+          data: [data],
+          onSelect: this.selectHandle,
+          onCancel: this.cancelHandle
+        })
+      }
+      this.picker.show()
+    },
+
+    selectHandle(selectedVal, selectedIndex, selectedText) {
+      this.addresses.forEach(v => {
+        if(v.id === selectedVal[0]) {
+          console.log('v', v)
+          this.selectedAddress = v
+        }
+      })
+      if (this.selectedAddress == null) return
+      this.$createDialog({
+        type: 'warn',
+        content: `您选择的是: <br/> - 联系电话: ${this.selectedAddress.phone} <br/> - 收件人: ${this.selectedAddress.receiver_name} <br/> - 收货地址: ${this.selectedAddress.address}`,
+        icon: 'cubeic-alert'
+      }).show()
+    },
+    
+    cancelHandle() {
+      this.$createToast({
+        type: 'correct',
+        txt: '您取消了选择',
+        time: 1000
+      }).show()
+    },
+
     //减少购买数量
     subNumber() {
       if (this.number <= 0) return;
@@ -92,12 +139,14 @@ export default {
     //直接购买
     async immediatelyPurchase() {
       if (typeof this.number === "number") {
+        this.isLoading = true
         //请求服务器得到默认的收货地址
-        const defaultAddressRes = await this.$http.post('/user-server/api/v1/address/pri/selectDefaultAddress', {
-          'account_username': this.username
-        })
-        console.log(defaultAddressRes)
-        if (defaultAddressRes.code == 1) {
+        try {
+          if (this.selectedAddress == null) {
+            //跳转到添加地址
+            this.$router.push({ path: '/address-add' })
+            return
+          }
           //发起创建订单的请求
           const createOrderRes = await this.$http.post('/user-server/api/v1/account/pri/createOrder', {
             'book_id': this.bookData.id,
@@ -106,9 +155,9 @@ export default {
             'product_count': this.number,
             'use_score': this.useScore == true ? 1 : 0,
             'book_name': this.bookData.book_name,
-            'phone': defaultAddressRes.data.phone,
-            'receiver_name': defaultAddressRes.data.receiver_name,
-            'address': defaultAddressRes.data.address
+            'phone': this.selectedAddress.phone,
+            'receiver_name': this.selectedAddress.receiver_name,
+            'address': this.selectedAddress.address
           })
           console.log(createOrderRes)
           const toast = this.$createToast({
@@ -122,9 +171,10 @@ export default {
             path: '/payment',
             query: { serialNumber: serialNumber }
           })
-        } else {
-          //跳转到添加收货地址
-          this.$router.push({ path: '/address-add' })
+        } catch (err) {
+          console.log(err)
+        } finally {
+          this.isLoading = false
         }
       } else {
         this.number = 0
@@ -133,6 +183,7 @@ export default {
 
     //加入购物车
     async addCart() {
+      this.isLoading = true
       const res = await this.$http.post('/user-server/api/v1/shopping/pri/insertShoppingTrolley', {
         'book_id': this.bookData.id,
         'account_username': this.username,
@@ -156,6 +207,7 @@ export default {
           })
           toast.show()
       }
+      this.isLoading = false
     },
 
     //图文信息（详细介绍）
@@ -165,9 +217,6 @@ export default {
         query: { id: this.bookData.id },
       });
     },
-
-    //查看评论
-    showComment() {},
 
     validateNumber(value) {
       return typeof value === "number" && !isNaN(value);
@@ -183,7 +232,16 @@ export default {
     },
   },
   mounted() {},
-  created() {},
+  async created() {
+    const res = await this.$http.post('/user-server/api/v1/address/pri/selectByAccount', { username: this.username })
+    if (res.code === 1) {
+      res.data.forEach(v => this.addresses.push(v))
+    }
+    const defaultAddressRes = await this.$http.post('/user-server/api/v1/address/pri/selectDefaultAddress', {
+      'account_username': this.username
+    })
+    if (defaultAddressRes.code === 1) this.selectedAddress = defaultAddressRes.data
+  },
 };
 </script>
 <style lang="stylus" scoped>
@@ -191,6 +249,9 @@ export default {
   margin 10px
   box-shadow 0 4px 11px 0 rgba(43, 51, 59, 0.6)
   padding-top 10px
+  .remind-loading
+    position absolute
+    margin-left 40%
   .price
     padding-top 5px
     padding-left 10px
@@ -201,11 +262,21 @@ export default {
       color red
       font-size 16px
       font-weight bold
+  .receiver-address
+    text-align left 
+    margin-top 10px
+    margin-bottom 10px
+    font-size 12px
+    padding-left 10px
+    button
+      color #26A2FF
+      margin-left 5px
+    .pick-address
+      border 0
   .purchase
     padding-top 20px
     text-align left
     padding-left 10px
-    margin-bottom 20px
     display flex
     .cube-input
       width 40px

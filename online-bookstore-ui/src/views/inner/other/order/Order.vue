@@ -69,9 +69,10 @@ export default {
 
     async deleteOrder(serial) {
       //删除服务器的数据
-      const result = await this.$http.get(
-        `/order-server/api/v1/order/pri/deleteOrder/${serial}/${this.username}`
-      );
+      const result = await this.$http.post('/order-server/api/v1/order/pri/deleteOrder', {
+        serialNumber: serial,
+        username: this.username
+      });
       if (result.code === 1) {
         //删除本地数据
         for (let i = 0; i < this.orderList.length; i++) {
@@ -106,9 +107,9 @@ export default {
 
   async created() {
     //查询该账号的全部订单
-    const result = await this.$http.get(
-      `/order-server/api/v1/order/pri/selectOrderByUsername/${this.username}`
-    );
+    const result = await this.$http.post('/order-server/api/v1/order/pri/selectOrderByUsername', {
+      username: this.username
+    })
     if (result.code === 0) {
       const toast = this.$createToast({
         txt: result.message,

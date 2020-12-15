@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     async refreshAddresses() {
-      const addressListRes = await this.$http.get(`/user-server/api/v1/address/pri/selectByAccount/${this.username}`)
+      const addressListRes = await this.$http.post('/user-server/api/v1/address/pri/selectByAccount', { username: this.username })
       if (addressListRes.code === 1) {
         this.addresses = addressListRes.data
       }

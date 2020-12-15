@@ -44,9 +44,11 @@ export default {
     async cancelOrder() {
       try {
         this.isLoading = true
-        const result = await this.$http.get(
-          `/order-server/api/v1/order/pri/cancelOrder/${this.order.serial_number}/${this.order.username_id}`
-        );
+        console.log(this.order.serial_number)
+        const result = await this.$http.post('/order-server/api/v1/order/pri/cancelOrder', {
+          serialNumber: this.order.serial_number,
+          username: this.order.username_id
+        })
         if (result.code === 1) {
           this.$createToast({
             txt: "取消成功！",
@@ -76,9 +78,7 @@ export default {
     async pay() {
       try {
         this.isLoading = true
-        const result = await this.$http.get(
-          `/user-server/api/v1/account/pri/purchaseBook/${this.order.serial_number}`
-        );
+        const result = await this.$http.post('/user-server/api/v1/account/pri/purchaseBook', { serialNumber: this.order.serial_number })
         if (result.code === 1) {
           this.$createToast({
             txt: "购买成功！",
