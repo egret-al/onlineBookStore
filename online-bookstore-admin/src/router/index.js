@@ -77,6 +77,14 @@ export const constantRoutes = [{
           title: '图书馆'
         }
       },
+      {
+        path: 'carousel',
+        name: 'carousel',
+        component: () => import('@/views/book/Carousel'),
+        meta: {
+          title: '客户端轮播图'
+        }
+      }
     ]
   },
   {
@@ -88,29 +96,21 @@ export const constantRoutes = [{
       icon: 'form'
     },
     children: [{
-      path: 'overview',
-      name: 'overview',
-      component: () => import('@/views/order/OrderOverview.vue'),
-      meta: {
-        title: '订单总览',
-      }
-    },
-    {
-      path: 'order-list',
-      name: 'orderList',
-      component: () => import('@/views/order/OrderList.vue'),
-      meta: {
-        title: '订单列表'
-      }
-    },
-    {
-      path: 'user-activity',
-      name: 'userActivity',
-      component: () => import('@/views/order/UserActivity.vue'),
-      meta: {
-        title: '用户活动',
-      }
-    }
+        path: 'overview',
+        name: 'overview',
+        component: () => import('@/views/order/OrderOverview.vue'),
+        meta: {
+          title: '订单总览',
+        }
+      },
+      {
+        path: 'order-list',
+        name: 'orderList',
+        component: () => import('@/views/order/OrderList.vue'),
+        meta: {
+          title: '订单列表'
+        }
+      },
     ]
   },
   // 404 page must be placed at the end !!!

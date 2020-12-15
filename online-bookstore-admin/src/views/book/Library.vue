@@ -5,7 +5,9 @@
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="书名">
-              <span>{{ props.row.book_name }}</span>
+              <router-link :to="{path: 'detail', query: {id: props.row.id}}">
+                <span>{{ props.row.book_name }}</span>
+              </router-link>
             </el-form-item>
             <el-form-item label="作者">
               <span>{{ props.row.author }}</span>
@@ -20,7 +22,8 @@
               <span>{{ props.row.price }}</span>
             </el-form-item>
             <el-form-item label="库存">
-              <span>{{ props.row.bookStorage.residue_count }}</span>
+              <span v-if="props.row.bookStorage.residue_count < 20" style="color: red">{{ props.row.bookStorage.residue_count }}</span>
+              <span v-else>{{ props.row.bookStorage.residue_count }}</span>
             </el-form-item>
             <el-form-item label="ISBN">
               <span>{{ props.row.isbn }}</span>
@@ -34,10 +37,17 @@
       </el-table-column>
       <el-table-column align="center">
         <template slot-scope="scope">
-    　　　<img :src="scope.row.main_cover" width="40" height="40" class="head_pic"/>
+    　　　<el-avatar :src="scope.row.main_cover" width="40" height="40" class="head_pic"/>
     　　</template>
       </el-table-column>
-      <el-table-column align="center" label="书名" prop="book_name"></el-table-column>
+      <el-table-column align="center" label="书名">
+        <template slot-scope="scope">
+          <router-link :to="{path: 'detail', query: {id: scope.row.id}}">
+            <span style="color: red" v-if="scope.row.bookStorage.residue_count < 20">{{scope.row.book_name}}</span>
+            <span v-else>{{scope.row.book_name}}</span>
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="作者" prop="author"></el-table-column>
       <el-table-column align="center" label="出版社" prop="publisher"></el-table-column>
       <el-table-column align="center" sortable label="上架时间" prop="create_time"></el-table-column>
