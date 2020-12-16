@@ -1,7 +1,5 @@
 <template>
   <div class="root">
-    <!--轮播图-->
-    <!-- <book-banner :bannerItems="bannerItems"></book-banner> -->
     <el-input v-model="searchValue" placeholder="请输入图书名称"></el-input>
     <!--图书列表-->
     <book-list-item :bookList="bookList"></book-list-item>

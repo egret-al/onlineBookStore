@@ -22,7 +22,9 @@
               <span>{{ props.row.price }}</span>
             </el-form-item>
             <el-form-item label="库存">
-              <span v-if="props.row.bookStorage.residue_count < 20" style="color: red">{{ props.row.bookStorage.residue_count }}</span>
+              <el-badge v-if="props.row.bookStorage.residue_count < 20" is-dot class="item-dot">
+                <span style="color: red">{{ props.row.bookStorage.residue_count }}</span>
+              </el-badge>
               <span v-else>{{ props.row.bookStorage.residue_count }}</span>
             </el-form-item>
             <el-form-item label="ISBN">
@@ -40,7 +42,7 @@
     　　　<el-avatar :src="scope.row.main_cover" width="40" height="40" class="head_pic"/>
     　　</template>
       </el-table-column>
-      <el-table-column align="center" label="书名">
+      <el-table-column is-dot align="center" label="书名">
         <template slot-scope="scope">
           <router-link :to="{path: 'detail', query: {id: scope.row.id}}">
             <span style="color: red" v-if="scope.row.bookStorage.residue_count < 20">{{scope.row.book_name}}</span>
@@ -123,5 +125,8 @@ export default {
 .block {
   margin-right: 20px;
   float: right;
+}
+.item-dot {
+  margin-right: 40px;
 }
 </style>

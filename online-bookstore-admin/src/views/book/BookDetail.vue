@@ -62,13 +62,22 @@
     <div class="down">
       <el-tabs type="border-card">
         <el-tab-pane label="图片">
-          <div v-if="book.bookResources.length > 0">
+          <div class="picture-list" v-if="book.bookResources.length > 0">
             <el-row v-for="item in book.bookResources" :key="item.id">
               <img class="img-list-left-img" :src="item.resource_url"/>
             </el-row>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="评论">评论</el-tab-pane>
+        <el-tab-pane label="评论">
+          <el-card v-if="comments.length === 0" style="color: red; text-align: center">暂无评论</el-card>
+          <el-card v-else class="comment" v-for="item in comments" :key="item.id">
+            <div class="top">
+              <div class="comment-nickname">{{item.account.user.nickname}}</div>
+              <div class="comment-time">{{item.create_time}}</div>
+            </div>
+            <div class="content">{{item.content}}</div>
+          </el-card>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -91,7 +100,8 @@ export default {
       newBookName: '',
       newPrice: 1,
       newDescription: '',
-      newStorage: 1
+      newStorage: 1,
+      comments: []
     };
   },
 
@@ -206,14 +216,16 @@ export default {
     }
   },
   
-  mounted() {},
-  
   async created() {
-    let result = await this.$http.get(`/book-server/api/v1/book/pub/selectBookContainAllInfoById/${this.$route.query.id}`);
+    const result = await this.$http.get(`/book-server/api/v1/book/pub/selectBookContainAllInfoById/${this.$route.query.id}`);
     if (result.code === 1) {
       this.book = result.data;
     }
-    console.log(result);
+    let id = this.$route.query.id
+    const res = await this.$http.get(`/user-server/api/v1/comment/pri/selectCommentsByBookId/${id}`)
+    if (res.code === 1) {
+      res.data.forEach(v => this.comments.push(v))
+    }
   }
 };
 </script>
@@ -230,6 +242,26 @@ export default {
   .down {
     margin-left: 5%;
     margin-right: 5%;
+    margin-bottom: 30px;
+    .comment {
+      margin-bottom: 10px;
+      .top {
+        display: flex;
+        justify-content: space-between;
+        .comment-nickname {
+          font-size: 14px;
+          color: gray;
+        }
+        .comment-time {
+          color: gray;
+          font-size: 13px;
+        }
+      }
+      .content {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+    }
   }
 }
 li {

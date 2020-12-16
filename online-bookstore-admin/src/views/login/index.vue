@@ -92,9 +92,7 @@ export default {
     async handleLogin() {
       this.loading = true;
       try {
-        const result = await this.$http.post(
-          "/user-server/api/v1/adminAccount/pub/login",
-          {
+        const result = await this.$http.post("/user-server/api/v1/adminAccount/pub/login", {
             username: this.loginForm.username,
             password: this.loginForm.password
           }
