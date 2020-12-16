@@ -1,10 +1,14 @@
 package com.onlinebookstore.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.exception.StatusCodeException;
+import com.onlinebookstore.handler.OrderBlockHandler;
 import com.onlinebookstore.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/order")
 public class OrderController {
@@ -51,8 +56,8 @@ public class OrderController {
      * @param username 账号
      * @return 影响行数
      */
-    @GetMapping("pri/deleteOrder/{serialNumber}/{username}")
-    public CommonplaceResult deleteOrder(@PathVariable("serialNumber") String serialNumber, @PathVariable("username") String username) {
+    @PostMapping("pri/deleteOrder")
+    public CommonplaceResult deleteOrder(@JsonObject("serialNumber") String serialNumber, @JsonObject("username") String username) {
         if (StringUtils.isEmpty(serialNumber) || StringUtils.isEmpty(username)) {
             return CommonplaceResult.buildErrorNoData("非法数据！");
         }
@@ -64,8 +69,9 @@ public class OrderController {
      * @param username 账号
      * @return 订单列表
      */
-    @GetMapping("pri/selectOrderByUsername/{username}")
-    public CommonplaceResult selectOrderByUsername(@PathVariable("username") String username) {
+    @PostMapping("pri/selectOrderByUsername")
+    @SentinelResource(value = "selectOrderByUsername", blockHandlerClass = OrderBlockHandler.class, blockHandler = "handleSelectOrderByUsername")
+    public CommonplaceResult selectOrderByUsername(@JsonObject("username") String username) {
         if (StringUtils.isEmpty(username)) {
             return CommonplaceResult.buildErrorNoData("数据异常！");
         }
@@ -74,15 +80,15 @@ public class OrderController {
 
     /**
      * 根据订单号取消订单
-     * @param serial 订单号
+     * @param serialNumber 订单号
      * @param username 账号
      */
-    @GetMapping("pri/cancelOrder/{serial}/{username}")
-    public CommonplaceResult tryCancelOrder(@PathVariable("serial") String serial, @PathVariable("username") String username) {
-        if (ObjectUtils.isEmpty(serial)) {
+    @PostMapping("pri/cancelOrder")
+    public CommonplaceResult tryCancelOrder(@JsonObject("serialNumber") String serialNumber, @JsonObject("username") String username) {
+        if (ObjectUtils.isEmpty(serialNumber)) {
             return CommonplaceResult.buildErrorNoData("数据异常！");
         }
-        return orderService.tryCancelOrder(serial, username);
+        return orderService.tryCancelOrder(serialNumber, username);
     }
 
     /**
@@ -114,15 +120,6 @@ public class OrderController {
     }
 
     /**
-     * 根据账号查询所有订单
-     * @param username 账号
-     */
-    @GetMapping("pri/selectAllByUsername/{username}")
-    public CommonplaceResult selectAllByUsername(@PathVariable(value = "username") String username) {
-        return orderService.selectAllByUsername(username);
-    }
-
-    /**
      * 根据图书id查询该书本的所有订单
      * @param bookId 图书id
      */
@@ -137,16 +134,17 @@ public class OrderController {
      * @return 影响行数
      */
     @PostMapping("pri/insertOrder")
+    @SentinelResource(value = "insertOrder", blockHandlerClass = OrderBlockHandler.class, blockHandler = "handleInsertOrder")
     public CommonplaceResult insertOrder(@RequestBody Order order) {
         return orderService.insertOrder(order);
     }
 
     /**
      * 更新订单状态
-     * 数据格式：
      * @param pojo 包含状态码和订单号
      */
     @PostMapping("pri/updateOrderStatus")
+    @SentinelResource(value = "updateOrderStatus", blockHandlerClass = OrderBlockHandler.class, blockHandler = "handleUpdateOrderStatus")
     public CommonplaceResult updateOrderStatus(@RequestBody Map<String, String> pojo) {
         int code = Integer.parseInt(pojo.get("code"));
         String serialNumber = pojo.get("serial_number");
@@ -161,6 +159,7 @@ public class OrderController {
      * @param order 订单对象
      */
     @PostMapping("pri/updateOrder")
+    @SentinelResource(value = "updateOrder", blockHandlerClass = OrderBlockHandler.class, blockHandler = "handleUpdateOrder")
     public CommonplaceResult updateOrder(@RequestBody Order order) {
         return orderService.updateOrder(order);
     }

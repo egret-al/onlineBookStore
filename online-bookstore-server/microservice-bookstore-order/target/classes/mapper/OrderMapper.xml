@@ -24,12 +24,6 @@
         <result column="send_status" property="sendStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="orderFields">
-        serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
-        payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address,
-        send_status
-    </sql>
-
     <update id="tryAutomaticallyAcknowledge" parameterType="com.onlinebookstore.entity.orderserver.Order">
         update sys_order
         set send_status = 2, end_time = #{endTime}
@@ -47,14 +41,18 @@
     </delete>
 
     <select id="selectOrderByUsername" resultMap="BaseOrderMap">
-        select <include refid="orderFields"/>
+        select serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
+               payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address,
+               send_status
         from bookstore_order.sys_order
         where username_id = #{username}
         order by create_time desc;
     </select>
 
     <select id="selectOrderBySerialNumber" resultMap="BaseOrderMap">
-        select <include refid="orderFields"/>
+        select serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
+               payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address,
+               send_status
         from sys_order
         where serial_number = #{serialNumber};
     </select>
@@ -78,22 +76,17 @@
     </update>
 
     <select id="selectAll" resultMap="BaseOrderMap">
-        select
-        <include refid="orderFields"/>
+        select serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
+               payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address,
+               send_status
         from sys_order
         order by create_time desc;
     </select>
 
-    <select id="selectAllByUsername" resultMap="BaseOrderMap">
-        select
-        <include refid="orderFields"/>
-        from sys_order
-        where username_id = #{username};
-    </select>
-
     <select id="selectAllByBookId" resultMap="BaseOrderMap">
-        select
-        <include refid="orderFields"/>
+        select serial_number, book_id, username_id, order_content, product_count, whole_price, obtain_score, create_time,
+               payment_time, delivery_time, end_time, order_payment_status, use_score, book_name, phone, receiver_name, address,
+               send_status
         from sys_order
         where book_id = #{bookId};
     </select>

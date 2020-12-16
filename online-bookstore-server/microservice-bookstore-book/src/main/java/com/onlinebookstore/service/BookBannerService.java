@@ -28,14 +28,13 @@ public interface BookBannerService {
     CommonplaceResult insertBookBanner(BookBanner bookBanner);
 
     /**
-     * 根据id删除BookBanner
-     * @param id id
+     * 根据URL删除BookBanner
+     * @param url url
      */
-    CommonplaceResult deleteBookBannerById(Integer id);
+    CommonplaceResult deleteBookBannerByUrl(String url);
 
     /**
-     * 修改BookBanner
-     * @param bookBanner 实体类
+     * 刷新缓存
      */
-    CommonplaceResult updateBookBanner(BookBanner bookBanner);
+    CommonplaceResult refreshCache();
 }

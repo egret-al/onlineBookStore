@@ -25,6 +25,10 @@ public class BookConstantPool {
 
     public static final String BOOK_RESOURCE = "book-server:bookResource";
 
+    public static final String SELECT_BOOK_AND_STORAGE_PAGE = "book-server:selectBookAndStoragePage";
+
+    public static final String SELECT_BOOK_AND_STORAGE_BY_TYPE_PAGE = "book-server:selectBookAndStorageByTypePage";
+
     public static final String SELECT_ALL_BOOK_ALONE = "book-server:selectAllBookAlone";
 
     public static final String SELECT_ALL_BOOK_INFO = "book-server:selectAllBookInfo";

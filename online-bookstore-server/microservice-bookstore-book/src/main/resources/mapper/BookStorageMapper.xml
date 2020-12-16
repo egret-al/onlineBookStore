@@ -3,9 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlinebookstore.mapper.BookStorageMapper">
-    <sql id="baseBookStorage">
-        id, b_id, last_add_time, residue_count
-    </sql>
+    <resultMap id="BookStorageMap" type="com.onlinebookstore.entity.bookserver.BookStorage">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="b_id" property="bookId" jdbcType="INTEGER"/>
+        <result column="last_add_time" property="lastAddTime" jdbcType="TIMESTAMP"/>
+        <result column="residue_count" property="residueCount" jdbcType="INTEGER"/>
+    </resultMap>
 
     <update id="updateBookStorage" parameterType="com.onlinebookstore.entity.bookserver.BookStorage">
         update sys_book_storage
@@ -18,14 +21,14 @@
         values (#{bookId}, #{lastAddTime}, #{residueCount});
     </insert>
 
-    <select id="selectStorageByBookId" resultType="com.onlinebookstore.entity.bookserver.BookStorage">
-        select <include refid="baseBookStorage"/>
+    <select id="selectStorageByBookId" resultMap="BookStorageMap">
+        select id, b_id, last_add_time, residue_count
         from sys_book_storage
         where b_id = #{bookId};
     </select>
 
-    <select id="selectStorageById" resultType="com.onlinebookstore.entity.bookserver.BookStorage">
-        select <include refid="baseBookStorage"/>
+    <select id="selectStorageById" resultMap="BookStorageMap">
+        select id, b_id, last_add_time, residue_count
         from sys_book_storage
         where id = #{id};
     </select>

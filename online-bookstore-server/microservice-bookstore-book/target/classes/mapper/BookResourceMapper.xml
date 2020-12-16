@@ -12,10 +12,6 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <sql id="baseBookResource">
-        id, b_id, resource_url, symbol, supplement, create_time
-    </sql>
-
     <insert id="addBookResources">
         insert into sys_book_resource(b_id, resource_url, symbol, supplement, create_time)
         values
@@ -30,18 +26,18 @@
     </insert>
 
     <select id="selectAllResourceAlone" resultMap="BaseBookResourceMapper">
-        select <include refid="baseBookResource"/>
+        select id, b_id, resource_url, symbol, supplement, create_time
         from sys_book_resource;
     </select>
 
     <select id="selectAllResourceAloneByBookId" resultMap="BaseBookResourceMapper">
-        select <include refid="baseBookResource"/>
+        select id, b_id, resource_url, symbol, supplement, create_time
         from sys_book_resource
         where b_id = #{bookId};
     </select>
 
     <select id="selectResourceById" resultMap="BaseBookResourceMapper">
-        select <include refid="baseBookResource"/>
+        select id, b_id, resource_url, symbol, supplement, create_time
         from sys_book_resource
         where id = #{resourceId};
     </select>

@@ -1,9 +1,11 @@
 package com.onlinebookstore.config;
 
+import com.alibaba.cloud.seata.web.SeataHandlerInterceptor;
 import com.onlinebookstore.handler.JsonObjectArgResolverHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -21,5 +23,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         //注册JsonObjectArgResolverHandler处理类
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
         resolvers.add(new JsonObjectArgResolverHandler());
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SeataHandlerInterceptor()).addPathPatterns("/**");
     }
 }

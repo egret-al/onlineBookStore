@@ -34,10 +34,13 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author rkc
- * @version 1.0
+ * @version 3.0
  * @date 2020/9/11 15:43
  */
 @Slf4j
@@ -67,10 +70,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private RedisUtils redisUtils;
-    //黑名单
     private static final String forgotPasswordBlacklist = "forgotPassword:blacklist";
-    //已经发送的验证码
     private static final String forgotPasswordSentCode = "forgotPassword:sentCode";
+    private final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(15, 30,
+            5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20));
 
     /**
      * 忘记密码，通过手机短信找回
@@ -88,10 +91,13 @@ public class AccountServiceImpl implements AccountService {
             String code = AliyunSmsUtil.getCode();
             JSONObject jsonObject = AliyunSmsUtil.sendSms(accountUser.getUser().getPhone(), code);
             if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
-                //存入redis，并设置3分钟后值自动过期
-                redisUtils.set(forgotPasswordSentCode + account.getUsername(), code, 180);
-                //加入黑名单，2分钟内不能再次发送
-                redisUtils.set(forgotPasswordBlacklist + account.getUsername(), true, 120);
+                poolExecutor.execute(() -> {
+                    //存入redis，并设置3分钟后值自动过期
+                    redisUtils.set(forgotPasswordSentCode + account.getUsername(), code, 180);
+                    //加入黑名单，2分钟内不能再次发送
+                    redisUtils.set(forgotPasswordBlacklist + account.getUsername(), true, 120);
+                    log.info("验证码发送成功：{}", code);
+                });
                 return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
             }
             return CommonplaceResult.buildError(jsonObject, "发送失败！");
@@ -111,8 +117,10 @@ public class AccountServiceImpl implements AccountService {
         if (StringUtils.isEmpty(correctCode)) return CommonplaceResult.buildErrorNoData("验证码已过期或不存在！");
         if (code.equals(correctCode)) {
             account.setPassword(encryptor.encrypt(account.getPassword()));
-            //删除redis中用户的验证码
-            redisUtils.del(forgotPasswordSentCode + account.getUsername());
+            poolExecutor.execute(() -> {
+                //删除redis中用户的验证码
+                redisUtils.del(forgotPasswordSentCode + account.getUsername());
+            });
             //验证码正确，调用dao层进行修改密码
             return accountMapper.modifyPassword(account.getUsername(), account.getPassword()) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
                     : CommonplaceResult.buildErrorNoData("修改失败");
@@ -144,7 +152,8 @@ public class AccountServiceImpl implements AccountService {
         order.setCreateTime(new Date());
         order.setOrderPaymentStatus(0);
         //创建订单
-        orderService.insertOrder(order);
+        CommonplaceResult result = orderService.insertOrder(order);
+        if (result.getCode() == 0) return CommonplaceResult.buildErrorNoData(result.getMessage());
         //发送异步延时消息，测试为5分钟取消，上线改为30分钟
         rocketMQMessageSendUtils.sendDelayMessageAsync(RocketMQConstantPool.Topic.R_ORDER_IMPORT, OrderOperationStatusEnum.CANCEL.status,
                 order, new SendCallback() {
@@ -218,10 +227,8 @@ public class AccountServiceImpl implements AccountService {
      * @return 账户集合列表
      */
     @Override
-    public List<Account> selectAllAccount() {
-        CommonplaceResult commonplaceResult = bookService.selectAllInfo();
-        System.out.println(commonplaceResult.getData());
-        return accountMapper.selectAllAccount();
+    public CommonplaceResult selectAllAccount() {
+        return CommonplaceResult.buildSuccessNoMessage(accountMapper.selectAllAccount());
     }
 
     /**
@@ -290,10 +297,11 @@ public class AccountServiceImpl implements AccountService {
 //    @GlobalTransactional(name = "dealWithOrder", rollbackFor = Exception.class)
     public CommonplaceResult purchaseBook(String serialNumber) {
         //查询订单
-        System.out.println(orderService.selectOrderBySerialNumber(serialNumber).getData().getClass());
         Order order = null;
         try {
-            order = jsonUtil.mapToBean((Map) orderService.selectOrderBySerialNumber(serialNumber).getData(), Order.class);
+            CommonplaceResult result = orderService.selectOrderBySerialNumber(serialNumber);
+            if (result.getCode() == 1) order = jsonUtil.mapToBean((Map) result.getData(), Order.class);
+            else return CommonplaceResult.buildErrorNoData(result.getMessage());
         } catch (Exception e) {
             log.error("对象转换错误：" + e.getMessage());
             return CommonplaceResult.buildErrorNoData("没有该数据！");
@@ -315,7 +323,12 @@ public class AccountServiceImpl implements AccountService {
         boolean useScore = order.getUseScore() == 1;
 
         //调用图书微服务，得到图书信息+库存信息，通过断点调试可以得知，此时得到的对象是LinkedHashMap
-        Object data = bookService.selectBookAndStorageByBookId(bookId).getData();
+        CommonplaceResult res = bookService.selectBookAndStorageByBookId(bookId);
+        Object data = res.getData();
+        if (data instanceof Boolean) {
+            //服务调用失败
+            return CommonplaceResult.buildErrorNoData(res.getMessage());
+        }
         //转化为Book实体类
         try {
             Book book = jsonUtil.mapToBean((Map) data, Book.class);
@@ -345,7 +358,6 @@ public class AccountServiceImpl implements AccountService {
                         throw new RuntimeException("server occurred a error during calling subtracting storage");
                     }
                     if ((boolean) storageCalledResult.getData()) {
-                        //TODO 修改订单状态
                         order.setOrderPaymentStatus(1);
                         order.setDeliveryTime(new Date());
                         order.setEndTime(new Date());
@@ -353,17 +365,20 @@ public class AccountServiceImpl implements AccountService {
                         order.setWholePrice(money);
 
                         //4、修改订单状态和其它数据信息
-                        orderService.updateOrder(order);
+                        CommonplaceResult result = orderService.updateOrder(order);
+                        log.info("result.getCode() {}", result.getCode());
+                        if (result.getCode() != 1) throw new RuntimeException("订单状态修改失败！");
                         this.modifyScore(username, score);
                         return CommonplaceResult.buildSuccessNoData("操作成功！");
                     } else {
-                        throw new RuntimeException("库存扣除失败");
+                        return CommonplaceResult.buildErrorNoData(storageCalledResult.getMessage());
                     }
                 } else {
                     return CommonplaceResult.buildErrorNoData("余额不足！");
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return CommonplaceResult.buildSuccessNoData("服务器异常！");
@@ -377,7 +392,6 @@ public class AccountServiceImpl implements AccountService {
      * @return 操作是否成功
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public CommonplaceResult modifyBalance(String username, int count, boolean useScore) {
         if (StringUtils.isEmpty(username)) {
             return CommonplaceResult.buildError(false, "非法账号！");

@@ -7,6 +7,7 @@ import com.onlinebookstore.mapper.AdminAccountMapper;
 import com.onlinebookstore.service.AdminAccountService;
 import com.onlinebookstore.util.JwtUtil;
 import com.onlinebookstore.util.userutil.UserConstantPool;
+import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.UUID;
  * @date 2020/11/1 10:25
  * @version 1.0
  */
+@Slf4j
 @Service
 public class AdminAccountServiceImpl implements AdminAccountService {
 
@@ -33,8 +35,27 @@ public class AdminAccountServiceImpl implements AdminAccountService {
     @Autowired
     private StringEncryptor encryptor;
 
+    @Override
+    public CommonplaceResult updatePassword(AdminAccount adminAccount, String newPassword) {
+        String ciphertext = adminAccountMapper.getPasswordByUsername(adminAccount.getUsername());
+        log.info(encryptor.decrypt(ciphertext));
+        if (encryptor.decrypt(ciphertext).equals(adminAccount.getPassword())) {
+            //解密匹配，能够正常修改，进行加密处理
+            newPassword = encryptor.encrypt(newPassword);
+            int row = adminAccountMapper.updatePassword(adminAccount.getUsername(), newPassword);
+            return row > 0 ? CommonplaceResult.buildSuccessNoData("修改成功！") : CommonplaceResult.buildErrorNoData("修改失败！");
+        }
+        return CommonplaceResult.buildErrorNoData("修改失败！密码错误！");
+    }
+
+    @Override
+    public CommonplaceResult getAdminByUsername(String username) {
+        AdminAccount admin = adminAccountMapper.getAdminByUsername(username);
+        return ObjectUtils.isEmpty(admin) ? CommonplaceResult.buildErrorNoData("没有该账号信息") : CommonplaceResult.buildSuccessNoMessage(admin);
+    }
+
     /**
-     * 登录，逻辑和普通人登录逻辑类似，都采用JWT进行鉴权
+     * 登录，逻辑和正常登录逻辑类似，都采用JWT进行鉴权
      * @param username 账号
      * @param password 密码
      */
@@ -69,9 +90,13 @@ public class AdminAccountServiceImpl implements AdminAccountService {
      */
     @Override
     public CommonplaceResult addAdminAccount(AdminAccount adminAccount) {
-        //加密
-        adminAccount.setPassword(encryptor.encrypt(adminAccount.getPassword()));
-        return adminAccountMapper.addAdminAccount(adminAccount) > 0 ? CommonplaceResult.buildSuccessNoData("添加成功") : CommonplaceResult.buildErrorNoData("添加失败！");
+        AdminAccount admin = adminAccountMapper.getAdminByUsername(adminAccount.getUsername());
+        if (ObjectUtils.isEmpty(admin)) {
+            //加密
+            adminAccount.setPassword(encryptor.encrypt(adminAccount.getPassword()));
+            return adminAccountMapper.addAdminAccount(adminAccount) > 0 ? CommonplaceResult.buildSuccessNoData("添加成功") : CommonplaceResult.buildErrorNoData("添加失败");
+        }
+        return CommonplaceResult.buildErrorNoData("该账号已存在！");
     }
 
     /**

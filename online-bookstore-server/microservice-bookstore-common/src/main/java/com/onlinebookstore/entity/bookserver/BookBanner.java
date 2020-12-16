@@ -40,10 +40,4 @@ public class BookBanner implements Serializable {
     @JsonProperty("modify_time")
     @JsonFormat(pattern = BookConstantPool.TIME_FORMAT, timezone = BookConstantPool.TIMEZONE)
     private Date modifyTime;
-
-    /**
-     * bookId
-     */
-    @JsonProperty("b_id")
-    private Integer bookId;
 }

@@ -174,5 +174,8 @@ public class BookStorageServiceImpl implements BookStorageService {
     private void delRelativeCache(BookStorage bookStorage) {
         redisUtils.del(SELECT_ALL_BOOK_INFO, SELECT_ALL_BOOK_INFO_TYPE, SELECT_ALL_BOOK_INFO_BY_BOOK_ID + bookStorage.getBookId(),
                 SELECT_ALL_BOOK_WITH_STORAGE_BY_BOOK_ID + bookStorage.getBookId());
+        redisUtils.deleteByPrefix(SELECT_BOOK_AND_STORAGE_PAGE + "*");
+        redisUtils.deleteByPrefix(SELECT_BOOK_AND_STORAGE_BY_TYPE_PAGE + "*");
+        log.info("BookStorageServiceImpl删除缓存");
     }
 }

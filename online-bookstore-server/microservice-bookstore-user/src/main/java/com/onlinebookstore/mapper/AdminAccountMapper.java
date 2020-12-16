@@ -14,6 +14,10 @@ import java.util.List;
 @Mapper
 public interface AdminAccountMapper {
 
+    int updatePassword(@Param("username") String username, @Param("newPassword") String newPassword);
+
+    AdminAccount getAdminByUsername(String username);
+
     /**
      * 得到加密的密文
      * @param username username

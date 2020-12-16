@@ -57,7 +57,7 @@ public interface AddressService {
      * @param id id
      * @return 影响行数
      */
-    CommonplaceResult deleteAddressById(Integer id);
+    CommonplaceResult deleteAddressById(String username, Integer id);
 
     /**
      * 更新地址对象

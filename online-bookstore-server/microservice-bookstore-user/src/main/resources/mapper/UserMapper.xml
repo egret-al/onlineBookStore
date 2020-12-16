@@ -32,19 +32,6 @@
             <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         </association>
     </resultMap>
-
-    <sql id="baseUserInfo">
-        id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
-    </sql>
-
-    <sql id="baseUserInfoNoId">
-        a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
-    </sql>
-
-    <sql id="userAssociationAccount">
-        id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id, username, password, score, create_time
-    </sql>
-
     <update id="modifyPhone">
         update sys_user
         set phone = #{phone}
@@ -64,29 +51,23 @@
     </update>
 
     <insert id="addUser" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
-        insert into sys_user(<include refid="baseUserInfoNoId"/>)
+        insert into sys_user(a_id, nickname, birthday, sex, phone, last_login_time, default_address_id)
         values (#{accountUsername}, #{nickname}, #{birthday}, #{sex}, #{phone}, #{lastLoginTime}, -1);
     </insert>
 
     <select id="selectUserByUsername" resultMap="BaseUserMap">
-        select <include refid="baseUserInfo"/>
+        select id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
         from sys_user
         where a_id = #{accountUsername};
     </select>
 
     <select id="selectAllUser" resultMap="BaseUserMap">
-        select <include refid="baseUserInfo"/>
+        select id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
         from sys_user;
     </select>
 
-    <update id="modifyUserById">
-        update sys_user
-        set nickname = #{nickname}, birthday = #{birthday}, sex = #{sex}, phone = #{phone}, #{defaultAddressId}
-        where id = #{id}
-    </update>
-
     <select id="getUserContainAccountById" resultMap="UserContainAccountMap">
-        select <include refid="userAssociationAccount"/>
+        select id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id, username, password, score, create_time
         from sys_user u
         left join sys_account a on u.a_id = a.username
         where u.id = #{id};

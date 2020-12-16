@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 /**
@@ -86,7 +85,8 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
                 }
             }
         }
-        return CommonplaceResult.buildSuccessNoMessage(shoppingTrolleys);
+        //链路调用失败
+        return CommonplaceResult.buildErrorNoData(bookListRes.getMessage());
     }
 
     @Override

@@ -26,14 +26,6 @@
         </association>
     </resultMap>
 
-    <sql id="addressFields">
-        id, a_id, phone, receiver_name, address
-    </sql>
-
-    <sql id="addressFieldsNoId">
-        a_id, phone, receiver_name, address
-    </sql>
-
     <update id="setDefaultAddress">
         update sys_user
         set sys_user.default_address_id = #{address_id}
@@ -51,30 +43,30 @@
     </select>
 
     <select id="selectOneById" resultMap="BaseAddressMap">
-        select <include refid="addressFields"/>
+        select id, a_id, phone, receiver_name, address
         from sys_address
         where id = #{id};
     </select>
 
     <select id="selectAddressByAccountUsername" resultMap="BaseAddressMap">
-        select <include refid="addressFields"/>
+        select id, a_id, phone, receiver_name, address
         from sys_address
         where a_id = #{username};
     </select>
 
     <select id="selectAllAddress" resultType="com.onlinebookstore.entity.userserver.Address">
-        select <include refid="addressFields"/>
+        select id, a_id, phone, receiver_name, address
         from sys_address;
     </select>
 
     <insert id="addAddress" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.onlinebookstore.entity.userserver.Address">
-        insert into sys_address(<include refid="addressFieldsNoId"/>)
+        insert into sys_address(a_id, phone, receiver_name, address)
         values (#{accountUsername}, #{phone}, #{receiverName}, #{address});
     </insert>
 
     <delete id="deleteAddressById">
         delete from sys_address
-        where id = #{id};
+        where id = #{id} and a_id = #{username}
     </delete>
 
     <update id="updateAddress" parameterType="com.onlinebookstore.entity.userserver.Address">

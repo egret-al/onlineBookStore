@@ -33,7 +33,6 @@ public class SftpConnectUtils {
 
     /**
      * 构造基于密码认证的sftp对象
-     *
      * @param username 账号
      * @param password 密码
      * @param host     ip
@@ -48,7 +47,6 @@ public class SftpConnectUtils {
 
     /**
      * 构造基于秘钥认证的sftp对象
-     *
      * @param username   登录账号
      * @param host       ip
      * @param port       端口
@@ -64,7 +62,7 @@ public class SftpConnectUtils {
     /**
      * 连接sftp服务器
      */
-    public void login() {
+    public void connect() {
         try {
             JSch jsch = new JSch();
             if (privateKey != null) {
@@ -99,7 +97,7 @@ public class SftpConnectUtils {
     /**
      * 关闭连接 server
      */
-    public void logout() {
+    public void close() {
         if (sftp != null) {
             if (sftp.isConnected()) {
                 sftp.disconnect();
@@ -119,8 +117,6 @@ public class SftpConnectUtils {
      * @param directory    上传到该目录
      * @param sftpFileName sftp端文件名
      * @param is           输入流
-     * @throws SftpException
-     * @throws Exception
      */
     public void upload(String directory, String sftpFileName, InputStream is) throws SftpException {
         try {
@@ -133,5 +129,21 @@ public class SftpConnectUtils {
         }
         sftp.put(is, sftpFileName);
         log.info("file:{} is upload successful", sftpFileName);
+    }
+
+    /**
+     * 删除文件
+     * @param directory 目录
+     * @param sftpFileName 文件名
+     */
+    public void delete(String directory, String sftpFileName) throws SftpException {
+        log.info("directory: {}, fileName: {}", directory, sftpFileName);
+        try {
+            sftp.cd(directory);
+            sftp.rm(sftpFileName);
+        } catch (SftpException e) {
+            log.warn("directory is not exist");
+        }
+        log.info("file:{} delete successfully", sftpFileName);
     }
 }

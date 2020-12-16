@@ -1,11 +1,14 @@
 package com.onlinebookstore.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.ShoppingTrolley;
+import com.onlinebookstore.handler.ShoppingTrolleyBlockHandler;
 import com.onlinebookstore.service.ShoppingTrolleyService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import java.util.Date;
  * @date 2020/11/25 20:24
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/shopping/pri")
 public class ShoppingTrolleyController {
@@ -33,6 +37,8 @@ public class ShoppingTrolleyController {
      * @return 数量和
      */
     @PostMapping("getBookCountByUsername")
+    @SentinelResource(value = "getBookCountByUsername", blockHandlerClass = ShoppingTrolleyBlockHandler.class,
+            blockHandler = "handleGetBookCountByUsername")
     public CommonplaceResult getBookCountByUsername(@JsonObject("username") String username) {
         return shoppingTrolleyService.getBookCountByUsername(username);
     }
@@ -44,6 +50,8 @@ public class ShoppingTrolleyController {
      * @return 购物车的商品集合
      */
     @PostMapping("selectCompleteProductByAccount")
+    @SentinelResource(value = "selectCompleteProductByAccount", blockHandlerClass = ShoppingTrolleyBlockHandler.class,
+            blockHandler = "handleSelectCompleteProductByAccount")
     public CommonplaceResult selectCompleteProductByAccount(@RequestBody Account account) {
         if (StringUtils.isEmpty(account.getUsername())) {
             return CommonplaceResult.buildErrorNoData("非法请求！");
@@ -102,6 +110,8 @@ public class ShoppingTrolleyController {
      * @return 影响行数
      */
     @PostMapping("modifyCollectCount")
+    @SentinelResource(value = "modifyCollectCount", blockHandlerClass = ShoppingTrolleyBlockHandler.class,
+            blockHandler = "handleModifyCollectCount")
     public CommonplaceResult modifyCollectCount(@RequestBody ShoppingTrolley shoppingTrolley) {
         int modify = shoppingTrolley.getCollectCount();
         return shoppingTrolleyService.modifyCollectCount(shoppingTrolley.getId(), modify);

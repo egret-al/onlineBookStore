@@ -61,7 +61,7 @@ public interface AddressMapper {
      * @param id id
      * @return 影响行数
      */
-    int deleteAddressById(Integer id);
+    int deleteAddressById(@Param("username") String username, @Param("id") Integer id);
 
     /**
      * 更新地址对象

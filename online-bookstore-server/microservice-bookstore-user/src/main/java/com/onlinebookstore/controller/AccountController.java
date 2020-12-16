@@ -1,14 +1,18 @@
 package com.onlinebookstore.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.orderserver.Order;
 import com.onlinebookstore.entity.userserver.Account;
 import com.onlinebookstore.entity.userserver.User;
+import com.onlinebookstore.handler.AccountBlockHandler;
 import com.onlinebookstore.service.AccountService;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020/9/11 9:18
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/account")
 public class AccountController {
@@ -59,6 +64,7 @@ public class AccountController {
      * @return CommonplaceResult
      */
     @PostMapping("pri/topUpResidue")
+    @SentinelResource(value = "topUpResidue", blockHandlerClass = AccountBlockHandler.class, blockHandler = "handleTopUpResidue")
     public CommonplaceResult topUpResidue(@RequestBody Map<String, String> map) {
         String username = map.get(UserConstantPool.USERNAME);
         String count = map.get(UserConstantPool.COUNT);
@@ -69,8 +75,8 @@ public class AccountController {
     /**
      * 购买图书接口
      */
-    @GetMapping("pri/purchaseBook/{serialNumber}")
-    public CommonplaceResult purchaseBook(@PathVariable("serialNumber") String serialNumber) {
+    @PostMapping("pri/purchaseBook")
+    public CommonplaceResult purchaseBook(@JsonObject("serialNumber") String serialNumber) {
         if (ObjectUtils.isEmpty(serialNumber)) {
             return CommonplaceResult.buildErrorNoData("非法数据");
         }
@@ -89,22 +95,10 @@ public class AccountController {
 
     /**
      * 注册账号接口
-     * 数据格式
-     * {
-     *     'account': {
-     *         'username': 'xxx',
-     *         'password': 'xxx'
-     *     },
-     *     'user': {
-     *         'nickname': 'xx',
-     *         'birthday': 'xxxxxx',
-     *         'sex': 'xx',
-     *         'phone': 'xxxxxxxxxx'
-     *     }
-     * }
      * @return json
      */
     @PostMapping("pub/registry")
+    @SentinelResource(value = "registry", blockHandlerClass = AccountBlockHandler.class, blockHandler = "handleRegistry")
     public CommonplaceResult registry(@JsonObject("account") Account account, @JsonObject("user") User user) {
         account.setCreateTime(new Date());
         user.setLastLoginTime(new Date());
@@ -118,8 +112,7 @@ public class AccountController {
      */
     @GetMapping("pub/selectAll")
     public CommonplaceResult selectAllAccount() {
-        List<Account> accountList = accountService.selectAllAccount();
-        return CommonplaceResult.buildSuccess(accountList, "获取成功！");
+        return accountService.selectAllAccount();
     }
 
     /**
@@ -127,8 +120,8 @@ public class AccountController {
      * @param username 账号
      * @return 数据集
      */
-    @GetMapping("pub/getAccountWithUser/{username}")
-    public CommonplaceResult getAccountContainUserByUsername(@PathVariable(UserConstantPool.USERNAME) String username) {
+    @PostMapping("pub/getAccountWithUser")
+    public CommonplaceResult getAccountContainUserByUsername(@JsonObject(UserConstantPool.USERNAME) String username) {
         return accountService.getAccountContainUserByUsername(username);
     }
 
@@ -138,6 +131,7 @@ public class AccountController {
      * @return 是否登录成功
      */
     @PostMapping("pub/login")
+    @SentinelResource(value = "login", blockHandlerClass = AccountBlockHandler.class, blockHandler = "handleLogin")
     public CommonplaceResult login(@RequestBody Map<String, String> loginInfo) {
         String username = loginInfo.get(UserConstantPool.USERNAME);
         String password = loginInfo.get(UserConstantPool.PASSWORD);
@@ -164,7 +158,6 @@ public class AccountController {
 
     /**
      * 增加用户积分的接口
-     * 数据格式：
      * @param modifyScorePojo 里面包含了账号和将要改变的积分
      * @return json数据信息
      */

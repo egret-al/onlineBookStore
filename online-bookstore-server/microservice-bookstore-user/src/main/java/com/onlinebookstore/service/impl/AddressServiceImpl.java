@@ -2,7 +2,9 @@ package com.onlinebookstore.service.impl;
 
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Address;
+import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.mapper.AddressMapper;
+import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AddressService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ import java.util.List;
 public class AddressServiceImpl implements AddressService {
     @Resource
     private AddressMapper addressMapper;
+
+    @Resource
+    private UserMapper userMapper;
 
     /**
      * 设置默认收货地址
@@ -99,8 +104,12 @@ public class AddressServiceImpl implements AddressService {
      * @return 结果集
      */
     @Override
-    public CommonplaceResult deleteAddressById(Integer id) {
-        return addressMapper.deleteAddressById(id) > 0 ? CommonplaceResult.buildSuccessNoData("删除成功") :
+    public CommonplaceResult deleteAddressById(String username, Integer id) {
+        User user = userMapper.selectUserByUsername(username);
+        if (user.getDefaultAddressId().equals(id)) {
+            return CommonplaceResult.buildErrorNoData("不能删除默认地址！");
+        }
+        return addressMapper.deleteAddressById(username, id) > 0 ? CommonplaceResult.buildSuccessNoData("删除成功") :
                 CommonplaceResult.buildErrorNoData("删除失败！");
     }
 

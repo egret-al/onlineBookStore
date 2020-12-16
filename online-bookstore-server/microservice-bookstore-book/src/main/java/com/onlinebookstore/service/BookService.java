@@ -30,7 +30,7 @@ public interface BookService {
      * @param typeId 类型id
      * @return CommonplaceResult
      */
-    CommonplaceResult selectAllBookInfoByTypePage(int typeId, int currentPage, int pageSize);
+    CommonplaceResult selectBookAndStorageByTypePage(int typeId, int currentPage, int pageSize);
 
     /**
      * 根据类型查询
@@ -73,7 +73,7 @@ public interface BookService {
      */
     CommonplaceResult selectAllBookAlone();
 
-    CommonplaceResult selectAllBookInfoPage(int currentPage, int pageSize);
+    CommonplaceResult selectBookAndStoragePage(int currentPage, int pageSize);
 
     /**
      * 查询所有图书信息

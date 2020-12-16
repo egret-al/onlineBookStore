@@ -76,21 +76,24 @@ public class BookBannerServiceImpl implements BookBannerService {
 
     /**
      * 根据id删除BookBanner
-     * @param id id
+     * @param url url
      */
     @Override
-    public CommonplaceResult deleteBookBannerById(Integer id) {
-        return bookBannerMapper.deleteBookBannerById(id) > 0 ? CommonplaceResult.buildSuccessNoData("删除成功")
-                : CommonplaceResult.buildErrorNoData("删除失败！");
+    public CommonplaceResult deleteBookBannerByUrl(String url) {
+        if (bookBannerMapper.deleteBookBannerByUrl(url) > 0) {
+            //这里只有管理员操作，因此不涉及到数据库和redis的一致性
+            this.refreshCache();
+            return CommonplaceResult.buildSuccessNoData("删除成功");
+        }
+        return CommonplaceResult.buildErrorNoData("删除失败！");
     }
 
     /**
-     * 修改BookBanner
-     * @param bookBanner 实体类
+     * 刷新缓存
      */
     @Override
-    public CommonplaceResult updateBookBanner(BookBanner bookBanner) {
-        return bookBannerMapper.updateBookBanner(bookBanner) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功")
-                : CommonplaceResult.buildErrorNoData("修改失败！");
+    public CommonplaceResult refreshCache() {
+        redisUtils.del(BookConstantPool.SELECT_ALL);
+        return CommonplaceResult.buildSuccessNoData("刷新成功");
     }
 }

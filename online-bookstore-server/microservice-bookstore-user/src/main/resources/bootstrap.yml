@@ -23,13 +23,17 @@ spring:
         server-addr: 101.200.203.216:8848
         file-extension: yaml
         timeout: 5000
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+        port: 8791
   # 整合zipkin链路追踪
-#  zipkin:
-#    base-url: http://101.200.203.216:9411/
-#    discovery-client-enabled: false
-#  sleuth:
-#    sampler:
-#      probability: 1
+  zipkin:
+    base-url: http://101.200.203.216:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1        # 统计比例
   mail:
     host: smtp.qq.com
     username: 2243756824@qq.com
@@ -40,7 +44,6 @@ spring:
   #redis配置
   redis:
     database: 0
-    #    host: 132.232.28.130
     host: 101.200.203.216
     port: 6379
     jedis:
@@ -49,7 +52,7 @@ spring:
         max-wait: 1000ms
         max-idle: 8
         min-idle: 0
-    timeout: 1000ms
+    timeout: 2000ms
 
   # 数据源配置
   datasource:
@@ -82,8 +85,16 @@ seata:
 # 指定mapper文件位置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # 配置加解密秘钥
 jasypt:
   encryptor:
     password: vh^onsYFUx^DMCKK
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

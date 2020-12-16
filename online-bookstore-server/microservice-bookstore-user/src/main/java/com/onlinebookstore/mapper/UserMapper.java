@@ -59,13 +59,6 @@ public interface UserMapper {
     List<User> selectAllUser();
 
     /**
-     * 根据id修改用户信息
-     * @param user id
-     * @return 影响行数
-     */
-    int modifyUserById(User user);
-
-    /**
      * 根据id查询用户全部信息，包括关联查询的账户信息
      * @param id id
      * @return 用户信息+账号信息

@@ -148,17 +148,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 根据账号查询所有订单
-     * @param username 账号
-     */
-    @Override
-    public CommonplaceResult selectAllByUsername(String username) {
-        List<Order> orders = orderMapper.selectAllByUsername(username);
-        return orders.size() == 0 ? CommonplaceResult.buildErrorNoData("该用户没有订单！") :
-                CommonplaceResult.buildSuccess(orders, "您有" + orders.size() + "条订单");
-    }
-
-    /**
      * 根据图书id查询该书本的所有订单
      * @param bookId 图书id
      */
@@ -214,7 +203,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("订单微服务准备修改订单状态为完成");
         //模拟异常
 //        int i = 1 / 0;
-        return orderMapper.updateOrder(order) > 1 ? CommonplaceResult.buildSuccess(true, "更新成功！") :
+        return orderMapper.updateOrder(order) > 0 ? CommonplaceResult.buildSuccess(true, "更新成功！") :
                 CommonplaceResult.buildError(false, "更新失败！");
     }
 }

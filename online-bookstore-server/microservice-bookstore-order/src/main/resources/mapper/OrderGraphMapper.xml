@@ -15,8 +15,8 @@
         select book_id, book_name, sum(whole_price) total_price, sum(product_count) total_count,
             date_format(create_time, '%Y-%m') data_date
         from sys_order_success
-            where book_id = #{bookId} and date_sub(curdate(), interval #{month} month) &lt;= date(create_time)
-        group by month(create_time)
+        where book_id = #{bookId} and date_sub(curdate(), interval #{month} month) &lt;= date(create_time)
+            group by month(create_time)
         order by month(create_time);
     </select>
 

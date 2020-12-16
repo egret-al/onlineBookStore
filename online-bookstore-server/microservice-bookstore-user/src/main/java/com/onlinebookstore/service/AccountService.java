@@ -46,7 +46,7 @@ public interface AccountService {
      * 查询所有的账户，通常由管理员调用
      * @return 账户集合列表
      */
-    List<Account> selectAllAccount();
+    CommonplaceResult selectAllAccount();
 
     /**
      * 修改密码

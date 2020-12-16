@@ -31,7 +31,7 @@ CREATE TABLE `sys_account` (
 
 /*Data for the table `sys_account` */
 
-insert  into `sys_account`(`username`,`password`,`score`,`create_time`,`balance`) values ('1234567890','123456',49,'2020-09-11 00:00:00',6735),('1234567891','123456',820,'2020-09-12 20:45:42',9810),('1234567893','123456',13,'2020-09-15 16:46:41',9862);
+insert  into `sys_account`(`username`,`password`,`score`,`create_time`,`balance`) values ('1234567890','rdq35AiIigZAOAPYoRkNgA==',629,'2020-09-11 00:00:00',5162),('1234567891','Me3l+bqiM/q1idjDUtlItQ==',846,'2020-09-12 20:45:42',9506),('1234567892','JVs4RXWoNG+0hS0gJar72Q==',2,'2020-12-09 11:11:12',1972),('1234567893','U6pna9cmKyy5FYVuxK7ZeQ==',122,'2020-09-15 16:46:41',11739),('1234567894','zNFvTAD2qREhJyAnMlswCA==',2,'2020-12-09 14:29:31',3972);
 
 /*Table structure for table `sys_address` */
 
@@ -46,11 +46,11 @@ CREATE TABLE `sys_address` (
   PRIMARY KEY (`id`),
   KEY `ADDRESS_AID_ACCOUNT` (`a_id`),
   CONSTRAINT `ADDRESS_AID_ACCOUNT` FOREIGN KEY (`a_id`) REFERENCES `sys_account` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_address` */
 
-insert  into `sys_address`(`id`,`a_id`,`phone`,`receiver_name`,`address`) values (1,'1234567890','17012345678','张三33','重庆市忠县xxxxxxx'),(2,'1234567890','17012345678','张三3','四川省德阳市xxxxxxx'),(3,'1234567890','17012345678','张三','四川省成都市xxxxxxx'),(4,'1234567891','17012345678','测试用户','四川省xxx'),(5,'1234567891','17012345670','测试用户','四川省xxx'),(6,'1234567890','17012345678','测试用户','四川省xxx'),(9,'1234567893','17012345678','测试用户','四川省xxx');
+insert  into `sys_address`(`id`,`a_id`,`phone`,`receiver_name`,`address`) values (1,'1234567890','17012345678','张三33','重庆市忠县乌杨镇'),(4,'1234567891','17012345678','测试用户','四川省xxx'),(6,'1234567890','17012345678','测试用户','四川省xxx'),(9,'1234567893','17012345678','测试用户','四川省xxx'),(11,'1234567890','17602382966','测试2','重庆市忠县乌杨镇'),(12,'1234567892','17012345678','receiver','四川省xxx'),(13,'1234567894','17602382966','receiver2','四川省德阳市旌阳区xxx');
 
 /*Table structure for table `sys_admin` */
 
@@ -62,11 +62,11 @@ CREATE TABLE `sys_admin` (
   `password` varchar(100) NOT NULL COMMENT '登录密码',
   `create_time` datetime DEFAULT NULL COMMENT '账号创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_admin` */
 
-insert  into `sys_admin`(`id`,`username`,`password`,`create_time`) values (1,'224375','123456','2020-11-01 10:42:00');
+insert  into `sys_admin`(`id`,`username`,`password`,`create_time`) values (1,'224375','Th/bRFdrtKs9yFEqdfCZRA==','2020-11-01 10:42:00'),(3,'224376','X2WIqOiuMg1RNNwUWrBeFw==','2020-12-15 22:05:44');
 
 /*Table structure for table `sys_comment` */
 
@@ -81,11 +81,30 @@ CREATE TABLE `sys_comment` (
   PRIMARY KEY (`id`),
   KEY `COMMENT_UID_USER` (`account_username`),
   CONSTRAINT `COMMENT_UID_USER` FOREIGN KEY (`account_username`) REFERENCES `sys_account` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_comment` */
 
-insert  into `sys_comment`(`id`,`account_username`,`b_id`,`content`,`create_time`) values (1,'1234567890',1,'test sending comment 1','2020-11-18 10:04:56'),(2,'1234567890',1,'test sending comment 2','2020-11-18 13:19:07'),(3,'1234567890',1,'test sending comment 3','2020-11-18 13:19:37'),(4,'1234567890',2,'test sending comment 1','2020-11-18 13:20:50'),(5,'1234567890',2,'test sending comment 2','2020-11-18 13:28:38'),(6,'1234567890',2,'test sending comment 3','2020-11-18 13:33:32'),(7,'1234567890',2,'test sending comment 4','2020-11-18 13:33:38'),(8,'1234567890',2,'test sending comment 5','2020-11-18 13:33:42'),(9,'1234567890',3,'test sending comment 1','2020-11-18 21:37:48'),(10,'1234567890',4,'test sending comment 1','2020-11-18 21:40:48'),(11,'1234567890',4,'test sending comment 2','2020-11-18 21:40:54'),(12,'1234567890',4,'test sending comment 3','2020-11-18 21:40:58'),(13,'1234567890',1,'test sending comment 4','2020-11-18 21:42:53'),(14,'1234567890',1,'test sending comment 5','2020-11-18 21:42:56'),(15,'1234567890',1,'test sending comment 6','2020-11-18 21:43:00'),(16,'1234567890',1,'test sending comment 7','2020-11-18 21:43:05'),(17,'1234567890',1,'test sending comment 8','2020-11-18 21:43:08'),(18,'1234567890',1,'test sending comment 9','2020-11-18 21:43:13'),(19,'1234567890',1,'test sending comment 10','2020-11-18 21:43:17'),(20,'1234567890',1,'test sending comment 11','2020-11-18 21:43:37'),(21,'1234567890',1,'test sending comment 12','2020-11-18 21:43:40');
+insert  into `sys_comment`(`id`,`account_username`,`b_id`,`content`,`create_time`) values (1,'1234567890',1,'test sending comment 1','2020-11-18 10:04:56'),(2,'1234567890',1,'test sending comment 2','2020-11-18 13:19:07'),(3,'1234567890',1,'test sending comment 3','2020-11-18 13:19:37'),(4,'1234567890',2,'test sending comment 1','2020-11-18 13:20:50'),(5,'1234567890',2,'test sending comment 2','2020-11-18 13:28:38'),(6,'1234567890',2,'test sending comment 3','2020-11-18 13:33:32'),(7,'1234567890',2,'test sending comment 4','2020-11-18 13:33:38'),(8,'1234567890',2,'test sending comment 5','2020-11-18 13:33:42'),(9,'1234567890',3,'test sending comment 1','2020-11-18 21:37:48'),(10,'1234567890',4,'test sending comment 1','2020-11-18 21:40:48'),(11,'1234567890',4,'test sending comment 2','2020-11-18 21:40:54'),(12,'1234567890',4,'test sending comment 3','2020-11-18 21:40:58'),(13,'1234567890',1,'test sending comment 4','2020-11-18 21:42:53'),(14,'1234567890',1,'test sending comment 5','2020-11-18 21:42:56'),(15,'1234567890',1,'test sending comment 6','2020-11-18 21:43:00'),(16,'1234567890',1,'test sending comment 7','2020-11-18 21:43:05'),(17,'1234567890',1,'test sending comment 8','2020-11-18 21:43:08'),(18,'1234567890',1,'test sending comment 9','2020-11-18 21:43:13'),(19,'1234567890',1,'test sending comment 10','2020-11-18 21:43:17'),(20,'1234567890',1,'test sending comment 11','2020-11-18 21:43:37'),(21,'1234567890',1,'test sending comment 12','2020-11-18 21:43:40'),(22,'1234567890',3,'aaaaa','2020-11-26 21:08:45'),(23,'1234567890',16,'你好1','2020-11-28 17:23:48'),(24,'1234567890',4,'hello1','2020-11-28 17:24:08'),(25,'1234567890',1,'邝邝','2020-12-02 15:35:11'),(26,'1234567890',2,'123','2020-12-10 16:57:22'),(27,'1234567891',3,'CET4: changes in the way of transportation','2020-12-13 10:35:11'),(28,'1234567890',2,'aaa','2020-12-13 10:38:58');
+
+/*Table structure for table `sys_shopping_trolley` */
+
+DROP TABLE IF EXISTS `sys_shopping_trolley`;
+
+CREATE TABLE `sys_shopping_trolley` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键自增长字段',
+  `b_id` int(11) NOT NULL COMMENT '图书表的主键冗余字段',
+  `a_id` varchar(10) NOT NULL COMMENT '账号表的外键字段',
+  `collect_count` int(11) NOT NULL COMMENT '收藏的数量',
+  `create_time` datetime DEFAULT NULL COMMENT '收藏时间',
+  PRIMARY KEY (`id`),
+  KEY `SHOPPING_TROLLEY_AID_ACCOUNT` (`a_id`),
+  CONSTRAINT `SHOPPING_TROLLEY_AID_ACCOUNT` FOREIGN KEY (`a_id`) REFERENCES `sys_account` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+/*Data for the table `sys_shopping_trolley` */
+
+insert  into `sys_shopping_trolley`(`id`,`b_id`,`a_id`,`collect_count`,`create_time`) values (9,2,'1234567890',6,'2020-11-26 15:23:05'),(10,11,'1234567890',4,'2020-11-30 11:01:53'),(12,1,'1234567891',13,'2020-12-09 15:59:55'),(13,25,'1234567891',2,'2020-12-09 17:04:04'),(14,21,'1234567891',1,'2020-12-09 17:05:02'),(15,42,'1234567891',4,'2020-12-09 17:05:17'),(16,37,'1234567891',3,'2020-12-09 17:05:21'),(17,42,'1234567892',1,'2020-12-09 17:05:43'),(18,25,'1234567892',3,'2020-12-09 17:05:48'),(19,12,'1234567892',1,'2020-12-09 17:07:03'),(20,22,'1234567892',4,'2020-12-09 17:07:46'),(22,41,'1234567890',3,'2020-12-09 17:18:25'),(23,42,'1234567890',4,'2020-12-10 15:52:52'),(24,25,'1234567890',1,'2020-12-13 18:34:30'),(25,32,'1234567890',1,'2020-12-15 09:49:07');
 
 /*Table structure for table `sys_user` */
 
@@ -103,11 +122,11 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`id`),
   KEY `USER_AID_ACCOUNT` (`a_id`),
   CONSTRAINT `USER_AID_ACCOUNT` FOREIGN KEY (`a_id`) REFERENCES `sys_account` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`id`,`a_id`,`nickname`,`birthday`,`sex`,`phone`,`last_login_time`,`default_address_id`) values (1,'1234567890','测试用户1234','2000-01-01 00:00:00','女','13000000001','2020-09-12 20:45:42',2),(2,'1234567891','测试2','2000-01-01 00:00:00','女','13000000000','2020-09-12 20:45:42',4),(3,'1234567893','测试3','2000-09-15 00:00:00','女','13000000002','2020-09-15 16:46:41',9);
+insert  into `sys_user`(`id`,`a_id`,`nickname`,`birthday`,`sex`,`phone`,`last_login_time`,`default_address_id`) values (1,'1234567890','test111','2000-01-01 00:00:00','女','17602382966','2020-09-12 20:45:42',6),(2,'1234567891','测试2','2000-01-01 00:00:00','男','17602382966','2020-09-12 20:45:42',4),(3,'1234567893','测试3','2000-09-15 00:00:00','女','17602382966','2020-09-15 16:46:41',9),(4,'1234567892','tom','2020-11-07 00:00:00','女','17602382966','2020-12-09 11:11:12',12),(5,'1234567894','jack','2011-12-09 00:00:00','女','17602382966','2020-12-09 14:29:31',13);
 
 /*Table structure for table `undo_log` */
 

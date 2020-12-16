@@ -66,12 +66,6 @@ public interface OrderService {
     CommonplaceResult selectAll();
 
     /**
-     * 根据账号查询所有订单
-     * @param username 账号
-     */
-    CommonplaceResult selectAllByUsername(String username);
-
-    /**
      * 根据图书id查询订单
      * @param bookId 图书id
      */

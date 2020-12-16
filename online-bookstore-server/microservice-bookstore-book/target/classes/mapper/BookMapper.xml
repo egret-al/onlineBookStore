@@ -141,7 +141,7 @@
         from sys_book;
     </select>
 
-    <select id="selectAllBookInfoByType" resultMap="BookContainBookResourceWithStorage">
+    <select id="selectBookAndStorageByType" resultMap="BookContainBookResourceWithStorage">
         select sb.id, sb.book_name, sb.isbn, sb.author, sb.publisher, sb.price, sb.create_time, sb.t_id, sb.main_cover, sb.description,
                sbs.id sid, sbs.b_id, sbs.last_add_time, sbs.residue_count
         from sys_book sb
@@ -161,7 +161,7 @@
         order by sb.create_time desc
     </select>
 
-    <select id="selectAllBookInfo" resultMap="BookAssociationBookStorage">
+    <select id="selectBookAndStorage" resultMap="BookAssociationBookStorage">
         select sb.id id, book_name, isbn, author, publisher, price, create_time, t_id, main_cover, description,
                sbs.id sid, b_id, last_add_time, residue_count
         from sys_book sb
@@ -225,7 +225,7 @@
         from sys_book sb
             left join sys_book_storage sbs on sb.id = sbs.b_id
             left join sys_book_resource sbr on sb.id = sbr.b_id
-        where sb.id = 1;
+        where sb.id = #{bookId};
     </select>
 
     <select id="selectAllBookWithResourceByBookId" resultMap="BookContainBookResource">

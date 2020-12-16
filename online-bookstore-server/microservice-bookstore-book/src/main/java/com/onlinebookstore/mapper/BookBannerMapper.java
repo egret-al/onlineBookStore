@@ -32,11 +32,11 @@ public interface BookBannerMapper {
     int insertBookBanner(BookBanner bookBanner);
 
     /**
-     * 根据id删除BookBanner
-     * @param id id
+     * 根据url删除BookBanner
+     * @param url url
      * @return 影响行数
      */
-    int deleteBookBannerById(Integer id);
+    int deleteBookBannerByUrl(String url);
 
     /**
      * 修改BookBanner

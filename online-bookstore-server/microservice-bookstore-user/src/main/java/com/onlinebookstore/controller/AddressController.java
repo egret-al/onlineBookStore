@@ -1,16 +1,16 @@
 package com.onlinebookstore.controller;
 
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.userserver.Address;
 import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.AddressService;
-import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * @author rkc
@@ -28,12 +28,12 @@ public class AddressController {
     /**
      * 设置默认收货地址
      * @param addressId 收货地址id
-     * @param account 账户
+     * @param username 账户
      * @return CommonplaceResult
      */
-    @GetMapping("setDefaultAddress/{var1}/{var2}")
-    public CommonplaceResult setDefaultAddress(@PathVariable("var1") int addressId, @PathVariable("var2") String account) {
-        return addressService.setDefaultAddress(addressId, account);
+    @PostMapping("setDefaultAddress")
+    public CommonplaceResult setDefaultAddress(@JsonObject("addressId") int addressId, @JsonObject("username") String username) {
+        return addressService.setDefaultAddress(addressId, username);
     }
 
     /**
@@ -58,11 +58,11 @@ public class AddressController {
 
     /**
      * 根据账号查询所有绑定地址
-     * @param account account
+     * @param username username
      */
-    @GetMapping("selectByAccount/{account}")
-    public CommonplaceResult selectByAccount(@PathVariable("account") String account) {
-        return addressService.selectAddressByAccountUsername(account);
+    @PostMapping("selectByAccount")
+    public CommonplaceResult selectByAccount(@JsonObject("username") String username) {
+        return addressService.selectAddressByAccountUsername(username);
     }
 
     /**
@@ -75,12 +75,12 @@ public class AddressController {
     }
 
     /**
-     * 根据id删除地址
-     * @param id id
+     * 根据id删除地址，如果是默认地址则删除失败
+     * @param addressId addressId
      */
-    @PostMapping("deleteAddress/{id}")
-    public CommonplaceResult deleteAddress(@PathVariable("id") Integer id) {
-        return addressService.deleteAddressById(id);
+    @PostMapping("deleteAddress")
+    public CommonplaceResult deleteAddress(@JsonObject("username") String username, @JsonObject("addressId") Integer addressId) {
+        return addressService.deleteAddressById(username, addressId);
     }
 
     /**

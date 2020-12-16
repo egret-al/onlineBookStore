@@ -29,9 +29,9 @@ public interface BookMapper {
     /**
      * 根据图书类型查询列表
      * @param typeId 类型id
-     * @return 结果
+     * @return 图书+库存
      */
-    List<Book> selectAllBookInfoByType(int typeId);
+    List<Book> selectBookAndStorageByType(int typeId);
 
     /**
      * 模糊查询
@@ -69,9 +69,9 @@ public interface BookMapper {
 
     /**
      * 查询所有图书信息（顺序为图书创建时间的倒序）
-     * @return 图书信息+库存信息+资源信息
+     * @return 图书信息+库存信息
      */
-    List<Book> selectAllBookInfo();
+    List<Book> selectBookAndStorage();
 
     /**
      * 查询所有图书信息（顺序为图书创建时间的倒序）

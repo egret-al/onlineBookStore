@@ -1,12 +1,15 @@
 package com.onlinebookstore.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.entity.bookserver.*;
+import com.onlinebookstore.handler.BookBlockHandler;
 import com.onlinebookstore.service.*;
 import com.onlinebookstore.service.impl.BookServiceImpl;
 import com.onlinebookstore.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +34,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/book")
 public class BookController {
@@ -66,6 +70,7 @@ public class BookController {
      * @return Book集合
      */
     @PostMapping("pri/selectBookByIds")
+    @SentinelResource(value = "selectBookByIds", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectBookByIds")
     public CommonplaceResult selectBookByIds(@RequestBody List<Integer> ids) {
         return bookService.selectBookByIds(ids);
     }
@@ -89,6 +94,7 @@ public class BookController {
      * @return CommonplaceResult
      */
     @GetMapping("pub/selectAllTypeWithBook")
+    @SentinelResource(value = "selectAllTypeWithBook", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllTypeWithBook")
     public CommonplaceResult selectAllTypeWithBook() {
         return bookTypeService.selectAllWithBook();
     }
@@ -135,6 +141,7 @@ public class BookController {
      * @return 图书类型
      */
     @GetMapping("pub/selectAllType")
+    @SentinelResource(value = "selectAllType", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllType")
     public CommonplaceResult selectAllType() {
         return bookTypeService.selectAllType();
     }
@@ -154,6 +161,8 @@ public class BookController {
      * @return 指定图书下的所有资源
      */
     @GetMapping("pub/selectAllResourceAloneByBookId/{bookId}")
+    @SentinelResource(value = "selectAllResourceAloneByBookId", blockHandlerClass = BookBlockHandler.class,
+            blockHandler = "handleSelectAllResourceAloneByBookId")
     public CommonplaceResult selectAllResourceAloneByBookId(@PathVariable("bookId") Integer bookId) {
         return bookResourceService.selectAllResourceAloneByBookId(bookId);
     }
@@ -186,19 +195,10 @@ public class BookController {
     }
 
     /**
-     * 根据id删除资源
-     * @param resourceId 资源id
-     * @return 影响行数
-     */
-    @GetMapping("pri/deleteResourceById/{id}")
-    public CommonplaceResult deleteResourceById(@PathVariable("id") Integer resourceId) {
-        return bookResourceService.deleteResourceById(resourceId);
-    }
-
-    /**
      * 获取所有Banner
      */
     @GetMapping("pub/selectAllBanner")
+    @SentinelResource(value = "selectAllBanner", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllBanner")
     public CommonplaceResult selectAllBanner() {
         return bookBannerService.selectAll();
     }
@@ -213,12 +213,11 @@ public class BookController {
     }
 
     /**
-     * 修改BookBanner
-     * @param bookBanner 实体类
+     * 刷新缓存
      */
-    @PostMapping("pri/updateBookBanner")
-    public CommonplaceResult updateBookBanner(@RequestBody BookBanner bookBanner) {
-        return bookBannerService.updateBookBanner(bookBanner);
+    @PostMapping("pri/refreshCache")
+    public CommonplaceResult refreshCache() {
+        return bookBannerService.refreshCache();
     }
 
     /**
@@ -227,24 +226,20 @@ public class BookController {
      */
     @PostMapping("pri/insertBookBanner")
     public CommonplaceResult insertBookBanner(@RequestBody BookBanner bookBanner) {
+        bookBanner.setModifyTime(new Date());
         return bookBannerService.insertBookBanner(bookBanner);
     }
 
     /**
-     * 根据id删除banner
-     * 数据格式：
-     * {
-     *     'id': 'xxx'
-     * }
-     * @param pojo 存放id的map
+     * 根据url删除banner
+     * @param url url
      */
-    @PostMapping("pri/deleteBookBannerById")
-    public CommonplaceResult deleteBookBannerById(@RequestBody Map<String, Integer> pojo) {
-        Integer id = pojo.get("id");
-        if (ObjectUtils.isEmpty(id)) {
+    @PostMapping("pri/deleteBookBannerByUrl")
+    public CommonplaceResult deleteBookBannerByUrl(@JsonObject("url") String url) {
+        if (ObjectUtils.isEmpty(url)) {
             return CommonplaceResult.buildErrorNoData("数据错误！");
         }
-        return bookBannerService.deleteBookBannerById(id);
+        return bookBannerService.deleteBookBannerByUrl(url);
     }
 
     /**
@@ -252,10 +247,12 @@ public class BookController {
      * @param id 类型id
      * @return CommonplaceResult
      */
-    @GetMapping("pub/selectAllInfoByTypePage/{typeId}/{currentPage}/{pageSize}")
-    public CommonplaceResult selectAllInfoByTypePage(@PathVariable("typeId") int id, @PathVariable("currentPage") int currentPage
+    @GetMapping("pub/selectBookAndStorageByTypePage/{typeId}/{currentPage}/{pageSize}")
+    @SentinelResource(value = "selectBookAndStorageByTypePage", blockHandlerClass = BookBlockHandler.class,
+            blockHandler = "handleSelectBookAndStorageByTypePage")
+    public CommonplaceResult selectBookAndStorageByTypePage(@PathVariable("typeId") int id, @PathVariable("currentPage") int currentPage
             , @PathVariable("pageSize") int pageSize) {
-        return bookService.selectAllBookInfoByTypePage(id, currentPage, pageSize);
+        return bookService.selectBookAndStorageByTypePage(id, currentPage, pageSize);
     }
 
     /**
@@ -264,6 +261,7 @@ public class BookController {
      * @return CommonplaceResult
      */
     @GetMapping("pub/selectAllInfoByType/{typeId}")
+    @SentinelResource(value = "selectAllInfoByType", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllInfoByType")
     public CommonplaceResult selectAllInfoByType(@PathVariable("typeId") int id) {
         return bookService.selectAllBookInfoByType(id);
     }
@@ -273,15 +271,17 @@ public class BookController {
      * @param currentPage 当前页
      * @param pageSize 每页大小
      */
-    @GetMapping("pub/selectAllInfoPage/{currentPage}/{pageSize}")
-    public CommonplaceResult selectAllInfoPage(@PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize) {
-        return bookService.selectAllBookInfoPage(currentPage, pageSize);
+    @GetMapping("pub/selectBookAndStoragePage/{currentPage}/{pageSize}")
+    @SentinelResource(value = "selectBookAndStoragePage", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectBookAndStoragePage")
+    public CommonplaceResult selectBookAndStoragePage(@PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize) {
+        return bookService.selectBookAndStoragePage(currentPage, pageSize);
     }
 
     /**
      * 得到所有图书的所有信息，包括库存和资源信息
      */
     @GetMapping("pub/selectAllInfo")
+    @SentinelResource(value = "selectAllInfo", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllInfo")
     public CommonplaceResult selectAllInfo() {
         return bookService.selectAllBookInfo();
     }
@@ -290,6 +290,7 @@ public class BookController {
      * 模糊查询：得到所有图书的所有信息，包括库存和资源信息
      */
     @PostMapping("pub/selectAllInfoLike")
+    @SentinelResource(value = "selectAllInfoLike", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllInfoLike")
     public CommonplaceResult selectAllInfoLike(@RequestBody Book book) {
         if (book.getBookName().length() == 0) {
             return bookService.selectAllBookInfo();
@@ -302,6 +303,7 @@ public class BookController {
      * @return CommonplaceResult
      */
     @GetMapping("pri/selectBookAndType")
+    @SentinelResource(value = "selectBookAndType", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectBookAndType")
     public CommonplaceResult selectBookAndType() {
         return bookService.selectBookAndType();
     }
@@ -310,6 +312,7 @@ public class BookController {
      * 得到所有图书的信息，包括图书信息和库存信息
      */
     @GetMapping("pub/selectAllBookAndStorage")
+    @SentinelResource(value = "selectAllBookAndStorage", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllBookAndStorage")
     public CommonplaceResult selectAllBookAndStorage() {
         return bookService.selectAllBookWithStorage();
     }
@@ -320,6 +323,7 @@ public class BookController {
      * @return CommonplaceResult
      */
     @GetMapping("pub/selectAllBookWithResourceByType/{typeId}")
+    @SentinelResource(value = "selectAllBookWithResourceByType", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllBookWithResourceByType")
     public CommonplaceResult selectAllBookWithResourceByType(@PathVariable("typeId") int id) {
         return bookService.selectAllBookWithResourceByType(id);
     }
@@ -327,6 +331,7 @@ public class BookController {
     /**
      * 得到所有的图书信息，包括图书信息和资源信息
      */
+    @Deprecated
     @GetMapping("pub/selectBookAndResource")
     public CommonplaceResult selectBookAndResource() {
         return bookService.selectAllBookWithResource();
@@ -336,6 +341,8 @@ public class BookController {
      * 模糊查询：得到所有的图书信息，包括图书信息和资源信息
      */
     @PostMapping("pub/selectBookAndResourceLike")
+    @SentinelResource(value = "selectBookAndResourceLike", blockHandlerClass = BookBlockHandler.class,
+            blockHandler = "handleSelectBookAndResourceLike")
     public CommonplaceResult selectBookAndResourceLike(@RequestBody Book book) {
         if (book.getBookName().length() == 0) {
             return bookService.selectAllBookWithResource();
@@ -348,6 +355,8 @@ public class BookController {
      * @param bookId 图书id
      */
     @GetMapping(value = "pub/selectBookAndStorageByBookId/{bookId}")
+    @SentinelResource(value = "selectBookAndStorageByBookId", blockHandlerClass = BookBlockHandler.class,
+            blockHandler = "handleSelectBookAndStorageByBookId")
     public CommonplaceResult selectBookAndStorageByBookId(@PathVariable("bookId") Integer bookId) {
         return bookService.selectAllBookWithStorageByBookId(bookId);
     }
@@ -357,6 +366,8 @@ public class BookController {
      * @param bookId 图书id
      */
     @GetMapping("pub/selectBookAndResourceByBookId/{bookId}")
+    @SentinelResource(value = "selectBookAndResourceByBookId", blockHandlerClass = BookBlockHandler.class,
+            blockHandler = "handleSelectBookAndResourceByBookId")
     public CommonplaceResult selectBookAndResourceByBookId(@PathVariable("bookId") Integer bookId) {
         return bookService.selectAllBookWithResourceByBookId(bookId);
     }
@@ -367,6 +378,7 @@ public class BookController {
      * @return 只包含图书的基本信息
      */
     @GetMapping(value = "pub/selectAllBookAloneById/{bookId}")
+    @SentinelResource(value = "selectAllBookAloneById", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectAllBookAloneById")
     public CommonplaceResult selectAllBookAloneById(@PathVariable("bookId") Integer bookId) {
         return bookService.selectAllBookAloneById(bookId);
     }
@@ -376,6 +388,7 @@ public class BookController {
      * @param bookId 图书id
      */
     @GetMapping("pub/selectBookContainAllInfoById/{bookId}")
+    @SentinelResource(value = "selectBookContainAllInfoById", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectBookContainAllInfoById")
     public CommonplaceResult selectBookContainAllInfoById(@PathVariable("bookId") Integer bookId) {
         return bookService.selectAllBookInfoByBookId(bookId);
     }
@@ -385,6 +398,7 @@ public class BookController {
      * @param bookId 图书id
      */
     @GetMapping("pub/selectStorageByBookId/{bookId}")
+    @SentinelResource(value = "selectStorageByBookId", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSelectStorageByBookId")
     public CommonplaceResult selectStorageByBookId(@PathVariable("bookId") Integer bookId) {
         return bookStorageService.selectStorageByBookId(bookId);
     }
@@ -404,6 +418,7 @@ public class BookController {
      * @return CommonplaceResult
      */
     @PostMapping("pri/updateBookStorage")
+    @SentinelResource(value = "updateBookStorage", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleUpdateBookStorage")
     public CommonplaceResult updateBookStorage(@RequestBody BookStorage bookStorage) {
         bookStorage.setLastAddTime(new Date());
         return bookStorageService.updateBookStorage(bookStorage);
@@ -415,6 +430,7 @@ public class BookController {
      * @param pojo 包含id和count键值
      */
     @PostMapping("pri/addStorageById")
+    @SentinelResource(value = "addStorageById", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleAddStorageById")
     public CommonplaceResult addStorageById(@RequestBody Map<String, Integer> pojo) {
         Integer id = pojo.get("id");
         Integer count = pojo.get("count");
@@ -431,6 +447,7 @@ public class BookController {
      * @param pojo 包含id和count键值
      */
     @PostMapping("pri/subtractStorageById")
+    @SentinelResource(value = "subtractStorageById", blockHandlerClass = BookBlockHandler.class, blockHandler = "handleSubtractStorageById")
     public CommonplaceResult subtractStorageById(@RequestBody Map<String, Integer> pojo) {
         Integer id = pojo.get("id");
         Integer count = pojo.get("count");

@@ -89,6 +89,17 @@ public class RedisUtils {
         }
     }
 
+    /**
+     * 模糊匹配删除，例如要删除key为select1、select2、select3，则传入：select*
+     * @param param
+     */
+    public void deleteByPrefix(String param) {
+        Set<String> keys = redisTemplate.keys(param);
+        if (!CollectionUtils.isEmpty(keys)) {
+            redisTemplate.delete(keys);
+        }
+    }
+
     // ============================String=============================
 
     /**
@@ -137,7 +148,7 @@ public class RedisUtils {
     }
 
     /**
-     * 递增 适用场景： https://blog.csdn.net/y_y_y_k_k_k_k/article/details/79218254 高并发生成订单号，秒杀类的业务逻辑等。。
+     * 递增 适用场景： 高并发生成订单号，秒杀类的业务逻辑等。。
      * @param key 键
      * @param delta 要增加几(大于0)
      */

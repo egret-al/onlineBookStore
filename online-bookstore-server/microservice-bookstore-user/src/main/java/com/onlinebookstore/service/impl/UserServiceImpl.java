@@ -7,18 +7,23 @@ import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.UserService;
 import com.onlinebookstore.util.AliyunSmsUtil;
 import com.onlinebookstore.util.RedisUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author rkc
  * @version 1.0
  * @date 2020/9/11 15:44
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -26,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     private static final String resetPhoneBlacklist = "resetPhone:blacklist";
     private static final String resetPhoneSentCode = "resetPhone:sentCode";
+    private final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(15, 30,
+            5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20));
 
     @Resource
     private RedisUtils redisUtils;
@@ -42,10 +49,13 @@ public class UserServiceImpl implements UserService {
             String code = AliyunSmsUtil.getCode();
             JSONObject jsonObject = AliyunSmsUtil.sendSms(phone, code);
             if (jsonObject.getInteger("code") == AliyunSmsUtil.SEND_SUCCESS) {
-                //验证码存入redis，设置3分钟时间
-                redisUtils.set(resetPhoneSentCode + user.getAccountUsername(), code, 180);
-                //加入黑名单，2分钟内不能再次发送
-                redisUtils.set(resetPhoneBlacklist + user.getAccountUsername(), true, 120);
+                poolExecutor.execute(() -> {
+                    //验证码存入redis，设置3分钟时间
+                    redisUtils.set(resetPhoneSentCode + user.getAccountUsername(), code, 180);
+                    //加入黑名单，2分钟内不能再次发送
+                    redisUtils.set(resetPhoneBlacklist + user.getAccountUsername(), true, 120);
+                    log.info("验证码发送成功：{}", code);
+                });
                 return CommonplaceResult.buildSuccess(jsonObject, "发送成功！");
             }
             return CommonplaceResult.buildError(jsonObject, "发送失败！");
@@ -116,17 +126,6 @@ public class UserServiceImpl implements UserService {
         List<User> users = userMapper.selectAllUser();
         return users.size() > 0 ? CommonplaceResult.buildSuccess(users, "查询成功") :
                 CommonplaceResult.buildError(users, "没有数据");
-    }
-
-    /**
-     * 根据id修改用户信息
-     * @param user id
-     * @return 影响行数
-     */
-    @Override
-    public CommonplaceResult modifyUserById(User user) {
-        return userMapper.modifyUserById(user) > 0 ? CommonplaceResult.buildSuccessNoData("修改成功") :
-                CommonplaceResult.buildErrorNoData("修改失败");
     }
 
     /**

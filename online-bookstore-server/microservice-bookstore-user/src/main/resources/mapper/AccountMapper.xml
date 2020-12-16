@@ -30,14 +30,6 @@
         </association>
     </resultMap>
 
-    <sql id="baseAccountInfo">
-        username, password, score, create_time, balance
-    </sql>
-
-    <sql id="accountAssociationUser">
-        username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
-    </sql>
-
     <select id="getPasswordByUsername" resultType="java.lang.String">
         select password
         from bookstore_user.sys_account
@@ -45,25 +37,25 @@
     </select>
 
     <insert id="addAccount" keyColumn="username" keyProperty="username">
-        insert into sys_account(<include refid="baseAccountInfo"/>)
+        insert into sys_account(username, password, score, create_time, balance)
         values(#{username}, #{password}, 0, #{createTime}, 0);
     </insert>
 
     <select id="selectAccountByUsernameAndPassword" resultMap="AccountContainUserMap">
-        select <include refid="accountAssociationUser"/>
+        select username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
         from sys_account a
         left join sys_user u on a.username = u.a_id
         where username = #{username} and password = #{password};
     </select>
 
     <select id="selectOneByUsername" resultType="com.onlinebookstore.entity.userserver.Account">
-        select <include refid="baseAccountInfo"/>
+        select username, password, score, create_time, balance
         from sys_account
         where username = #{username};
     </select>
     
     <select id="selectAllAccount" resultType="com.onlinebookstore.entity.userserver.Account">
-        select <include refid="baseAccountInfo"/>
+        select username, password, score, create_time, balance
         from sys_account;
     </select>
     
@@ -80,7 +72,7 @@
     </update>
 
     <select id="getAccountContainUserByUsername" resultMap="AccountContainUserMap">
-        select <include refid="accountAssociationUser"/>
+        select username, password, score, create_time, balance, id, a_id, nickname, birthday, sex, phone, last_login_time, default_address_id
         from sys_account a
         left join sys_user u on a.username = u.a_id
         where username = #{username};

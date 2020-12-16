@@ -12,6 +12,10 @@ import java.util.List;
  */
 public interface AdminAccountService {
 
+    CommonplaceResult updatePassword(AdminAccount adminAccount, String newPassword);
+
+    CommonplaceResult getAdminByUsername(String username);
+
     /**
      * 根据账号密码查询管理员账号
      * @param username 账号

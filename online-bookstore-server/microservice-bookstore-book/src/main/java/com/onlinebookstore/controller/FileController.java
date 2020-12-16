@@ -1,5 +1,6 @@
 package com.onlinebookstore.controller;
 
+import com.onlinebookstore.annotation.JsonObject;
 import com.onlinebookstore.common.CommonplaceResult;
 import com.onlinebookstore.config.SftpProperties;
 import com.onlinebookstore.util.SftpConnectUtils;
@@ -36,7 +37,7 @@ public class FileController {
         log.info("file: " + file);
         SftpConnectUtils sftpConnectUtils = new SftpConnectUtils(sftpProperties.getUsername(), sftpProperties.getPassword(), sftpProperties.getIp(), sftpProperties.getId());
         //连接linux
-        sftpConnectUtils.login();
+        sftpConnectUtils.connect();
         try {
             String fileName = file.getOriginalFilename();
             log.info("图片名称：" + fileName);
@@ -54,7 +55,41 @@ public class FileController {
             return CommonplaceResult.buildErrorNoData("上传失败！" + e.getMessage());
         } finally {
             //释放连接
-            sftpConnectUtils.logout();
+            sftpConnectUtils.close();
         }
+    }
+
+    /**
+     * 删除图片资源文件
+     * @param url 图片的http地址
+     * @return CommonplaceResult
+     */
+    @PostMapping("delete")
+    public CommonplaceResult deleteNginxFile(@JsonObject("url") String url) {
+        //得到目录的路径
+        String directory = sftpProperties.getUploadPath();
+        String fileName = findFileNameFromUrl(url);
+        SftpConnectUtils sftpConnectUtils = new SftpConnectUtils(sftpProperties.getUsername(), sftpProperties.getPassword(), sftpProperties.getIp(), sftpProperties.getId());
+        sftpConnectUtils.connect();
+        try {
+            sftpConnectUtils.delete(directory, fileName);
+            return CommonplaceResult.buildSuccessNoData("删除成功！");
+        } catch (Exception e) {
+            log.error("删除失败！" + e.getMessage());
+            e.printStackTrace();
+            return CommonplaceResult.buildErrorNoData("删除失败！");
+        } finally {
+            sftpConnectUtils.close();
+        }
+    }
+
+    /**
+     * 从url地址中分割出文件名称
+     * @param url url
+     * @return 文件名
+     */
+    private String findFileNameFromUrl(String url) {
+        String downPath = sftpProperties.getDownPath();
+        return url.substring(url.lastIndexOf(downPath) + downPath.length());
     }
 }

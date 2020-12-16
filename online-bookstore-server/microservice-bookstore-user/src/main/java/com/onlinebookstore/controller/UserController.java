@@ -7,6 +7,7 @@ import com.onlinebookstore.entity.userserver.User;
 import com.onlinebookstore.service.UserService;
 import com.onlinebookstore.util.userutil.UserConstantPool;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.Map;
  * @date 2020/9/11 15:57
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {

@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 
@@ -41,6 +42,9 @@ public class JwtUtil {
         //过期时间
         long expMillis = nowMillis + ttlMillis;
         Date expDate = new Date(expMillis);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("登录时间：" + format.format(now));
+        System.out.println("过期时间：" + format.format(expDate));
         SecretKey secretKey = generalKey();
 
         JwtBuilder jwtBuilder = Jwts.builder()

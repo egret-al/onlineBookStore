@@ -10,6 +10,18 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <update id="updatePassword">
+        update sys_admin
+        set password = #{newPassword}
+        where username = #{username};
+    </update>
+
+    <select id="getAdminByUsername" resultMap="BaseAdminAccount">
+        select id, username, password, create_time
+        from sys_admin
+        where username = #{username};
+    </select>
+
     <select id="getPasswordByUsername" resultType="java.lang.String">
         select password
         from sys_admin
@@ -24,7 +36,7 @@
 
     <insert id="addAdminAccount" parameterType="com.onlinebookstore.entity.userserver.AdminAccount" useGeneratedKeys="true">
         insert into sys_admin(username, password, create_time)
-        values (#{username}, #{password}, #{create_time});
+        values (#{username}, #{password}, #{createTime});
     </insert>
 
     <select id="selectAllAdminAccount" resultMap="BaseAdminAccount">
