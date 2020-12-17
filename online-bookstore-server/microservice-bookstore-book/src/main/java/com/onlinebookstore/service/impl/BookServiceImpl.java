@@ -175,7 +175,8 @@ public class BookServiceImpl implements BookService {
         if (ids.size() == 0) {
             return CommonplaceResult.buildSuccessNoMessage(new ArrayList<Book>());
         }
-        return CommonplaceResult.buildSuccessNoMessage(bookMapper.selectBookByIds(ids));
+        List<Book> books = bookMapper.selectBookByIds(ids);
+        return CommonplaceResult.buildSuccessNoMessage(books);
     }
 
     /**

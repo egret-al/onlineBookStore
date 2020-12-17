@@ -7,6 +7,7 @@ import com.onlinebookstore.mapper.ShoppingTrolleyMapper;
 import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.ShoppingTrolleyService;
 import com.onlinebookstore.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -18,6 +19,7 @@ import java.util.*;
  * @version 1.0
  * @date 2020/11/25 20:19
  */
+@Slf4j
 @Service
 public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
     @Resource
@@ -84,6 +86,7 @@ public class ShoppingTrolleyServiceImpl implements ShoppingTrolleyService {
                     }
                 }
             }
+            return CommonplaceResult.buildSuccessNoMessage(shoppingTrolleys);
         }
         //链路调用失败
         return CommonplaceResult.buildErrorNoData(bookListRes.getMessage());
