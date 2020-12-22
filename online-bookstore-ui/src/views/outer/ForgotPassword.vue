@@ -24,15 +24,15 @@
         <div class="input-content">
           <cube-input v-model="phone" ></cube-input>
         </div>
+        <div class="send-box">
+          <cube-button v-if="show" class="send-button" @click="sendCode">发送</cube-button>
+          <cube-button style="background-color: gray" v-if="!show" class="send-button">{{times}}s</cube-button>
+        </div>
       </li>
       <li>
         <div class="label">短信验证码：</div>
         <div class="input-content">
           <cube-input v-model="code" ></cube-input>
-        </div>
-        <div class="send-box">
-          <cube-button v-if="show" class="send-button" @click="sendCode">发送</cube-button>
-          <cube-button style="background-color: gray" v-if="!show" class="send-button">{{times}}s</cube-button>
         </div>
       </li>
       <p>

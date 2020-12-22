@@ -10,7 +10,9 @@
     <cube-scroll class="rightPanel">
       <ul>
         <li v-for="(book, index) in showBookList" :key="index">
-          <img :src="book.main_cover" alt="" />
+          <router-link :to="{path: '/detail', query: {id: book.id}}">
+            <img :src="book.main_cover" alt="" />
+          </router-link>
           <p>{{ book.book_name }}<i class="cubeic-add" @click="addToCart($event, book)"></i></p>
         </li>
       </ul>

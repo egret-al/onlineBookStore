@@ -39,6 +39,7 @@ export default {
       const res = await this.$http.post('/user-server/api/v1/shopping/pri/selectCompleteProductByAccount', {
         'username': this.username
       })
+      console.log(res)
       if (res.code === 1) {
         this.shoppingTrolleys = res.data
       }

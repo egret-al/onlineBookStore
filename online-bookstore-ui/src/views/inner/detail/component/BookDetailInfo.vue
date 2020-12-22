@@ -9,7 +9,7 @@
     <hr />
     <div>
       <p class="price">
-        市场价：<del>￥{{ bookData.price + 20 }}</del
+        市12场价：<del>￥{{ bookData.price + 20 }}</del
         >&nbsp;&nbsp;销售价：
         <span class="now_price"> ￥{{ bookData.price }} </span>
       </p>
@@ -24,7 +24,8 @@
         </cube-switch>
       </div>
       <div class="receiver-address">
-        <span>收货地址：{{selectedAddress.address}}</span><button class="pick-address" @click="showPicker">选择</button>
+        <span class="receiver-address-content">收货地址：{{selectedAddress.address}}</span><br>
+        <button class="pick-address" @click="showPicker">选择地址</button>
       </div>
       <!--各种参数信息-->
       <div class="info">
@@ -108,7 +109,7 @@ export default {
           this.selectedAddress = v
         }
       })
-      if (this.selectedAddress == null) return
+      if (Object.keys(this.selectedAddress).length === 0) return
       this.$createDialog({
         type: 'warn',
         content: `您选择的是: <br/> - 联系电话: ${this.selectedAddress.phone} <br/> - 收件人: ${this.selectedAddress.receiver_name} <br/> - 收货地址: ${this.selectedAddress.address}`,
@@ -142,7 +143,7 @@ export default {
         this.isLoading = true
         //请求服务器得到默认的收货地址
         try {
-          if (this.selectedAddress == null) {
+          if (Object.keys(this.selectedAddress).length === 0) {
             //跳转到添加地址
             this.$router.push({ path: '/address-add' })
             return
@@ -240,6 +241,7 @@ export default {
     const defaultAddressRes = await this.$http.post('/user-server/api/v1/address/pri/selectDefaultAddress', {
       'account_username': this.username
     })
+    console.log('address', defaultAddressRes)
     if (defaultAddressRes.code === 1) this.selectedAddress = defaultAddressRes.data
   },
 };
@@ -268,9 +270,14 @@ export default {
     margin-bottom 10px
     font-size 12px
     padding-left 10px
+    .receiver-address-content
+      display -webkit-box
+      -webkit-line-clamp 1
+      overflow hidden
+      text-overflow ellipsis
+      -webkit-box-orient vertical
     button
       color #26A2FF
-      margin-left 5px
     .pick-address
       border 0
   .purchase
