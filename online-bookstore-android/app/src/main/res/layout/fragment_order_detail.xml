@@ -482,6 +482,7 @@
         android:text="@string/address_example"
         android:textColor="@color/black"
         android:textSize="12sp"
+        android:ems="15"
         app:layout_constraintBottom_toBottomOf="@+id/textView53"
         app:layout_constraintStart_toEndOf="@+id/textView53"
         app:layout_constraintTop_toTopOf="@+id/textView53" />

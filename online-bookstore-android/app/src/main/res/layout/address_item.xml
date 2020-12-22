@@ -49,6 +49,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="4dp"
         android:text="@string/address_example"
+        android:ems="17"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

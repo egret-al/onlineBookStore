@@ -60,9 +60,13 @@ class OrderDetailFragment : Fragment() {
         orderTextViewSerial.text = order.serialNumber
         orderTextViewCreateTime.text = SimpleDateFormat(DATE_FORMAT).format(order.createTime)
         orderTextViewProductCount.text = "${order.productCount}本"
+        signAddressTV.text = order.address
+        contactPhoneTV.text = order.phone
+        receiverNameTV.text = order.receiverName
+
         when (order.orderPaymentStatus) {
             ORDER_FINISHED -> {
-                orderTextViewStatus.text = "已完成"
+                orderTextViewStatus.text = "已支付"
                 orderTextViewStatus.setTextColor(Color.GREEN)
                 if (order.sendStatus == UN_ACKNOWLEDGE || order.sendStatus == ACKNOWLEDGED) {
                     orderTextViewSendTime.text = SimpleDateFormat(DATE_FORMAT).format(order.deliveryTime)

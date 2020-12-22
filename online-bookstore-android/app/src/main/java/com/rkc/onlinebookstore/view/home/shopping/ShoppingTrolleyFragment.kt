@@ -30,6 +30,7 @@ class ShoppingTrolleyFragment : Fragment() {
                 shoppingTrolleysRV.adapter = ShoppingTrolleysAdapter(shoppingTrolleyViewModel).apply { submitList(it) }
             } else {
                 remindTV.visibility = View.VISIBLE
+                shoppingTrolleysRV.adapter = null
             }
         })
         shoppingTrolleyViewModel.deleteStatus.observe(viewLifecycleOwner, {

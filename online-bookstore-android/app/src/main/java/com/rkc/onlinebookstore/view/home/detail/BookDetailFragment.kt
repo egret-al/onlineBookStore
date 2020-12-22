@@ -31,11 +31,7 @@ import java.util.ArrayList
 class BookDetailFragment(private val book: Book) : Fragment() {
     private lateinit var bookDetailViewModel: BookDetailViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bookDetailViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory(
                 requireActivity().application

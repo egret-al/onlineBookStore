@@ -44,6 +44,7 @@ class CommentFragment(private val book: Book) : Fragment() {
             val content = inputCommentContent.text.toString()
             if (content != "") {
                 commentViewModel.sendComment(content)
+                inputCommentContent.setText("")
             }
         }
     }
