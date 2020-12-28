@@ -27,7 +27,7 @@
       <el-button id="login_btn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
     </el-form>
     <div class="info" style="bottom: 40px;">Beta: 1.0</div>
-    <div class="info">Technical Support: XXX</div>
+    <div class="info">Technical Support: RKC</div>
   </div>
 </template>
 
