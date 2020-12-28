@@ -82,11 +82,12 @@ export default {
   mounted() {},
 
   async created() {
+    console.log('created', this.$route.path)
     switch (this.$route.path) {
       case '/footer/index':
         this.selectedLabelDefault = '首页'
         break
-      case '/footer/list':
+      case '/footer/classify':
         this.selectedLabelDefault = '分类'
         break
       case '/footer/search':
