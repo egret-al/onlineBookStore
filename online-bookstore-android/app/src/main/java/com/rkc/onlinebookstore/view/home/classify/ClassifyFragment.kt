@@ -42,6 +42,7 @@ class ClassifyFragment : Fragment() {
                                 add(bookType.books)
                             }
                             refreshRecyclerView(bookTypeList, this)
+                            Log.d("refreshRecyclerView", "执行成功")
                         }
                     }
                 }

@@ -1,7 +1,7 @@
 package com.rkc.onlinebookstore.adapter.classify
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rkc.onlinebookstore.R
 import com.rkc.onlinebookstore.model.book.BookType
 import kotlinx.android.synthetic.main.classify_left_item.view.*
+import kotlin.math.log
 
 /**
  * @author rkc
@@ -31,16 +32,7 @@ class ClassifyLeftAdapter(private var rightRecyclerView: RecyclerView) : ListAda
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassifyLeftViewHolder {
-        val holder = ClassifyLeftViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.classify_left_item, parent, false))
-        //添加点击事件，联动右侧的RecyclerView
-        holder.itemView.setOnClickListener {
-            //得到当前的位置并设置RecyclerView滚动到对应的位置
-            setCurrentPosition(holder.absoluteAdapterPosition)
-//            rightRecyclerView.scrollToPosition(holder.absoluteAdapterPosition)
-            rightRecyclerView.smoothScrollToPosition(holder.absoluteAdapterPosition)
-            notifyDataSetChanged()
-        }
-        return holder
+        return ClassifyLeftViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.classify_left_item, parent, false))
     }
 
     @SuppressLint("ResourceAsColor")
@@ -53,6 +45,14 @@ class ClassifyLeftAdapter(private var rightRecyclerView: RecyclerView) : ListAda
         } else {
             holder.itemView.classifyLeftLayout.setBackgroundColor(holder.itemView.resources.getColor(R.color.left_background_normal))
             holder.itemView.classifyTextViewTypeName.setTextColor(holder.itemView.resources.getColor(R.color.left_font_normal))
+        }
+        //添加点击事件，联动右侧的RecyclerView
+        holder.itemView.setOnClickListener {
+            //得到当前的位置并设置RecyclerView滚动到对应的位置
+            Log.d("tag", "${holder.absoluteAdapterPosition}   $position")
+            setCurrentPosition(position)
+            rightRecyclerView.smoothScrollToPosition(position)
+            notifyDataSetChanged()
         }
     }
 
