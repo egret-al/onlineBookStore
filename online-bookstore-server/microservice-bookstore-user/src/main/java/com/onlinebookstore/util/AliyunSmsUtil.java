@@ -22,8 +22,8 @@ import java.util.Random;
 @Slf4j
 public class AliyunSmsUtil {
 
-    public static final String accessKey = "xxx";
-    public static final String accessSecret = "xxx";
+    public static final String accessKey = "LTAI4G1KTq7TfoYDkRmfpGSm";
+    public static final String accessSecret = "tvHhNtGwBBDnkCeN9P9mw64xfu4B5L";
 
     public static final int SEND_SUCCESS = 1;
     public static final int SEND_FAILURE = -1;

@@ -135,6 +135,7 @@ public class AccountServiceImpl implements AccountService {
      * @return CommonplaceResult
      */
     @Override
+
     public CommonplaceResult topUpResidue(String username, int count) {
         //TODO 结合微信支付，应该先扣除微信余额再进行添加，并且需要进行事务控制
         if (count <= 0) return CommonplaceResult.buildErrorNoData("非法操作！");

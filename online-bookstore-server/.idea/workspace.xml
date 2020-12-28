@@ -28,25 +28,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/seata.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/src/views/login/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/tutorial.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyLeftAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyLeftAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/BookDetailFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/BookDetailFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/CommentFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/detail/CommentFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderDetailFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/order/OrderDetailFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/shopping/ShoppingTrolleyFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/shopping/ShoppingTrolleyFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/address_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/address_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_book_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_book_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_order_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_order_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/classify/ClassifyFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/classify/ClassifyFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/AliyunSmsUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/AliyunSmsUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/AliyunSmsUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/AliyunSmsUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/cart/Cart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/cart/Cart.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/classify/Classify.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/classify/Classify.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/detail/component/BookDetailInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/views/inner/detail/component/BookDetailInfo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/views/outer/ForgotPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/views/outer/ForgotPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/components/FooterNav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/components/FooterNav.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,17 +186,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -442,7 +423,16 @@
       <workItem from="1608522219914" duration="1437000" />
       <workItem from="1608523772210" duration="6266000" />
       <workItem from="1608601274358" duration="1162000" />
-      <workItem from="1608629691797" duration="2399000" />
+      <workItem from="1608629691797" duration="3730000" />
+      <workItem from="1608682213020" duration="44000" />
+      <workItem from="1608682292794" duration="3480000" />
+      <workItem from="1608722133090" duration="2820000" />
+      <workItem from="1608768358669" duration="3594000" />
+      <workItem from="1609031015306" duration="45000" />
+      <workItem from="1609031115127" duration="1459000" />
+      <workItem from="1609070666507" duration="3371000" />
+      <workItem from="1609121604628" duration="1268000" />
+      <workItem from="1609144205209" duration="1512000" />
     </task>
     <servers />
   </component>
