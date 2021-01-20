@@ -28,17 +28,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de418d0c-8c7c-4508-8b5e-c032eeb3639f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-admin/src/views/login/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-admin/tutorial.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyLeftAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/adapter/classify/ClassifyLeftAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/SubtractResidueStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/NoUseScoreSubtractResidueStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/SubtractStrategyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/UseScoreSubtractResidueStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/util/OkHttpUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/classify/ClassifyFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-android/app/src/main/java/com/rkc/onlinebookstore/view/home/classify/ClassifyFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/UserServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/UserServerApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/service/impl/AccountServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/AliyunSmsUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/src/main/java/com/onlinebookstore/util/AliyunSmsUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/UserServerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/UserServerApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/service/impl/AccountServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/AliyunSmsUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-bookstore-user/target/classes/com/onlinebookstore/util/AliyunSmsUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../online-bookstore-ui/src/components/FooterNav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../online-bookstore-ui/src/components/FooterNav.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,14 +54,22 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="2" />
@@ -109,7 +119,7 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../JavaCode/temp/Cknife" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -122,7 +132,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.34367815" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -433,6 +443,10 @@
       <workItem from="1609070666507" duration="3371000" />
       <workItem from="1609121604628" duration="1268000" />
       <workItem from="1609144205209" duration="1512000" />
+      <workItem from="1609150027310" duration="206000" />
+      <workItem from="1609747487736" duration="1439000" />
+      <workItem from="1610710188075" duration="784000" />
+      <workItem from="1611114551819" duration="4993000" />
     </task>
     <servers />
   </component>

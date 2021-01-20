@@ -13,6 +13,7 @@ import com.onlinebookstore.mapper.UserMapper;
 import com.onlinebookstore.service.AccountService;
 import com.onlinebookstore.service.BookService;
 import com.onlinebookstore.service.OrderService;
+import com.onlinebookstore.service.SubtractResidueStrategy;
 import com.onlinebookstore.util.AliyunSmsUtil;
 import com.onlinebookstore.util.JsonUtil;
 import com.onlinebookstore.util.JwtUtil;
@@ -67,6 +68,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private StringEncryptor encryptor;
+
+    @Autowired
+    private SubtractStrategyFactory subtractStrategyFactory;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -135,7 +139,6 @@ public class AccountServiceImpl implements AccountService {
      * @return CommonplaceResult
      */
     @Override
-
     public CommonplaceResult topUpResidue(String username, int count) {
         //TODO 结合微信支付，应该先扣除微信余额再进行添加，并且需要进行事务控制
         if (count <= 0) return CommonplaceResult.buildErrorNoData("非法操作！");
@@ -422,35 +425,9 @@ public class AccountServiceImpl implements AccountService {
      * @param useScore 是否使用积分
      */
     private CommonplaceResult subtractBalance(Account account, Integer count, Boolean useScore) {
-        if (useScore) {
-            //使用了积分抵扣，需要判断积分是否为0，如果为0，则提示不能抵扣，否则进行相应的抵扣操作3
-            int score = account.getScore();
-            if (score == 0) {
-                //直接进行扣除
-                return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccess(true, "扣费成功") :
-                        CommonplaceResult.buildError(false, "扣费失败");
-            } else if (score > 0) {
-                //balance = balance - count + score / 10
-                int subScore = 100;
-                if (score > 100) {
-                    //积分太多，但也只能抵扣10元
-                    count = count + subScore / 10;
-                    return accountMapper.subtractScoreAndBalance(account.getUsername(), subScore, count) > 0 ? CommonplaceResult.buildSuccess(true, "购买成功")
-                            : CommonplaceResult.buildError(false, "网络异常");
-                } else {
-                    //积分并不会满足抵扣过多，直接进行扣除，且把积分归零
-//                    accountMapper.subtractScoreAndBalance(account.getUsername(), score / 10, count);
-                    count = count + score / 10;
-                    return accountMapper.subtractScoreAndBalance(account.getUsername(), score, count) > 0 ? CommonplaceResult.buildSuccess(true, "购买成功")
-                            : CommonplaceResult.buildError(false, "网络异常");
-                }
-            }
-            return CommonplaceResult.buildError(false, "操作异常");
-        } else {
-            //没有使用积分抵扣，直接进行扣除
-            return accountMapper.modifyBalance(account.getUsername(), count) > 0 ? CommonplaceResult.buildSuccess(true, "扣费成功") :
-                    CommonplaceResult.buildError(false, "扣费失败");
-        }
+        //根据useScore，由工厂类决定使用哪种扣费策略
+        SubtractResidueStrategy subtractResidueStrategy = subtractStrategyFactory.getSubtractResidueStrategy(useScore);
+        return subtractResidueStrategy.subtractBalance(account, count);
     }
 
     /**
