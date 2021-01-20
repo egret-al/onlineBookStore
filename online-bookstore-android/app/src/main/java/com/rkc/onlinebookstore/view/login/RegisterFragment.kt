@@ -2,6 +2,7 @@ package com.rkc.onlinebookstore.view.login
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,7 @@ class RegisterFragment : Fragment() {
         btnDatePickerDialog.setOnClickListener {
             val calendar = Calendar.getInstance()
             val mYear = calendar[Calendar.YEAR]
-            val mMonth = calendar[Calendar.MONTH]
+            val mMonth = calendar[Calendar.MONTH] + 1
             val mDay = calendar[Calendar.DAY_OF_MONTH]
             DatePickerDialog(requireContext(), { datePicker, year, month, dayOfMonth ->
                 run {

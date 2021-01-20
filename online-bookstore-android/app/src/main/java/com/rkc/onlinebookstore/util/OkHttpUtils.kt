@@ -15,7 +15,7 @@ import kotlin.math.sign
 class OKHttpUtils {
 
     companion object {
-        private const val serverAddress = "http://10.127.107.16:9527"
+        private const val serverAddress = "http://192.168.41.177:9527"
         private val okHttpClientBuilder = OkHttpClient().newBuilder().addInterceptor(SignInterceptor())
         private val jsonType = "application/json;charset=utf-8".toMediaTypeOrNull()
 
